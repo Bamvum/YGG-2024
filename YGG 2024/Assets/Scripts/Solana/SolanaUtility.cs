@@ -27,4 +27,9 @@ public class SolanaUtility : MonoBehaviour
     public async void AJAccount(){
         await Web3.Instance.CreateAccount("5nD46oP3g54DmxcU3SFtnprVYKzn2j6dhuL2FaRkymWbA6vvxY2tas173H6Z37qaezKazR523PMMGh6MwDybaZFn", "A704Gods");
     }
+
+    [ContextMenu("Logout")]
+    public void Logout(){
+        Web3.Wallet.Logout();
+    }
 }
