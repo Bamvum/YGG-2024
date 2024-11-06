@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: d6cad69921702d5488d96b5ef30df1b0
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 246931
+  packageName: Solana SDK for Unity
+  packageVersion: 1.2
+  assetPath: Packages/com.solana.unity_sdk/Runtime/Plugins/UniTask/Runtime/UniTaskScheduler.cs
+  uploadId: 695847

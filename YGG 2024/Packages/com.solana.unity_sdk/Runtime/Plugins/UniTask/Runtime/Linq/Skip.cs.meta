@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 9c46b6c7dce0cb049a73c81084c75154
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 246931
+  packageName: Solana SDK for Unity
+  packageVersion: 1.2
+  assetPath: Packages/com.solana.unity_sdk/Runtime/Plugins/UniTask/Runtime/Linq/Skip.cs
+  uploadId: 695847

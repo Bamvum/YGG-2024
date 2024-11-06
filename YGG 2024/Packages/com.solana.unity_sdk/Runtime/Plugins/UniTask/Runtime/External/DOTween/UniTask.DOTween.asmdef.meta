@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 029c1c1b674aaae47a6841a0b89ad80e
+AssemblyDefinitionImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 246931
+  packageName: Solana SDK for Unity
+  packageVersion: 1.2
+  assetPath: Packages/com.solana.unity_sdk/Runtime/Plugins/UniTask/Runtime/External/DOTween/UniTask.DOTween.asmdef
+  uploadId: 695847
