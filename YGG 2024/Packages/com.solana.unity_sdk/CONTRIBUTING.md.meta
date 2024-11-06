@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 60200f70e78674a84b4e3ae92f46179c
+TextScriptImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 246931
+  packageName: Solana SDK for Unity
+  packageVersion: 1.2
+  assetPath: Packages/com.solana.unity_sdk/CONTRIBUTING.md
+  uploadId: 695847

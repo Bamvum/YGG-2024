@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: f51ebe6a0ceec4240a699833d6309b23
+AssemblyDefinitionImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 246931
+  packageName: Solana SDK for Unity
+  packageVersion: 1.2
+  assetPath: Packages/com.solana.unity_sdk/Runtime/Plugins/UniTask/Runtime/UniTask.asmdef
+  uploadId: 695847

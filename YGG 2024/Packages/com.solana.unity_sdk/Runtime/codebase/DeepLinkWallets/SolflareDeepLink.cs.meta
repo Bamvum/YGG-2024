@@ -1,0 +1,10 @@
+fileFormatVersion: 2
+guid: aa3b5e25ce4d4d9e834c1613163c0b98
+timeCreated: 1699379925
+AssetOrigin:
+  serializedVersion: 1
+  productId: 246931
+  packageName: Solana SDK for Unity
+  packageVersion: 1.2
+  assetPath: Packages/com.solana.unity_sdk/Runtime/codebase/DeepLinkWallets/SolflareDeepLink.cs
+  uploadId: 695847

@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 3af5098802d5d4a448d92a56cd99b8c7
+TextScriptImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 246931
+  packageName: Solana SDK for Unity
+  packageVersion: 1.2
+  assetPath: Packages/com.solana.unity_sdk/CODE_OF_CONDUCT.md
+  uploadId: 695847
