@@ -1,33 +1,27 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using Unisave;
-using Unisave.Facets;
 using Unisave.Facades;
-using Unisave.Authentication.Middleware;
+using Unisave.Facets;
 using Unisave.Broadcasting;
 using ESDatabase.Classes;
+using System.Diagnostics;
 
 public class RoomManager : Facet
 {
-    public ChannelSubscription JoinRoom(string room)
+
+    public ChannelSubscription JoinOnlineChannel(string roomID, PlayerData playerData)
     {
-        // get the authenticated player
-        var player = Auth.GetPlayer<PlayerData>();
-        // subscribe the client into the channel
+
         var subscription = Broadcast
-            .Channel<Lobby>()
-            .WithParameters(room)
+            .Channel<GameLobby>()
+            .JoinRoom(roomID)
             .CreateSubscription();
         
         // new player in the room broadcast
-        Broadcast.Channel<Lobby>()
-            .WithParameters(room)
+        Broadcast.Channel<GameLobby>()
+            .JoinRoom(roomID)
             .Send(new PlayerJoinedMessage {
-                playerName = player.gameData.playerName
+                playerName = playerData.gameData.playerName
             });
 
         return subscription;
     }
-
 }
