@@ -1,10 +1,12 @@
 using ESDatabase.Classes;
 using TMPro;
+using Unisave.Facades;
 using Unisave.Facets;
 using UnityEngine;
 
 public class UnisaveManager : MonoBehaviour
 {
+    [SerializeField] public PlayerClient clientGameObject;
     public static UnisaveManager Instance;
     [SerializeField] public PlayerData playerData;
     [SerializeField] string uuid;
@@ -21,12 +23,9 @@ public class UnisaveManager : MonoBehaviour
         this.CallFacet((DatabaseService ds) => ds.CreateAccount(pubkey))
         .Then(response => {
             playerData = response;
+            gameObject.GetComponent<PlayerClient>().enabled = true;
             Debug.Log(playerData.publicKey);
         });
-    }
-
-    public void CreateLobby(){
-        Debug.Log(Utilities.GenerateCode(5));
     }
 
     public void JoinLobby(){
