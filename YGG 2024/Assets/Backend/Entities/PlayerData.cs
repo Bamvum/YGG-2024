@@ -13,10 +13,10 @@ public class PlayerData : Entity
     public string token {get;set;}
     [Fillable] public GameData gameData {get; set;}
     public PlayerData() { }
-    public PlayerData(string pubKey, DateTime loginDate, GameData data){
+    public PlayerData(string pubKey, DateTime loginDate){
         this.publicKey = pubKey;
         this.lastLoginAt = loginDate;
-        this.gameData = data;
+        this.gameData = new GameData();
     }
     
 }

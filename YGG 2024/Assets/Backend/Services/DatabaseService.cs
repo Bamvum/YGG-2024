@@ -5,6 +5,7 @@ using Unisave;
 using Unisave.Facets;
 using Unisave.Facades;
 using Unisave.Authentication.Middleware;
+using ESDatabase.Classes;
 
 public class DatabaseService : Facet
 {
@@ -16,4 +17,13 @@ public class DatabaseService : Facet
     {
         return "Hello client! I'm the server!";
     }
+    public PlayerData CreateAccount(string pubkey)
+    {
+        GameData data = new GameData();
+        PlayerData player = new PlayerData(pubkey, DateTime.UtcNow);
+        player.Save();
+        
+        return player;
+    }
+
 }
