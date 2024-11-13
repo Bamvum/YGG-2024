@@ -1,12 +1,7 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using Unisave;
-using Unisave.Entities;
 using Unisave.Facades;
 using Unisave.Broadcasting;
 using UnityEngine;
-using UnityEngine.UI;
+
 using ESDatabase.Classes;
 
 public class PlayerClient : UnisaveBroadcastingClient
@@ -16,16 +11,29 @@ public class PlayerClient : UnisaveBroadcastingClient
         Debug.Log("Player logged in");        
     }
     public async void CreateLobby(){
+        string randomCode = Utilities.GenerateCode(5);
         var subscription = await OnFacet<RoomManager>
-        .CallAsync<ChannelSubscription>(
-                nameof(RoomManager.JoinRoom),
-                Utilities.GenerateCode(5)
-        );
+            .CallAsync<ChannelSubscription>(
+                nameof(RoomManager.JoinOnlineChannel),
+                randomCode,
+                UnisaveManager.Instance.playerData
+            );
+            FromSubscription(subscription)
+            .Forward<PlayerJoinedMessage>(PlayerJoined)
+            .ElseLogWarning();
+            Debug.Log(randomCode);
+    }
 
+    public async void JoinLobby(){
+        var subscription = await OnFacet<RoomManager>
+            .CallAsync<ChannelSubscription>(
+                nameof(RoomManager.JoinOnlineChannel),
+                UnisaveManager.Instance.lobby.text.ToUpper(),
+                UnisaveManager.Instance.playerData
+            );
         FromSubscription(subscription)
             .Forward<PlayerJoinedMessage>(PlayerJoined)
             .ElseLogWarning();
-
     }
     /*
     void MyMessageReceived(MyMessage msg)

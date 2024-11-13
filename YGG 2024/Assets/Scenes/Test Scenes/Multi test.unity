@@ -1225,8 +1225,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 352381286}
-        m_TargetAssemblyTypeName: UnisaveManager, Assembly-CSharp
+      - m_Target: {fileID: 352381288}
+        m_TargetAssemblyTypeName: PlayerClient, Assembly-CSharp
         m_MethodName: JoinLobby
         m_Mode: 1
         m_Arguments:
