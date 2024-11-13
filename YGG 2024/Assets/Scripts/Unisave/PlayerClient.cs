@@ -21,7 +21,6 @@ public class PlayerClient : UnisaveBroadcastingClient
             );
 
             FromSubscription(subscription)
-            .Forward<ChatMessage>(ChatMessageReceived)
             .Forward<PlayerJoinedMessage>(PlayerJoined)
             .ElseLogWarning();
             Debug.Log(UnisaveManager.Instance.lobbyCode);

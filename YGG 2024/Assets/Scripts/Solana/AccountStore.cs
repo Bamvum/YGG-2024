@@ -3,6 +3,7 @@ using Solana.Unity.SDK;
 using Solana.Unity.SDK.Nft;
 using Solana.Unity.Wallet;
 using TMPro;
+using Unisave.Facets;
 using UnityEngine;
 
 public class AccountStore : MonoBehaviour
@@ -17,6 +18,10 @@ public class AccountStore : MonoBehaviour
 
     private void OnLogin(Account account){
         publicKey.SetText("Public Key: " + account.PublicKey);
+        this.CallFacet((DatabaseService ds) => ds.CreateAccount(account.PublicKey))
+        .Then(response => {
+            AccountManager.Instance.playerData = response;
+        });
     }
     private void OnBalanceChange(double sol){
         balance.SetText("Balance: " + sol.ToString("#.#########"));
