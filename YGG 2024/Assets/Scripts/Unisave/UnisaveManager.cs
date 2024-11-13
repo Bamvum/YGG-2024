@@ -11,6 +11,7 @@ public class UnisaveManager : MonoBehaviour
     [SerializeField] public PlayerData playerData;
     [SerializeField] string uuid;
     [SerializeField] public TMP_InputField lobby;
+    [SerializeField] public string lobbyCode {get;set;}
     private void Awake(){
         if(Instance == null){
             Instance = this;
@@ -27,7 +28,6 @@ public class UnisaveManager : MonoBehaviour
             Debug.Log(playerData.publicKey);
         });
     }
-
     public void JoinLobby(){
         Debug.Log(lobby.text);
     }
