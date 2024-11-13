@@ -698,6 +698,7 @@ GameObject:
   m_Component:
   - component: {fileID: 352381287}
   - component: {fileID: 352381286}
+  - component: {fileID: 352381288}
   m_Layer: 0
   m_Name: UnisaveManager
   m_TagString: Untagged
@@ -717,6 +718,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca068127a5b793447b0182b3d16964f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  clientGameObject: {fileID: 0}
   uuid: 
   lobby: {fileID: 1798216153}
 --- !u!4 &352381287
@@ -734,6 +736,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &352381288
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 352381285}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d495b44f9205e5a4fbe74b83b8f261e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &524869618
 GameObject:
   m_ObjectHideFlags: 0
@@ -1949,8 +1963,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 352381286}
-        m_TargetAssemblyTypeName: UnisaveManager, Assembly-CSharp
+      - m_Target: {fileID: 352381288}
+        m_TargetAssemblyTypeName: PlayerClient, Assembly-CSharp
         m_MethodName: CreateLobby
         m_Mode: 1
         m_Arguments:
