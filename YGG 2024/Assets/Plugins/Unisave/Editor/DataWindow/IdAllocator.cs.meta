@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 1dc6ae130474854ce8d10bf088c9f7a9
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 142705
+  packageName: Backend Service Unisave
+  packageVersion: 0.13.0
+  assetPath: Assets/Plugins/Unisave/Editor/DataWindow/IdAllocator.cs
+  uploadId: 638031

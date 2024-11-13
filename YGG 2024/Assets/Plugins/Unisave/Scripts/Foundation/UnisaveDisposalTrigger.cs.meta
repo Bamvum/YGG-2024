@@ -1,0 +1,10 @@
+﻿fileFormatVersion: 2
+guid: 7161ebff4d3f44f1a9740b8d69d33746
+timeCreated: 1606334745
+AssetOrigin:
+  serializedVersion: 1
+  productId: 142705
+  packageName: Backend Service Unisave
+  packageVersion: 0.13.0
+  assetPath: Assets/Plugins/Unisave/Scripts/Foundation/UnisaveDisposalTrigger.cs
+  uploadId: 638031

@@ -1,0 +1,10 @@
+fileFormatVersion: 2
+guid: c466941cdf98438d82594148b809d103
+timeCreated: 1703798905
+AssetOrigin:
+  serializedVersion: 1
+  productId: 142705
+  packageName: Backend Service Unisave
+  packageVersion: 0.13.0
+  assetPath: Assets/Plugins/Unisave/Examples/EmailAuthentication/Backend/EmailAuthBootstrapper.cs
+  uploadId: 638031

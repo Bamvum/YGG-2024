@@ -1,0 +1,10 @@
+fileFormatVersion: 2
+guid: 717dd07757e44987ba26a83ee429d32f
+timeCreated: 1703893691
+AssetOrigin:
+  serializedVersion: 1
+  productId: 142705
+  packageName: Backend Service Unisave
+  packageVersion: 0.13.0
+  assetPath: Assets/Plugins/Unisave/Testing/FullstackBackend/FullstackAuthFacet.cs
+  uploadId: 638031

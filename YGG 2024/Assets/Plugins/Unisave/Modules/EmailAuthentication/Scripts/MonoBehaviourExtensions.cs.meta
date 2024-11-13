@@ -1,0 +1,10 @@
+fileFormatVersion: 2
+guid: 99c638cfeaf54b38b79e627674f8af0d
+timeCreated: 1704321653
+AssetOrigin:
+  serializedVersion: 1
+  productId: 142705
+  packageName: Backend Service Unisave
+  packageVersion: 0.13.0
+  assetPath: Assets/Plugins/Unisave/Modules/EmailAuthentication/Scripts/MonoBehaviourExtensions.cs
+  uploadId: 638031

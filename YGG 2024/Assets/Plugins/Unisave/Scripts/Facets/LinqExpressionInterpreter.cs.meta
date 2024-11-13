@@ -1,0 +1,10 @@
+fileFormatVersion: 2
+guid: 6799c970770d48d1a0df6b58d9aed4b8
+timeCreated: 1685375161
+AssetOrigin:
+  serializedVersion: 1
+  productId: 142705
+  packageName: Backend Service Unisave
+  packageVersion: 0.13.0
+  assetPath: Assets/Plugins/Unisave/Scripts/Facets/LinqExpressionInterpreter.cs
+  uploadId: 638031

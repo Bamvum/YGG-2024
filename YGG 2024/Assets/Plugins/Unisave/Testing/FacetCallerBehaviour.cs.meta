@@ -1,0 +1,10 @@
+fileFormatVersion: 2
+guid: c7d17c7278864befb0afb035e7ae1de7
+timeCreated: 1703891277
+AssetOrigin:
+  serializedVersion: 1
+  productId: 142705
+  packageName: Backend Service Unisave
+  packageVersion: 0.13.0
+  assetPath: Assets/Plugins/Unisave/Testing/FacetCallerBehaviour.cs
+  uploadId: 638031

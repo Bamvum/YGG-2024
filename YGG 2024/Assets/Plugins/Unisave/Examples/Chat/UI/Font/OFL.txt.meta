@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 34068ff6b9f44e4d7bc6075098ec9224
+TextScriptImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 142705
+  packageName: Backend Service Unisave
+  packageVersion: 0.13.0
+  assetPath: Assets/Plugins/Unisave/Examples/Chat/UI/Font/OFL.txt
+  uploadId: 638031

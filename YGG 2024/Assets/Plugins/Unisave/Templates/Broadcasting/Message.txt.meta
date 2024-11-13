@@ -1,0 +1,10 @@
+﻿fileFormatVersion: 2
+guid: 38bd1e26d85342799d177c47acefe9f9
+timeCreated: 1606917294
+AssetOrigin:
+  serializedVersion: 1
+  productId: 142705
+  packageName: Backend Service Unisave
+  packageVersion: 0.13.0
+  assetPath: Assets/Plugins/Unisave/Templates/Broadcasting/Message.txt
+  uploadId: 638031

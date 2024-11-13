@@ -1,0 +1,10 @@
+﻿fileFormatVersion: 2
+guid: b25527bedbdb4a6588e1728e74a5c403
+timeCreated: 1603623130
+AssetOrigin:
+  serializedVersion: 1
+  productId: 142705
+  packageName: Backend Service Unisave
+  packageVersion: 0.13.0
+  assetPath: Assets/Plugins/Unisave/Examples/Chat/ChatController.cs
+  uploadId: 638031

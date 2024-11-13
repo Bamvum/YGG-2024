@@ -1,0 +1,10 @@
+fileFormatVersion: 2
+guid: e1d814d789b44ac5840b94c076e97b51
+timeCreated: 1677608984
+AssetOrigin:
+  serializedVersion: 1
+  productId: 142705
+  packageName: Backend Service Unisave
+  packageVersion: 0.13.0
+  assetPath: Assets/Plugins/Unisave/Scripts/Facets/FacetClient.cs
+  uploadId: 638031

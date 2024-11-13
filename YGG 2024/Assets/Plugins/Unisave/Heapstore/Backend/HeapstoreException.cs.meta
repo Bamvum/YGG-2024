@@ -1,0 +1,10 @@
+fileFormatVersion: 2
+guid: cb59c7ae952f4bfeb6c40c21da0871b8
+timeCreated: 1685724420
+AssetOrigin:
+  serializedVersion: 1
+  productId: 142705
+  packageName: Backend Service Unisave
+  packageVersion: 0.13.0
+  assetPath: Assets/Plugins/Unisave/Heapstore/Backend/HeapstoreException.cs
+  uploadId: 638031

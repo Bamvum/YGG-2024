@@ -1,0 +1,10 @@
+fileFormatVersion: 2
+guid: 0a3168baec15459dac6d1af4ead67474
+timeCreated: 1675441044
+AssetOrigin:
+  serializedVersion: 1
+  productId: 142705
+  packageName: Backend Service Unisave
+  packageVersion: 0.13.0
+  assetPath: Assets/Plugins/Unisave/Editor/BackendUploading/States/StateCompilationError.cs
+  uploadId: 638031

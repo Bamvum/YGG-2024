@@ -1,0 +1,10 @@
+fileFormatVersion: 2
+guid: 5770df559dac4084ab234c3d22240c38
+timeCreated: 1673691944
+AssetOrigin:
+  serializedVersion: 1
+  productId: 142705
+  packageName: Backend Service Unisave
+  packageVersion: 0.13.0
+  assetPath: Assets/Plugins/Unisave/Editor/BackendFolders/BackendFolderDefinitionPostprocessor.cs
+  uploadId: 638031

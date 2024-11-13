@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 2c4fa66b1f368eb13bd1a2c1789985e0
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 142705
+  packageName: Backend Service Unisave
+  packageVersion: 0.13.0
+  assetPath: Assets/Plugins/Unisave/Editor/DataWindow/DataEditorWindow.cs
+  uploadId: 638031

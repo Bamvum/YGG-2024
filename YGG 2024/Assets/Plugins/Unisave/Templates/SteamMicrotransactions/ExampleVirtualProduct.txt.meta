@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 6aca5b876da86a35f8ee690707bce548
+TextScriptImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 142705
+  packageName: Backend Service Unisave
+  packageVersion: 0.13.0
+  assetPath: Assets/Plugins/Unisave/Templates/SteamMicrotransactions/ExampleVirtualProduct.txt
+  uploadId: 638031

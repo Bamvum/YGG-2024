@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 47b17e539558585c28e82eeed113f093
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 142705
+  packageName: Backend Service Unisave
+  packageVersion: 0.13.0
+  assetPath: Assets/Plugins/Unisave/Examples/EmailAuthentication/Backend/PlayerEntity.cs
+  uploadId: 638031

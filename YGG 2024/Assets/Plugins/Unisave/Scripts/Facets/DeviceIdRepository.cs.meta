@@ -1,0 +1,10 @@
+﻿fileFormatVersion: 2
+guid: 810a082a16ba41149dda25a28133f245
+timeCreated: 1586537417
+AssetOrigin:
+  serializedVersion: 1
+  productId: 142705
+  packageName: Backend Service Unisave
+  packageVersion: 0.13.0
+  assetPath: Assets/Plugins/Unisave/Scripts/Facets/DeviceIdRepository.cs
+  uploadId: 638031

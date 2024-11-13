@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 151faa001928ab19a93116a24bd13dba
+DefaultImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 142705
+  packageName: Backend Service Unisave
+  packageVersion: 0.13.0
+  assetPath: Assets/Plugins/Unisave/Examples/EmailAuthentication/EmailAuthentication.unity
+  uploadId: 638031

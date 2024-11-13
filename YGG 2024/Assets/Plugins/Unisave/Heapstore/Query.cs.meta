@@ -1,0 +1,10 @@
+fileFormatVersion: 2
+guid: 1aabbf7201e146188adfc73bf06eade5
+timeCreated: 1685708111
+AssetOrigin:
+  serializedVersion: 1
+  productId: 142705
+  packageName: Backend Service Unisave
+  packageVersion: 0.13.0
+  assetPath: Assets/Plugins/Unisave/Heapstore/Query.cs
+  uploadId: 638031

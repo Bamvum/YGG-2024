@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: a081c9d5118f77a6787e1021987c8479
+DefaultImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 142705
+  packageName: Backend Service Unisave
+  packageVersion: 0.13.0
+  assetPath: Assets/Plugins/Unisave/Examples/Chat/Chat.unity
+  uploadId: 638031

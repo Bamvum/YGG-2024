@@ -1,0 +1,10 @@
+﻿fileFormatVersion: 2
+guid: f5bdc31d362b48f5b37c99bbc883b9f7
+timeCreated: 1678465519
+AssetOrigin:
+  serializedVersion: 1
+  productId: 142705
+  packageName: Backend Service Unisave
+  packageVersion: 0.13.0
+  assetPath: Assets/Plugins/Unisave/Scripts/Broadcasting/Sse/WebGlSseSocket.cs
+  uploadId: 638031

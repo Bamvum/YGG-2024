@@ -1,0 +1,10 @@
+﻿fileFormatVersion: 2
+guid: 8eccd3e385714d049d0a745aee7af512
+timeCreated: 1588534994
+AssetOrigin:
+  serializedVersion: 1
+  productId: 142705
+  packageName: Backend Service Unisave
+  packageVersion: 0.13.0
+  assetPath: Assets/Plugins/Unisave/Editor/BackendUploading/Hooks/HookImplementations.cs
+  uploadId: 638031

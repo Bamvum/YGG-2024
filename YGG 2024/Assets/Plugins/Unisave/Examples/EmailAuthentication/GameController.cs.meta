@@ -1,0 +1,10 @@
+fileFormatVersion: 2
+guid: 7f6dfb00af024014bcfc698a43ec577c
+timeCreated: 1704399551
+AssetOrigin:
+  serializedVersion: 1
+  productId: 142705
+  packageName: Backend Service Unisave
+  packageVersion: 0.13.0
+  assetPath: Assets/Plugins/Unisave/Examples/EmailAuthentication/GameController.cs
+  uploadId: 638031

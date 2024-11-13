@@ -1,0 +1,10 @@
+fileFormatVersion: 2
+guid: 4a0931a841de4786abdd9f0505b3bec1
+timeCreated: 1704323030
+AssetOrigin:
+  serializedVersion: 1
+  productId: 142705
+  packageName: Backend Service Unisave
+  packageVersion: 0.13.0
+  assetPath: Assets/Plugins/Unisave/Modules/EmailAuthentication/Backend/EmailRegisterStatusCode.cs
+  uploadId: 638031

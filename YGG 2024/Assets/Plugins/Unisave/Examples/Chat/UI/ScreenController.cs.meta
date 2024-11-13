@@ -1,0 +1,10 @@
+fileFormatVersion: 2
+guid: 1f77a179fc344bfe962eac815936cefd
+timeCreated: 1676934354
+AssetOrigin:
+  serializedVersion: 1
+  productId: 142705
+  packageName: Backend Service Unisave
+  packageVersion: 0.13.0
+  assetPath: Assets/Plugins/Unisave/Examples/Chat/UI/ScreenController.cs
+  uploadId: 638031

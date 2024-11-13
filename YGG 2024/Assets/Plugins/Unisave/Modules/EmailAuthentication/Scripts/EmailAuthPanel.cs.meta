@@ -1,0 +1,10 @@
+fileFormatVersion: 2
+guid: c35a1d202a944a9fa16163f5b94bbf62
+timeCreated: 1704199812
+AssetOrigin:
+  serializedVersion: 1
+  productId: 142705
+  packageName: Backend Service Unisave
+  packageVersion: 0.13.0
+  assetPath: Assets/Plugins/Unisave/Modules/EmailAuthentication/Scripts/EmailAuthPanel.cs
+  uploadId: 638031

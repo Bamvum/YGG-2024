@@ -1,0 +1,10 @@
+fileFormatVersion: 2
+guid: 2ec752c1857d4e828d72ce9a93062dde
+timeCreated: 1677928671
+AssetOrigin:
+  serializedVersion: 1
+  productId: 142705
+  packageName: Backend Service Unisave
+  packageVersion: 0.13.0
+  assetPath: Assets/Plugins/Unisave/Editor/Auditing/UnisaveAuditing.cs
+  uploadId: 638031

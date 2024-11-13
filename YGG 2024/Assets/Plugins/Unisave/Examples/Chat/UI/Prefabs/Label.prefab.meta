@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 45b53b6f1bdbcea49bbfa55cd62bbf76
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 142705
+  packageName: Backend Service Unisave
+  packageVersion: 0.13.0
+  assetPath: Assets/Plugins/Unisave/Examples/Chat/UI/Prefabs/Label.prefab
+  uploadId: 638031

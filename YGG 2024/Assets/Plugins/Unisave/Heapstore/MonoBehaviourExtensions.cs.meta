@@ -1,0 +1,10 @@
+fileFormatVersion: 2
+guid: 8f9b71021a2547d48e4f61e3e885906e
+timeCreated: 1685534797
+AssetOrigin:
+  serializedVersion: 1
+  productId: 142705
+  packageName: Backend Service Unisave
+  packageVersion: 0.13.0
+  assetPath: Assets/Plugins/Unisave/Heapstore/MonoBehaviourExtensions.cs
+  uploadId: 638031

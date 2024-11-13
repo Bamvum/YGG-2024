@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: cf1ee5c28b5c806ceaedbaa659605f4b
+TextScriptImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 142705
+  packageName: Backend Service Unisave
+  packageVersion: 0.13.0
+  assetPath: Assets/Plugins/Unisave/Templates/SteamMicrotransactions/SteamPurchasingServerFacet.txt
+  uploadId: 638031

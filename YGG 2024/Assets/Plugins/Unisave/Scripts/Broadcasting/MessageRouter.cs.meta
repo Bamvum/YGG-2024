@@ -1,0 +1,10 @@
+﻿fileFormatVersion: 2
+guid: 019b550d1043407786eef85d6865db84
+timeCreated: 1605216407
+AssetOrigin:
+  serializedVersion: 1
+  productId: 142705
+  packageName: Backend Service Unisave
+  packageVersion: 0.13.0
+  assetPath: Assets/Plugins/Unisave/Scripts/Broadcasting/MessageRouter.cs
+  uploadId: 638031

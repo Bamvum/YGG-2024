@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 5f1e6588624520fb79df06de27ca1915
+DefaultImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 142705
+  packageName: Backend Service Unisave
+  packageVersion: 0.13.0
+  assetPath: Assets/Plugins/Unisave/Documentation.pdf
+  uploadId: 638031

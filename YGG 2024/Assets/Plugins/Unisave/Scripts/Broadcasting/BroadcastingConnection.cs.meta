@@ -1,0 +1,10 @@
+﻿fileFormatVersion: 2
+guid: e3e05a24f99247969c1117dfe6349ed8
+timeCreated: 1606345353
+AssetOrigin:
+  serializedVersion: 1
+  productId: 142705
+  packageName: Backend Service Unisave
+  packageVersion: 0.13.0
+  assetPath: Assets/Plugins/Unisave/Scripts/Broadcasting/BroadcastingConnection.cs
+  uploadId: 638031
