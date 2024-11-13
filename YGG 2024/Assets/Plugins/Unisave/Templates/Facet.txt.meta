@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: e23100ee8e92b1cea8154ebdb52c871f
+TextScriptImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 142705
+  packageName: Backend Service Unisave
+  packageVersion: 0.13.0
+  assetPath: Assets/Plugins/Unisave/Templates/Facet.txt
+  uploadId: 638031

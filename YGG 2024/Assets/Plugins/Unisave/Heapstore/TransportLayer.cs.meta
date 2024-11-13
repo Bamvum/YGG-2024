@@ -1,0 +1,10 @@
+fileFormatVersion: 2
+guid: cd6738ff684d411a9eb20353c5b679e6
+timeCreated: 1685727410
+AssetOrigin:
+  serializedVersion: 1
+  productId: 142705
+  packageName: Backend Service Unisave
+  packageVersion: 0.13.0
+  assetPath: Assets/Plugins/Unisave/Heapstore/TransportLayer.cs
+  uploadId: 638031

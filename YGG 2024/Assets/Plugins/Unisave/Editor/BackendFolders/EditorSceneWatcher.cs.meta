@@ -1,0 +1,10 @@
+fileFormatVersion: 2
+guid: 33c745d8fd4f4d7f83363349be75eb3a
+timeCreated: 1676307279
+AssetOrigin:
+  serializedVersion: 1
+  productId: 142705
+  packageName: Backend Service Unisave
+  packageVersion: 0.13.0
+  assetPath: Assets/Plugins/Unisave/Editor/BackendFolders/EditorSceneWatcher.cs
+  uploadId: 638031

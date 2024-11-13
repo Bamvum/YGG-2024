@@ -1,0 +1,10 @@
+fileFormatVersion: 2
+guid: 080486707487448fb8165071301f3195
+timeCreated: 1673657303
+AssetOrigin:
+  serializedVersion: 1
+  productId: 142705
+  packageName: Backend Service Unisave
+  packageVersion: 0.13.0
+  assetPath: Assets/Plugins/Unisave/Editor/Windows/Main/TabsController.cs
+  uploadId: 638031

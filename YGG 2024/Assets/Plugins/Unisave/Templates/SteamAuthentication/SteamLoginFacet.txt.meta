@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 372080c03d5c8cdbc8a68fd16fcd2da0
+TextScriptImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 142705
+  packageName: Backend Service Unisave
+  packageVersion: 0.13.0
+  assetPath: Assets/Plugins/Unisave/Templates/SteamAuthentication/SteamLoginFacet.txt
+  uploadId: 638031

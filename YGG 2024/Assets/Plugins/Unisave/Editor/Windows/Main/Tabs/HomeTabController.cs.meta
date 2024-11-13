@@ -1,0 +1,10 @@
+fileFormatVersion: 2
+guid: aa6298f594474a3d8a5910c8612b5d83
+timeCreated: 1675370914
+AssetOrigin:
+  serializedVersion: 1
+  productId: 142705
+  packageName: Backend Service Unisave
+  packageVersion: 0.13.0
+  assetPath: Assets/Plugins/Unisave/Editor/Windows/Main/Tabs/HomeTabController.cs
+  uploadId: 638031

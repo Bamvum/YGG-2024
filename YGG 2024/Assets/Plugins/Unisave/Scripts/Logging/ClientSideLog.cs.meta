@@ -1,0 +1,10 @@
+﻿fileFormatVersion: 2
+guid: c975129925954f158a6a740a578e2b9f
+timeCreated: 1596838106
+AssetOrigin:
+  serializedVersion: 1
+  productId: 142705
+  packageName: Backend Service Unisave
+  packageVersion: 0.13.0
+  assetPath: Assets/Plugins/Unisave/Scripts/Logging/ClientSideLog.cs
+  uploadId: 638031

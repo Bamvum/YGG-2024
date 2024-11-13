@@ -1,0 +1,20 @@
+fileFormatVersion: 2
+guid: 11ecc04d0d1da41b1bae51c06a4f3bd2
+timeCreated: 1553075996
+licenseType: Store
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 142705
+  packageName: Backend Service Unisave
+  packageVersion: 0.13.0
+  assetPath: Assets/Plugins/Unisave/Scripts/Foundation/UnisavePreferences.cs
+  uploadId: 638031

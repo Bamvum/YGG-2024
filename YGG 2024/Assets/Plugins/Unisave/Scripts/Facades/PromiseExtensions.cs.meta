@@ -1,0 +1,10 @@
+﻿fileFormatVersion: 2
+guid: 90b52fc121794d71854542a5350f3f3b
+timeCreated: 1585048229
+AssetOrigin:
+  serializedVersion: 1
+  productId: 142705
+  packageName: Backend Service Unisave
+  packageVersion: 0.13.0
+  assetPath: Assets/Plugins/Unisave/Scripts/Facades/PromiseExtensions.cs
+  uploadId: 638031

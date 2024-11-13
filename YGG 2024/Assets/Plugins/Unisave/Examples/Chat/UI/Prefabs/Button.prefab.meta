@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 32327f07dc6bcde18b0e299ef3e9d626
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 142705
+  packageName: Backend Service Unisave
+  packageVersion: 0.13.0
+  assetPath: Assets/Plugins/Unisave/Examples/Chat/UI/Prefabs/Button.prefab
+  uploadId: 638031

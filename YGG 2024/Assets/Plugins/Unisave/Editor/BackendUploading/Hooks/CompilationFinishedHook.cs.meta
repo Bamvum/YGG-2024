@@ -1,0 +1,20 @@
+fileFormatVersion: 2
+guid: 0f2681aea18264f30b25da00b4d79a43
+timeCreated: 1556041314
+licenseType: Store
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 142705
+  packageName: Backend Service Unisave
+  packageVersion: 0.13.0
+  assetPath: Assets/Plugins/Unisave/Editor/BackendUploading/Hooks/CompilationFinishedHook.cs
+  uploadId: 638031

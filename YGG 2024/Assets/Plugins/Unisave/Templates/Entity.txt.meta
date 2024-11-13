@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: a5a0fa1344429cc688f4f2b80692fbb0
+TextScriptImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 142705
+  packageName: Backend Service Unisave
+  packageVersion: 0.13.0
+  assetPath: Assets/Plugins/Unisave/Templates/Entity.txt
+  uploadId: 638031

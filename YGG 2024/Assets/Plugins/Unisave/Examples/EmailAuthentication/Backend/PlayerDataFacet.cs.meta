@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 164437d22f809679ca0996068f4d7450
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 142705
+  packageName: Backend Service Unisave
+  packageVersion: 0.13.0
+  assetPath: Assets/Plugins/Unisave/Examples/EmailAuthentication/Backend/PlayerDataFacet.cs
+  uploadId: 638031

@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: c90e65d767870e4edb77c00a729e1956
+TextScriptImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 142705
+  packageName: Backend Service Unisave
+  packageVersion: 0.13.0
+  assetPath: Assets/Plugins/Unisave/Libraries/Microsoft.Owin/Microsoft.Owin.xml
+  uploadId: 638031

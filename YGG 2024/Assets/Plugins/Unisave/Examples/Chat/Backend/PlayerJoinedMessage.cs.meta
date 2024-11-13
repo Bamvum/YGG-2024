@@ -1,0 +1,10 @@
+﻿fileFormatVersion: 2
+guid: 2acec87ccda84bf0bc9e367544e84f89
+timeCreated: 1605102737
+AssetOrigin:
+  serializedVersion: 1
+  productId: 142705
+  packageName: Backend Service Unisave
+  packageVersion: 0.13.0
+  assetPath: Assets/Plugins/Unisave/Examples/Chat/Backend/PlayerJoinedMessage.cs
+  uploadId: 638031

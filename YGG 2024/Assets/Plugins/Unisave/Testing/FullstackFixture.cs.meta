@@ -1,0 +1,10 @@
+fileFormatVersion: 2
+guid: b5ac7f3e0a454ba4a45ed39f837b05ec
+timeCreated: 1703886227
+AssetOrigin:
+  serializedVersion: 1
+  productId: 142705
+  packageName: Backend Service Unisave
+  packageVersion: 0.13.0
+  assetPath: Assets/Plugins/Unisave/Testing/FullstackFixture.cs
+  uploadId: 638031

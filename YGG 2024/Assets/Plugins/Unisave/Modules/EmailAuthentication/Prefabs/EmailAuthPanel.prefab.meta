@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 27a848139fc4c7ffdbdeebecd1bb1f08
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 142705
+  packageName: Backend Service Unisave
+  packageVersion: 0.13.0
+  assetPath: Assets/Plugins/Unisave/Modules/EmailAuthentication/Prefabs/EmailAuthPanel.prefab
+  uploadId: 638031

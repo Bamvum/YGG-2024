@@ -1,0 +1,10 @@
+fileFormatVersion: 2
+guid: 2414874adbb7459e9ff8169a2f3be909
+timeCreated: 1675420472
+AssetOrigin:
+  serializedVersion: 1
+  productId: 142705
+  packageName: Backend Service Unisave
+  packageVersion: 0.13.0
+  assetPath: Assets/Plugins/Unisave/Editor/Windows/Main/TabTaint.cs
+  uploadId: 638031
