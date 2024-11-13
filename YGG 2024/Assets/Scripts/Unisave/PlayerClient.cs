@@ -3,27 +3,30 @@ using Unisave.Broadcasting;
 using UnityEngine;
 
 using ESDatabase.Classes;
+using TMPro;
 
 public class PlayerClient : UnisaveBroadcastingClient
 {
-    private async void OnEnable()
+    private void OnEnable()
     {
         Debug.Log("Player logged in");        
     }
     public async void CreateLobby(){
-        string randomCode = Utilities.GenerateCode(5);
+        UnisaveManager.Instance.lobbyCode = Utilities.GenerateCode(5);
         var subscription = await OnFacet<RoomManager>
             .CallAsync<ChannelSubscription>(
                 nameof(RoomManager.JoinOnlineChannel),
-                randomCode,
+                UnisaveManager.Instance.lobbyCode,
                 UnisaveManager.Instance.playerData
             );
+            Debug.Log(subscription.SubscriptionId);
+            Debug.Log(subscription.SessionId);
             FromSubscription(subscription)
+            .Forward<ChatMessage>(ChatMessageReceived)
             .Forward<PlayerJoinedMessage>(PlayerJoined)
             .ElseLogWarning();
-            Debug.Log(randomCode);
+            Debug.Log(UnisaveManager.Instance.lobbyCode);
     }
-
     public async void JoinLobby(){
         var subscription = await OnFacet<RoomManager>
             .CallAsync<ChannelSubscription>(
@@ -31,18 +34,18 @@ public class PlayerClient : UnisaveBroadcastingClient
                 UnisaveManager.Instance.lobby.text.ToUpper(),
                 UnisaveManager.Instance.playerData
             );
+        Debug.Log(subscription.SubscriptionId);
+        Debug.Log(subscription.SessionId);
         FromSubscription(subscription)
             .Forward<PlayerJoinedMessage>(PlayerJoined)
             .ElseLogWarning();
     }
-    /*
-    void MyMessageReceived(MyMessage msg)
+    void ChatMessageReceived(ChatMessage msg)
     {
-        // customize the message handling
-        
-        Debug.Log("MyMessage has been received");
+        // "[John]: Hello people!"
+        Debug.Log($"[{msg.playerName}]: {msg.message}");
     }
-    */
+
     void PlayerJoined(PlayerJoinedMessage msg)
     {
         // "John joined the room"
