@@ -2,7 +2,7 @@
 	"ServerUrl": "https:\/\/unisave.cloud\/",
 	"GameToken": "S67HNwMWKFX6tJYC6baBKfSD",
 	"AutomaticBackendUploading": true,
-	"BackendHash": null,
+	"BackendHash": "d9ad80b30355b09f07c87f791ac13153",
 	"PreferencesEnabledBackendFolders": [
 	]
 }
