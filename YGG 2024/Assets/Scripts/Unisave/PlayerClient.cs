@@ -19,8 +19,7 @@ public class PlayerClient : UnisaveBroadcastingClient
                 UnisaveManager.Instance.lobbyCode,
                 UnisaveManager.Instance.playerData
             );
-            Debug.Log(subscription.SubscriptionId);
-            Debug.Log(subscription.SessionId);
+
             FromSubscription(subscription)
             .Forward<ChatMessage>(ChatMessageReceived)
             .Forward<PlayerJoinedMessage>(PlayerJoined)
@@ -34,8 +33,7 @@ public class PlayerClient : UnisaveBroadcastingClient
                 UnisaveManager.Instance.lobby.text.ToUpper(),
                 UnisaveManager.Instance.playerData
             );
-        Debug.Log(subscription.SubscriptionId);
-        Debug.Log(subscription.SessionId);
+        UnisaveManager.Instance.lobbyCode = UnisaveManager.Instance.lobby.text.ToUpper();
         FromSubscription(subscription)
             .Forward<PlayerJoinedMessage>(PlayerJoined)
             .ElseLogWarning();
