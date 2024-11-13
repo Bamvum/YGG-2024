@@ -19,11 +19,9 @@ public class DatabaseService : Facet
     }
     public PlayerData CreateAccount(string pubkey)
     {
-        GameData data = new GameData();
         PlayerData player = new PlayerData(pubkey, DateTime.UtcNow);
         player.Save();
         
         return player;
     }
-
 }
