@@ -12,8 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7063365387f0f3846b06a58f008ec4b7, type: 3}
   m_Name: Ashen Phoenix
   m_EditorClassIdentifier: 
-  cName: Ashen Phoenix
-  cDescription: Rises from the ashes with renewed strength. Revives with 50% health
-    after being defeated
-  cType: 
-  cImage: {fileID: 0}
+  <UniqueID>k__BackingField: f6cb22c9-fd99-4728-b07f-46fa86661ef5
+  <MaxStackableSize>k__BackingField: 1
+  <IsStackable>k__BackingField: 0
+  <cName>k__BackingField: Ashen Phoenix
+  <cDescription>k__BackingField: sadasd
+  <cType>k__BackingField: dasdasd
+  <cImage>k__BackingField: {fileID: -7008412969330441016, guid: 2fc74fa7747dc0049add021cd64d7a48, type: 3}

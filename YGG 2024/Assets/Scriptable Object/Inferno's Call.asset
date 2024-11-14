@@ -12,7 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7063365387f0f3846b06a58f008ec4b7, type: 3}
   m_Name: Inferno's Call
   m_EditorClassIdentifier: 
-  cName: Inferno's Call
-  cDescription: Summons a blazing aura that damages nearby enemies each turn
-  cType: 
-  cImage: {fileID: 0}
+  <UniqueID>k__BackingField: c1cebf9b-077a-4e67-8d3d-a23df7524210
+  <MaxStackableSize>k__BackingField: 1
+  <IsStackable>k__BackingField: 0
+  <cName>k__BackingField: Inferno's Call
+  <cDescription>k__BackingField: asdasd
+  <cType>k__BackingField: dasdasd
+  <cImage>k__BackingField: {fileID: -7008412969330441016, guid: ad91f6fa667af1d4eac6bc401aadba33, type: 3}
+  <isEquipped>k__BackingField: 0
