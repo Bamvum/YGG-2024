@@ -12,8 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7063365387f0f3846b06a58f008ec4b7, type: 3}
   m_Name: Ember Guardian
   m_EditorClassIdentifier: 
-  cName: Ember Guardian
-  cDescription: A vigilant protector, gains strength in numbers. Add +1 attack for
-    each ally on the field
-  cType: 
-  cImage: {fileID: 0}
+  <UniqueID>k__BackingField: f57d3546-babc-4e18-9244-b2091263d96f
+  <MaxStackableSize>k__BackingField: 1
+  <IsStackable>k__BackingField: 0
+  <cName>k__BackingField: Ember Guardian
+  <cDescription>k__BackingField: asdas
+  <cType>k__BackingField: dasdasd
+  <cImage>k__BackingField: {fileID: -7008412969330441016, guid: efcce9b9312267649ad3455ccfbc0dd6, type: 3}
