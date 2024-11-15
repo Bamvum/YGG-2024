@@ -4,6 +4,11 @@ using UnityEngine;
 using DG.Tweening;
 using Unity.VisualScripting;
 
+/*
+    TODO    - TURN SYSTEM
+            - COMBAT 
+*/
+
 public class CardGameManager : MonoBehaviour
 {
     [SerializeField] GameObject cardPrefab;
@@ -67,7 +72,7 @@ public class CardGameManager : MonoBehaviour
 
     #endregion
 
-    #region  - GENERATE CARDS IN DECK -
+    #region - GENERATE CARDS IN DECK -
 
     void InstantiateCardDeck()
     {
@@ -97,9 +102,55 @@ public class CardGameManager : MonoBehaviour
 
     #endregion
 
+    #region - AVAILABLE CARD SLOT CHECKER -
+
+    bool AllSlotsAvailable()
+    {
+        foreach (bool slotsAvailable in availableCardSlots)
+        {
+            if (!slotsAvailable)
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    bool AnySlotAvailable()
+    {
+        foreach (bool slotsAvailable in availableCardSlots)
+        {
+            if (slotsAvailable)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    #endregion 
+
+
+
     void Update()
     {
         deckCountText.text = deck.Count.ToString();
+
+        // DECK IS EMPTY AND 
+        if (deck.Count == 0 && AllSlotsAvailable())
+        {
+            Debug.Log("Game Over");
+        }
+
+        // DRAW CARDS IF THERE IS AVAILABLE SLOTS IN THE FIELD
+        if (deck.Count > 0 && AnySlotAvailable())
+        {
+            DrawCard();
+        }
+
+        
     }
 
 }
