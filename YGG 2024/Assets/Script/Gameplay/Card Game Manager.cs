@@ -1,33 +1,41 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 using DG.Tweening;
-using Unity.VisualScripting;
 
 /*
-    TODO    - TURN SYSTEM
-            - COMBAT 
-            - TIMER
-            - SURRENDER
-            
+    TODO    - WHO WILL GO FIRST? COIN FLIP? 
+            - TURN-BASED COMBAT
+            - CARD HEALTH DESTROY GAMEOBJECT AND AVAILABLE SLOT IS TRUE
+            - CARD TYPE BUFF AND DEBUFF 
 */
 
 public class CardGameManager : MonoBehaviour
 {
+    public static CardGameManager instance {get; private set;}
+
     [SerializeField] GameObject cardPrefab;
     [SerializeField] GameObject deckParent;
     [SerializeField] CardSO[] cardSOList;
     
-    public static CardGameManager instance {get; private set;}
-
     [SerializeField] List<Card> deck = new List<Card>();
     [SerializeField] Transform[] cardSlots;
     [SerializeField] bool[] availableCardSlots;
 
-    
+    [Header("HUD/UI")]
+    [SerializeField] GameObject gameDoneHUD;
+    [SerializeField] Text topPanelText;
+
+
+    [Header("Flag")]
     [SerializeField] TMP_Text deckCountText;
     [SerializeField] bool yourTurn;
 
+    [Header("Timer")]
+    [SerializeField] TMP_Text timerText;
+    [SerializeField] float timerValue;
+ 
     void Start()
     {
         // SET ALL AVAILABLE CARDS SLOT TO TRUE AT THE START OF THE GAME
@@ -57,6 +65,7 @@ public class CardGameManager : MonoBehaviour
                     randCard.handIndex= i;
 
                     randCard.transform.position = cardSlots[i].position;
+                    randCard.transform.SetParent(cardSlots[i]);
                     availableCardSlots[i] = false;
                     deck.Remove(randCard);
                     return;
@@ -79,7 +88,7 @@ public class CardGameManager : MonoBehaviour
 
     void InstantiateCardDeck()
     {
-        // CHANGE NA LANG DIPENDE SA NUMBER NG CARD NA NILAGAY NILA SA DECK (MAXIMUN KASI 9)
+        // CHANGE NA LANG DIPENDE SA NUMBER NG CARD NA NILAGAY NILA SA DECK (MAXIMUN KASI 9, RIGHT?)
         for (int i = 0; i < 9; i++)
         {
             GameObject instantiatedCardObjects = Instantiate(cardPrefab, deckParent.transform);
@@ -135,16 +144,68 @@ public class CardGameManager : MonoBehaviour
 
     #endregion 
 
+    #region - BUTTONS (SURRENDER, RETURN, BATTLE) -
+    
+    public void Surrender()
+    {
+        Debug.Log("You Surrendered!");
+        
+        Time.timeScale = 0;
+        
+        gameDoneHUD.SetActive(true);
+        topPanelText.text = "Nice Try";
+    }
 
+    public void Return()
+    {
+        Debug.Log("Return!");
+
+    }
+
+    public void Battle()
+    {
+        Debug.Log("Battle!");
+
+    }
+
+    #endregion
+
+    #region - TIMER -
+
+    void TimerToEndTurn()
+    {
+        timerValue -= 1 * Time.deltaTime;
+
+        int seconds = Mathf.FloorToInt(timerValue % 60);
+
+        timerText.text = string.Format("{0:00}", seconds);
+
+        if(timerValue <= 0)
+        {
+            timerValue = 30;
+
+            Debug.Log("Player End Turn");
+        }
+    }
+
+    #endregion
 
     void Update()
     {
         deckCountText.text = deck.Count.ToString();
 
+        TimerToEndTurn();
+
         // DECK IS EMPTY AND CARDS SLOTS ARE EMPTY 
         if (deck.Count == 0 && AllSlotsAvailable())
         {
             Debug.Log("Game Over");
+
+            Time.timeScale = 0;
+
+            gameDoneHUD.SetActive(true);
+            topPanelText.text = "Nice Try";
+            
         }
 
         // DRAW CARDS IF THERE IS AVAILABLE SLOTS IN THE FIELD
@@ -152,8 +213,6 @@ public class CardGameManager : MonoBehaviour
         {
             DrawCard();
         }
-
-        
     }
 
 }
