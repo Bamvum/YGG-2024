@@ -11,6 +11,7 @@ namespace ESDatabase.Classes
         [Fillable] public double money;
         [Fillable] public int pack;
         [Fillable] public int energy;
+        [Fillable] public bool isNew;
         [Fillable] public List<CardData> cardDeck;
         [Fillable] public List<CardData> cardList;
         public GameData(){
@@ -19,6 +20,7 @@ namespace ESDatabase.Classes
             this.money = 1000;
             this.pack = 1;
             this.energy = 5;
+            this.isNew = true;
             this.cardDeck = new List<CardData>{null, null, null, null, null, null};
             this.cardList = new List<CardData>();
         }
