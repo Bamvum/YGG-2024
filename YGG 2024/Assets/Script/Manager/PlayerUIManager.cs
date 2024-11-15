@@ -8,7 +8,6 @@ using UnityEngine.SceneManagement;
 
 public class PlayerUIManager : MonoBehaviour
 {
-
     [SerializeField] public static PlayerUIManager Instance;
     [Header("Main menu UI")]
     [SerializeField] public GameObject parentMainMenu;
@@ -46,7 +45,6 @@ public class PlayerUIManager : MonoBehaviour
         connectionMenu.GetComponent<DoMove>().Close();
     }
     // Play Game
-
     public void PlayGame(){
         PlayerData playerData = AccountManager.Instance.playerData;
         parentMainMenu.SetActive(false);

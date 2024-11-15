@@ -14,10 +14,10 @@ public class AccountManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
-
     public void SaveData(){
 
     }
+
     public void Logout(){
         Web3.Instance.Logout();
         playerData = null;
