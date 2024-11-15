@@ -1,3 +1,4 @@
+using Solana.Unity.SDK;
 using UnityEngine;
 
 public class AccountManager : MonoBehaviour
@@ -12,7 +13,9 @@ public class AccountManager : MonoBehaviour
         }
     }
 
-    public void Login(){
-
+    public void Logout(){
+        Web3.Instance.Logout();
+        playerData = null;
     }
+
 }

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Utilities : MonoBehaviour
 {
@@ -13,5 +14,23 @@ public class Utilities : MonoBehaviour
         }
 
         return new string(code);
+    }
+    public static void EnableAllButtons(GameObject gameObject)
+    {
+        // Example: Enable all buttons in the mainMenu GameObject
+        Button[] buttons = gameObject.GetComponentsInChildren<Button>();
+        foreach (Button button in buttons)
+        {
+            button.interactable = true;
+        }
+    }
+    public static void DisableAllButtons(GameObject gameObject)
+    {
+        // Example: Enable all buttons in the mainMenu GameObject
+        Button[] buttons = gameObject.GetComponentsInChildren<Button>();
+        foreach (Button button in buttons)
+        {
+            button.interactable = false;
+        }
     }
 }

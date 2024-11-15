@@ -12,6 +12,7 @@ public class AccountStore : MonoBehaviour
     [SerializeField] TextMeshProUGUI balance;
     private void OnEnable(){
         Web3.OnLogin += OnLogin;
+        Web3.OnLogout += OnLogout;
         Web3.OnBalanceChange += OnBalanceChange;
         Web3.OnNFTsUpdate += OnNFTsUpdate;
     }
@@ -22,6 +23,14 @@ public class AccountStore : MonoBehaviour
         .Then(response => {
             AccountManager.Instance.playerData = response;
         });
+        PlayerUIManager.Instance.CloseConnection();
+        PlayerUIManager.Instance.OpenMainmenu();
+    }
+    private void OnLogout(){
+        publicKey.SetText("");
+        balance.SetText("");
+        PlayerUIManager.Instance.CloseMainmenu();
+        PlayerUIManager.Instance.OpenConnection();
     }
     private void OnBalanceChange(double sol){
         balance.SetText("Balance: " + sol.ToString("#.#########"));
