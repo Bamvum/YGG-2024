@@ -119,6 +119,34 @@ public class CardsController : MonoBehaviour
     }
     public void LoadDatabase(){
         PlayerData playerData = AccountManager.Instance.playerData;
+
+        for(int i = 0; i < 6; i++){
+            
+            CardData cardData =  playerData.gameData.cardDeck[i];
+            if(cardData != null){ 
+                
+                CardSO selectedCard = GameManager.instance.cardLists.CardItems.FirstOrDefault(card => card.UniqueID.Equals(cardData.cardID));
+                Cards newCard = Utilities.cardtoCards(selectedCard);
+
+                CardsInvItem item = Instantiate(inventoryUI.itemPrefab, cardParents[i].GetChild(0));
+                item.DeSelect();
+                    // Set the card image
+                item.SetData(selectedCard.cImage, newCard.quantity, selectedCard.cName, selectedCard.cDescription, selectedCard.cType, newCard.isEquipped);
+
+                newCard.isEquipped = true;
+                inventoryData.UpdateCardAt(i, newCard);
+                ListofUsedItems.Add(item);
+
+                item.OnItemClicked += HandleItemSelection;
+                usedItemsIndexMap[ListofUsedItems.Count - 1] = i;
+
+
+                    // Set the item's position based on the available slot
+                item.transform.localPosition = cardParents[i].GetChild(0).localPosition;
+                item.transform.localScale = new Vector3(1.2f, 1.2f, 1.2f);
+            }
+        }
+
         foreach(CardData cardData in playerData.gameData.cardList){
             CardSO selectedCard = GameManager.instance.cardLists.CardItems.FirstOrDefault(card => card.UniqueID.Equals(cardData.cardID));
             Cards newCard = Utilities.cardtoCards(selectedCard);
@@ -127,7 +155,8 @@ public class CardsController : MonoBehaviour
         }
     }
 
-    public void UseCards(int cardIndex, Transform[] parents)
+    
+    public async void UseCards(int cardIndex, Transform[] parents)
     {
         Cards cards = inventoryData.GetItemAt(cardIndex);
         CardSO card = cards.item;
@@ -165,14 +194,15 @@ public class CardsController : MonoBehaviour
                 ListofUsedItems.Add(item);
                 CardData cardData = new CardData(cards.item.UniqueID);
                 playerData.gameData.cardDeck[cardIndex] = cardData;
+
                 item.OnItemClicked += HandleItemSelection;
                 usedItemsIndexMap[ListofUsedItems.Count - 1] = cardIndex;
 
 
                 // Set the item's position based on the available slot
                 item.transform.localPosition = availableSlot.localPosition;
-                item.transform.localScale = new Vector3(0.6f, 0.6f, 0.6f);
-
+                item.transform.localScale = new Vector3(1.2f, 1.2f, 1.2f);
+                await AccountManager.SaveData(playerData);
                 // Stop after placing the card in the first available slot
                 return;
             }
@@ -182,7 +212,7 @@ public class CardsController : MonoBehaviour
         Debug.Log("There's no slot available.");
     }
 
-    public void UnequipCard(int cardIndex)
+    public async void UnequipCard(int cardIndex)
     {
         // Retrieve the card data from the inventory
         Cards cards = inventoryData.GetItemAt(cardIndex);
@@ -220,7 +250,8 @@ public class CardsController : MonoBehaviour
         {
             // Set the previously selected item to the one being unequipped
             previouslySelectedItem = itemToRemove;
-
+            PlayerData playerData = AccountManager.Instance.playerData;
+            playerData.gameData.cardDeck[indexToRemove] = null;
             ListofUsedItems.RemoveAt(indexToRemove);
             Destroy(itemToRemove.gameObject); // Remove the item from the UI
 
@@ -233,6 +264,7 @@ public class CardsController : MonoBehaviour
                     usedItemsIndexMap.Remove(kvp.Key);
                 }
             }
+            await AccountManager.SaveData(playerData);
         }
         else
         {
