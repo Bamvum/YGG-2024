@@ -22,6 +22,7 @@ public class AccountStore : MonoBehaviour
         this.CallFacet((DatabaseService ds) => ds.CreateAccount(account.PublicKey))
         .Then(response => {
             AccountManager.Instance.playerData = response;
+            Debug.Log("Success");
         });
         PlayerUIManager.Instance.CloseConnection();
         PlayerUIManager.Instance.OpenMainmenu();

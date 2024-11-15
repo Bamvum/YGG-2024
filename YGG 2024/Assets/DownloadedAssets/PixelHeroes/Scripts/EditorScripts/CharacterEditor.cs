@@ -24,10 +24,18 @@ namespace Assets.PixelHeroes.Scripts.EditorScripts
         public List<LayerEditor> Layers;
         public CharacterBuilder CharacterBuilder;
         public Sprite EmptyIcon;
-
+        public static CharacterEditor Instance;
         public static event Action<string> SliceTextureRequest = path => { };
         public static event Action<string> CreateSpriteLibraryRequest = path => { };
 
+
+        private void Awake(){
+            if(Instance == null){
+                Instance = this;
+            }else{
+                Destroy(gameObject);
+            }
+        }
         public void Start()
         {
             foreach (var layer in Layers)
@@ -116,28 +124,11 @@ namespace Assets.PixelHeroes.Scripts.EditorScripts
             CharacterBuilder.Cape = layers["Cape"];
             CharacterBuilder.Back = layers["Back"];
             CharacterBuilder.Rebuild(layer?.Name);
-
-
-            GameManager.instance.characterBuilder.Head = layers["Head"];
-            GameManager.instance.characterBuilder.Body = layers["Body"];
-            GameManager.instance.characterBuilder.Hair = layers["Hair"];
-            GameManager.instance.characterBuilder.Armor = layers["Armor"];
-            GameManager.instance.characterBuilder.Helmet = layers["Helmet"];
-            GameManager.instance.characterBuilder.Weapon = layers["Weapon"];
-            GameManager.instance.characterBuilder.Shield = layers["Shield"];
-            GameManager.instance.characterBuilder.Cape = layers["Cape"];
-            GameManager.instance.characterBuilder.Back = layers["Back"];
-            GameManager.instance.characterBuilder.Rebuild(layer?.Name);
         }
 
-        public void UnloadThisScene()
-        {
-           
-               SceneManager.UnloadSceneAsync(1);
-               //GameManager.instance.characterBuilder.Rebuild();
-                
+        // public void UnloadThisScene()
+        // {
             
-
-        }
+        // }
     }
 }

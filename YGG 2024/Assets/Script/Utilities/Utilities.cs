@@ -1,6 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
-
+using static CardSOData;
 public class Utilities : MonoBehaviour
 {
     public static string GenerateCode(int length)
@@ -32,5 +32,14 @@ public class Utilities : MonoBehaviour
         {
             button.interactable = false;
         }
+    }
+    public static Cards cardtoCards(CardSO selectedCard)
+    {
+        Cards newCard = new Cards();
+
+        newCard.item = selectedCard;
+        newCard.quantity = 1;
+
+        return newCard;
     }
 }

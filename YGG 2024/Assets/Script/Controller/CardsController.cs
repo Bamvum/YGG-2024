@@ -1,3 +1,4 @@
+using ESDatabase.Classes;
 using Org.BouncyCastle.Asn1.X509;
 using System;
 using System.Collections.Generic;
@@ -116,7 +117,15 @@ public class CardsController : MonoBehaviour
 
 
     }
+    public void LoadDatabase(){
+        PlayerData playerData = AccountManager.Instance.playerData;
+        foreach(CardData cardData in playerData.gameData.cardList){
+            CardSO selectedCard = GameManager.instance.cardLists.CardItems.FirstOrDefault(card => card.UniqueID.Equals(cardData.cardID));
+            Cards newCard = Utilities.cardtoCards(selectedCard);
 
+            GameManager.instance.AddItemToTransfer(newCard);
+        }
+    }
 
     public void UseCards(int cardIndex, Transform[] parents)
     {
@@ -137,7 +146,7 @@ public class CardsController : MonoBehaviour
             return;
         }
 
-
+        PlayerData playerData = AccountManager.Instance.playerData;
         // Iterate over each parent to find an available slot
         foreach (Transform parent in parents)
         {
@@ -154,9 +163,11 @@ public class CardsController : MonoBehaviour
                 cards.isEquipped = true;
                 inventoryData.UpdateCardAt(cardIndex, cards);
                 ListofUsedItems.Add(item);
+                CardData cardData = new CardData(cards.item.UniqueID);
+                playerData.gameData.cardDeck[cardIndex] = cardData;
                 item.OnItemClicked += HandleItemSelection;
                 usedItemsIndexMap[ListofUsedItems.Count - 1] = cardIndex;
-               
+
 
                 // Set the item's position based on the available slot
                 item.transform.localPosition = availableSlot.localPosition;

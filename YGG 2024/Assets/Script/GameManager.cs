@@ -22,7 +22,7 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        Editor.onClick.AddListener(OpenEditor);
+        // Editor.onClick.AddListener(OpenEditor);
     }
 
     public void AddItemToTransfer(Cards item)

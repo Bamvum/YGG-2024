@@ -1,14 +1,16 @@
+using System.Collections.Generic;
+using ESDatabase.Classes;
 using UnityEngine;
 using static CardSOData;
 
 public class BuyPacks : MonoBehaviour
 {
-    public void BuyRandomItems()
+    public async void BuyRandomItems()
     {
-        // Clear the previous items if needed
         GameManager.instance.itemsToTransfer.Clear();
-
+        PlayerData playerData = AccountManager.Instance.playerData;
         // Randomly select 6 items from CardItems
+        List<CardData> listCards = new List<CardData>(); 
         for (int i = 0; i < 6; i++)
         {
             // Ensure we have items to select from
@@ -19,20 +21,17 @@ public class BuyPacks : MonoBehaviour
 
             // Create a new Cards instance for the selected item
             CardSO selectedCard = GameManager.instance.cardLists.CardItems[randomIndex];
-            Cards newCard = cardtoCards(selectedCard); // Assuming quantity is 1 for each selection
+            Cards newCard = Utilities.cardtoCards(selectedCard); // Assuming quantity is 1 for each selection
 
             // Add the newCard to itemsToTransfer
             GameManager.instance.AddItemToTransfer(newCard);
+            CardData cardData = new CardData(newCard.item.UniqueID);
+            listCards.Add(cardData);
         }
+        
+        playerData.gameData.cardList.AddRange(listCards);
+        await AccountManager.SaveData(playerData);
     }
 
-    public Cards cardtoCards(CardSO selectedCard)
-    {
-        Cards newCard = new Cards();
 
-        newCard.item = selectedCard;
-        newCard.quantity = 1;
-
-        return newCard;
-    }
 }
