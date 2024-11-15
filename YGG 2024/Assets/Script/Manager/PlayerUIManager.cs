@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class PlayerUIManager : MonoBehaviour
 {
-
     [SerializeField] public static PlayerUIManager Instance;
     [Header("Main menu UI")]
     [SerializeField] public GameObject connectionMenu;
@@ -32,9 +31,6 @@ public class PlayerUIManager : MonoBehaviour
     public void CloseConnection(){
         connectionMenu.GetComponent<DoMove>().Close();
     }
-
-
-
 
     public void OpenLink(string link){
         Application.OpenURL(link);
