@@ -7,6 +7,9 @@ using Unity.VisualScripting;
 /*
     TODO    - TURN SYSTEM
             - COMBAT 
+            - TIMER
+            - SURRENDER
+            
 */
 
 public class CardGameManager : MonoBehaviour
@@ -138,7 +141,7 @@ public class CardGameManager : MonoBehaviour
     {
         deckCountText.text = deck.Count.ToString();
 
-        // DECK IS EMPTY AND 
+        // DECK IS EMPTY AND CARDS SLOTS ARE EMPTY 
         if (deck.Count == 0 && AllSlotsAvailable())
         {
             Debug.Log("Game Over");
