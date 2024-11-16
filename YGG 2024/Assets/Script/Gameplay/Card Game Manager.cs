@@ -7,7 +7,6 @@ using DG.Tweening;
 /*
     TODO    - WHO WILL GO FIRST? COIN FLIP? 
             - TURN-BASED COMBAT
-            - CARD HEALTH DESTROY GAMEOBJECT AND AVAILABLE SLOT IS TRUE
             - CARD TYPE BUFF AND DEBUFF 
 */
 
@@ -27,15 +26,22 @@ public class CardGameManager : MonoBehaviour
     [SerializeField] GameObject gameDoneHUD;
     [SerializeField] Text topPanelText;
 
-
     [Header("Flag")]
     [SerializeField] TMP_Text deckCountText;
     [SerializeField] bool yourTurn;
+
+    [Space(10)]
+    public Card[] selectedCard = new Card[2];
 
     [Header("Timer")]
     [SerializeField] TMP_Text timerText;
     [SerializeField] float timerValue;
  
+    void Awake()
+    {
+        instance = this;
+    }
+
     void Start()
     {
         // SET ALL AVAILABLE CARDS SLOT TO TRUE AT THE START OF THE GAME
@@ -189,6 +195,74 @@ public class CardGameManager : MonoBehaviour
     }
 
     #endregion
+
+    #region  - COMBAT -
+
+    // BUGS -  YOUR CARD TO YOUR CARD DAMAGE
+     
+
+    public void CardSelect(Card cSelected)
+    {
+        Debug.Log("Card Select Method!!");
+        
+        if (selectedCard[0] == null)
+        {
+            selectedCard[0] = cSelected;
+        }
+        else if (selectedCard[1] == null && selectedCard[1] != selectedCard[0])
+        {
+            selectedCard[1] = cSelected;
+            Debug.Log("Second Selected Card: " + cSelected.name);
+        }
+        else
+        {
+            Debug.LogWarning("Both slots are filled or the same card is being selected twice.");
+        }
+
+        // CARD COMBAT 
+        if (selectedCard[0] != null && selectedCard[1] != null)
+        {
+            CardAttack(selectedCard[0], selectedCard[1]);
+            
+            selectedCard[0] = null;
+            selectedCard[1] = null; 
+
+            // END TURN
+        }
+        else
+        {
+            Debug.LogWarning("You must select an attacking card and a target card before performing damage.");
+        }
+    }
+
+    void CardAttack(Card attacker, Card defender)
+    {
+        if (attacker.cardSO != null && defender.cardSO != null)
+        {
+            int attackDamage =  attacker.cardSO.cAttack;
+            defender.cardSO.cHealth -= attackDamage;
+
+            /*
+                INSERT CARD TYPE DAMAGE
+            */
+
+            Debug.Log($"{attacker.name} dealt {attackDamage} damage to {defender.name}. Remaining health: {defender.cardSO.cHealth}");
+
+            // DEFENDER HEALTH CHECKER 
+            if (defender.cardSO.cHealth <= 0)
+            {
+                Destroy(defender.gameObject);
+                Debug.Log($"{defender.name} has been destroyed!");
+            }
+        }
+        else
+        {
+            Debug.LogWarning("One or both cards are missing CardSO data.");
+        }  
+    }
+
+    #endregion
+
 
     void Update()
     {

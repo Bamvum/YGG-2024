@@ -15,6 +15,8 @@ MonoBehaviour:
   <UniqueID>k__BackingField: a53f5ae0-5c1f-492e-aca6-f2cea1629887
   <MaxStackableSize>k__BackingField: 1
   <IsStackable>k__BackingField: 0
+  <cHealth>k__BackingField: 20
+  <cAttack>k__BackingField: 4
   <cName>k__BackingField: Fire Extinguisher Expert
   <cDescription>k__BackingField: asdas
   <cType>k__BackingField: dasdas

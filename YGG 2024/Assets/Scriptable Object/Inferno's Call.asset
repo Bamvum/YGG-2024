@@ -15,8 +15,9 @@ MonoBehaviour:
   <UniqueID>k__BackingField: c1cebf9b-077a-4e67-8d3d-a23df7524210
   <MaxStackableSize>k__BackingField: 1
   <IsStackable>k__BackingField: 0
+  <cHealth>k__BackingField: 20
+  <cAttack>k__BackingField: 4
   <cName>k__BackingField: Inferno's Call
   <cDescription>k__BackingField: asdasd
   <cType>k__BackingField: dasdasd
   <cImage>k__BackingField: {fileID: -7008412969330441016, guid: ad91f6fa667af1d4eac6bc401aadba33, type: 3}
-  <isEquipped>k__BackingField: 0
