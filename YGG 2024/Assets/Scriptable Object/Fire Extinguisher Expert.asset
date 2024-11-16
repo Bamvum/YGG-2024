@@ -12,8 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7063365387f0f3846b06a58f008ec4b7, type: 3}
   m_Name: Fire Extinguisher Expert
   m_EditorClassIdentifier: 
-  cName: Fire Extinguisher Expert
-  cDescription: Equipped to handle all flames. Can neutralize one fire-type enemy
-    card upon deployment
-  cType: 
-  cImage: {fileID: 0}
+  <UniqueID>k__BackingField: a53f5ae0-5c1f-492e-aca6-f2cea1629887
+  <MaxStackableSize>k__BackingField: 1
+  <IsStackable>k__BackingField: 0
+  <cName>k__BackingField: Fire Extinguisher Expert
+  <cDescription>k__BackingField: asdas
+  <cType>k__BackingField: dasdas
+  <cImage>k__BackingField: {fileID: -7008412969330441016, guid: 9745dbe09bc4dc14291159778ab18df2, type: 3}
