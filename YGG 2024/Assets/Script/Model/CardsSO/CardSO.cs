@@ -30,6 +30,8 @@ public class CardSO : ScriptableObject
     public string cType { get; set; }
     [field: SerializeField]
     public Sprite cImage { get; set; }
+    [field: SerializeField]
+    public string ardriveLink { get; set; }
 
     private void OnValidate()
     {
