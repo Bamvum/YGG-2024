@@ -15,6 +15,8 @@ MonoBehaviour:
   <UniqueID>k__BackingField: f6cb22c9-fd99-4728-b07f-46fa86661ef5
   <MaxStackableSize>k__BackingField: 1
   <IsStackable>k__BackingField: 0
+  <cHealth>k__BackingField: 20
+  <cAttack>k__BackingField: 4
   <cName>k__BackingField: Ashen Phoenix
   <cDescription>k__BackingField: sadasd
   <cType>k__BackingField: dasdasd

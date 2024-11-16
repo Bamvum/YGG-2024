@@ -1,4 +1,6 @@
+using Solana.Unity.Soar.Accounts;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,28 +17,28 @@ public class Card : MonoBehaviour
     [SerializeField] TMP_Text cardDescription;
     [SerializeField] TMP_Text cardTypes;
     [SerializeField] Image cardImage;
-    
+
+    [Space(10)]
+    [SerializeField] Button cardButton;
+
     [Header("Flags")]
+    [SerializeField] int cardHealth;
     public bool hasBeenPlayed;
     public int handIndex;
 
     private void Start()
     {
-        // cardGameManager = FindObjectOfType<CardGameManager>();
+        cardButton.onClick.AddListener(() => CardGameManager.instance.CardSelect(this));
 
-        //DisplayCard();
+        DisplayCard();
     }
 
     void DisplayCard()
     {
+        cardHealth = cardSO.cHealth;
         cardName.text = cardSO.cName;
         cardDescription.text = cardSO.cDescription;
         cardImage.sprite = cardSO.cImage;
         // cardTypes.text = cardSO.cType;
-    }
-
-    public void ForTesting()
-    {
-        Debug.Log("Card Pressed");
     }
 }

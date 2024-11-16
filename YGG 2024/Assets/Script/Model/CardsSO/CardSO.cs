@@ -17,6 +17,12 @@ public class CardSO : ScriptableObject
     public bool IsStackable { get; set; }
 
     [field: SerializeField]
+    public int cHealth { get; set; }
+
+    [field: SerializeField]
+    public int cAttack { get; set; }
+
+    [field: SerializeField]
     public string cName { get; set; }
     [field: SerializeField]
     public string cDescription { get; set; }
