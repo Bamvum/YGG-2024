@@ -95,9 +95,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardGameManager: {fileID: 0}
   cardSO: {fileID: 0}
-  cardName: {fileID: 9022790609810623083}
-  cardDescription: {fileID: 1537980272535603076}
-  cardTypes: {fileID: 8870021849279679513}
+  cardName: {fileID: 3422735852837031010}
+  cardDescription: {fileID: 4480673417286698652}
+  cardTypes: {fileID: 4295126817231986664}
   cardImage: {fileID: 7721981930642150314}
   cardButton: {fileID: 3482981359170191608}
   cardHealth: 0
@@ -116,9 +116,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemImage: {fileID: 7721981930642150314}
-  Name: {fileID: 9022790609810623083}
-  Description: {fileID: 1537980272535603076}
-  Type: {fileID: 8870021849279679513}
+  Name: {fileID: 3422735852837031010}
+  Description: {fileID: 4480673417286698652}
+  Type: {fileID: 4295126817231986664}
   borderImage: {fileID: 4872097772438595723}
   EquippedImage: {fileID: 8940100935528521698}
   temporaryIndex: 0
@@ -176,7 +176,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4264870320642675061}
   - component: {fileID: 9191105286394007511}
-  - component: {fileID: 9022790609810623083}
+  - component: {fileID: 3422735852837031010}
   m_Layer: 5
   m_Name: Card Name
   m_TagString: Untagged
@@ -211,7 +211,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2019589173616201156}
   m_CullTransparentMesh: 1
---- !u!114 &9022790609810623083
+--- !u!114 &3422735852837031010
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -231,10 +231,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '[Card Name]'
+  m_text: '[Card name]'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: d04f78da4d720f34fa1f47218fe07a12, type: 2}
-  m_sharedMaterial: {fileID: 7384549690356024961, guid: d04f78da4d720f34fa1f47218fe07a12, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 4e44e886c5fd03640bc19d559d9d03f6, type: 2}
+  m_sharedMaterial: {fileID: -2775524539316863270, guid: 4e44e886c5fd03640bc19d559d9d03f6, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -258,12 +258,12 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 17.1
-  m_fontSizeBase: 10
+  m_fontSize: 12.25
+  m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
   m_fontSizeMin: 10
-  m_fontSizeMax: 20
+  m_fontSizeMax: 13
   m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
@@ -613,7 +613,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2584459594370710492}
   - component: {fileID: 3535422979234769935}
-  - component: {fileID: 1537980272535603076}
+  - component: {fileID: 4480673417286698652}
   m_Layer: 5
   m_Name: Card Description
   m_TagString: Untagged
@@ -648,7 +648,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5454989320118979019}
   m_CullTransparentMesh: 1
---- !u!114 &1537980272535603076
+--- !u!114 &4480673417286698652
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -670,8 +670,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: '[Card Description]'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: d04f78da4d720f34fa1f47218fe07a12, type: 2}
-  m_sharedMaterial: {fileID: 7384549690356024961, guid: d04f78da4d720f34fa1f47218fe07a12, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 4e44e886c5fd03640bc19d559d9d03f6, type: 2}
+  m_sharedMaterial: {fileID: -2775524539316863270, guid: 4e44e886c5fd03640bc19d559d9d03f6, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -695,13 +695,13 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 15
-  m_fontSizeBase: 10
+  m_fontSize: 13
+  m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
-  m_fontSizeMin: 7.5
-  m_fontSizeMax: 15
-  m_fontStyle: 0
+  m_fontSizeMin: 8
+  m_fontSizeMax: 13
+  m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -828,7 +828,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3367453622549798335}
   - component: {fileID: 2086469359925501872}
-  - component: {fileID: 8870021849279679513}
+  - component: {fileID: 4295126817231986664}
   m_Layer: 5
   m_Name: Card Type
   m_TagString: Untagged
@@ -853,7 +853,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -39.7}
-  m_SizeDelta: {x: 300, y: 50}
+  m_SizeDelta: {x: 400, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2086469359925501872
 CanvasRenderer:
@@ -863,7 +863,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7715747536540282287}
   m_CullTransparentMesh: 1
---- !u!114 &8870021849279679513
+--- !u!114 &4295126817231986664
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -885,8 +885,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: '[Card Type]'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: d04f78da4d720f34fa1f47218fe07a12, type: 2}
-  m_sharedMaterial: {fileID: 7384549690356024961, guid: d04f78da4d720f34fa1f47218fe07a12, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 4e44e886c5fd03640bc19d559d9d03f6, type: 2}
+  m_sharedMaterial: {fileID: -2775524539316863270, guid: 4e44e886c5fd03640bc19d559d9d03f6, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -910,13 +910,13 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 75
-  m_fontSizeBase: 75
+  m_fontSize: 36
+  m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
