@@ -39,6 +39,29 @@ public class Card : MonoBehaviour
         cardName.text = cardSO.cName;
         cardDescription.text = cardSO.cDescription;
         cardImage.sprite = cardSO.cImage;
-        // cardTypes.text = cardSO.cType;
+        
+        cardTypes.text = cardSO.cType;
+
+        // CHANGE COLOR OF TEXT
+        // INFERNO = RED
+        // NATURE = GREEN
+        // HYDRO = BLUE
+
+        if (cardSO.cType == "Inferno")
+        {
+            cardTypes.color = Color.red; // Red for Inferno
+        }
+        else if (cardSO.cType == "Nature")
+        {
+            cardTypes.color = Color.green; // Green for Nature
+        }
+        else if (cardSO.cType == "Hydro")
+        {
+            cardTypes.color = Color.blue; // Blue for Hydro
+        }
+        else
+        {
+            cardTypes.color = Color.black; // Default color if no match
+        }
     }
 }
