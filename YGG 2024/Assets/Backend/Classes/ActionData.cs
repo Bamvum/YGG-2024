@@ -8,8 +8,8 @@ namespace ESDatabase.Classes
     public class ActionData
     {
         public string attackerCardID;
-        public List<ActiveCards> activeDeck;
         public ActionType actionType;
+        public int damage = 0;
         public int attackedSlotNo;
     }
 
@@ -40,6 +40,8 @@ namespace ESDatabase.Classes
             joinerTurn = !hostTurn;
             hostDeck = hd;
             joinerDeck = ed;
+            ShuffleDeck(hostDeck);
+            ShuffleDeck(joinerDeck);
             hostActiveCards = DrawCards(hostDeck, 3);
             joinerActiveCards = DrawCards(joinerDeck, 3);
             hostCurrentDeck = new List<ActiveCards>(hostDeck);
@@ -56,6 +58,17 @@ namespace ESDatabase.Classes
             deck.RemoveRange(0, numberOfCards);
             return drawnCards;
         } 
+        public void ShuffleDeck(List<ActiveCards> deck)
+        {
+            Random rng = new Random();
+            for (int i = deck.Count - 1; i > 0; i--)
+            {
+                int swapIndex = rng.Next(i + 1);
+                ActiveCards temp = deck[i];
+                deck[i] = deck[swapIndex];
+                deck[swapIndex] = temp;
+            }
+        }
         public bool CoinFlip()
         {
             Random random = new Random();

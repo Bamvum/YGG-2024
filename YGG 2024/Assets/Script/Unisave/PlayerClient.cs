@@ -7,6 +7,7 @@ using TMPro;
 using Solana.Unity.SDK;
 using System.Linq;
 using UnityEngine.SceneManagement;
+using System;
 
 public class PlayerClient : UnisaveBroadcastingClient
 {
@@ -32,7 +33,6 @@ public class PlayerClient : UnisaveBroadcastingClient
             .Forward<SendData>(ReceiveEnemy)
             .Forward<GameStart>(ReceiveStartGame)
             .Forward<InGameMessage>(ReceiveInGame)
-            .Forward<SwapTurn>(ReceiveSwapTurn)
             .ElseLogWarning();
             MultiplayerManager.Instance.multiplayerUI.SetActive(false);
             MultiplayerManager.Instance.lobbyUI.SetActive(true);
@@ -54,7 +54,7 @@ public class PlayerClient : UnisaveBroadcastingClient
             .Forward<SendData>(ReceiveEnemy)
             .Forward<GameStart>(ReceiveStartGame)
             .Forward<InGameMessage>(ReceiveInGame)
-            .Forward<SwapTurn>(ReceiveSwapTurn)
+            .Forward<ActionMessage>(ReceiveAction)
             .ElseLogWarning();
         MultiplayerManager.Instance.multiplayerUI.SetActive(false);
         MultiplayerManager.Instance.lobbyUI.SetActive(true);
@@ -155,9 +155,16 @@ public class PlayerClient : UnisaveBroadcastingClient
             // }
         }   
     }
-    void ReceiveSwapTurn(SwapTurn swapMessage){
-        if(!swapMessage.playerData.publicKey.Equals(AccountManager.Instance.playerData.publicKey.ToString())){
+    void ReceiveAction(ActionMessage actionMessage){
+        if(!actionMessage.playerData.publicKey.Equals(AccountManager.Instance.playerData.publicKey.ToString())){
             CardGameManager.instance.ToggleTurn();
+            MultiplayerManager.Instance.lobbyData = actionMessage.lobbyData;
+            LobbyData lobby = MultiplayerManager.Instance.lobbyData;
+            if(MultiplayerManager.Instance.isJoiner){
+                lobby.joinerActiveCards[actionMessage.actionData.attackedSlotNo].cardHP = Math.Max(0, lobby.joinerActiveCards[actionMessage.actionData.attackedSlotNo].cardHP - actionMessage.actionData.damage);
+            }else{
+                lobby.hostActiveCards[actionMessage.actionData.attackedSlotNo].cardHP = Math.Max(0, lobby.hostActiveCards[actionMessage.actionData.attackedSlotNo].cardHP - actionMessage.actionData.damage);
+            }
         }
     }
     public void ProceedGame(){

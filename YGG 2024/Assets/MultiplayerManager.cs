@@ -123,8 +123,8 @@ public class MultiplayerManager : MonoBehaviour
     public void SendReady(){
         this.CallFacet((RoomManager rm) => rm.SendReady(lobbyCode, AccountManager.Instance.playerData, playerReady));
     }
-    public void SendSwap(){
-        this.CallFacet((RoomManager rm) => rm.SendSwapTurn(lobbyCode, AccountManager.Instance.playerData, playerReady));
+    public void SendAction(LobbyData lobbyData, ActionData actionData){
+        this.CallFacet((RoomManager rm) => rm.SendAction(lobbyCode, AccountManager.Instance.playerData, lobbyData, actionData));
     }
     public void SendInGame(){
         this.CallFacet((RoomManager rm) => rm.SendInGame(lobbyCode, AccountManager.Instance.playerData, true));
