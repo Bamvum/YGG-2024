@@ -26,6 +26,8 @@ public class MultiplayerManager : MonoBehaviour
     [SerializeField] public Text enemyPubKey;
     [SerializeField] public List<Card> playerCards = new List<Card>();
     [SerializeField] public List<Card> enemyCards = new List<Card>();
+    [SerializeField] public List<ActiveCards> playerDeck = new List<ActiveCards>{null, null, null, null, null, null};
+    [SerializeField] public List<ActiveCards> enemyDeck = new List<ActiveCards>{null, null, null, null, null, null};
     [Header("UIs")]
     [SerializeField] public Image readyImagePlayer;
     [SerializeField] public Image readyImageEnemy;
@@ -52,8 +54,13 @@ public class MultiplayerManager : MonoBehaviour
         int i = 0;
         foreach(CardData cardData in playerData.gameData.cardDeck){
             if(cardData != null){
+                
                 CardSO selectedCard = GameManager.instance.cardLists.CardItems.FirstOrDefault(card => card.UniqueID.Equals(cardData.cardID));
                 Cards newCard = Utilities.cardtoCards(selectedCard);
+                ActiveCards actCard = new ActiveCards();
+                actCard.uniqueID = selectedCard.UniqueID;
+                actCard.cardHP = selectedCard.cHealth;
+                playerDeck[i] = actCard;
                 playerCards[i].cardSO = selectedCard;
                 playerCards[i].DisplayCard();
                 playerCards[i].gameObject.SetActive(true);
@@ -71,6 +78,10 @@ public class MultiplayerManager : MonoBehaviour
             if(cardData != null){
                 CardSO selectedCard = GameManager.instance.cardLists.CardItems.FirstOrDefault(card => card.UniqueID.Equals(cardData.cardID));
                 Cards newCard = Utilities.cardtoCards(selectedCard);
+                ActiveCards actCard = new ActiveCards();
+                actCard.uniqueID = selectedCard.UniqueID;
+                actCard.cardHP = selectedCard.cHealth;
+                enemyDeck[i] = actCard;
                 enemyCards[i].cardSO = selectedCard;
                 enemyCards[i].DisplayCard();
                 enemyCards[i].gameObject.SetActive(true);

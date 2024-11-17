@@ -36,7 +36,9 @@ namespace ESDatabase.Classes
         public bool hostTurn = false;
         public bool joinerTurn = false;
 
-        public LobbyData(){
+        public LobbyData(List<ActiveCards> hd, List<ActiveCards> ed){
+            hostDeck = hd;
+            joinerDeck = ed;
             hostActiveCards = DrawCards(hostDeck, 3);
             joinerActiveCards = DrawCards(joinerDeck, 3);
             hostCurrentDeck = new List<ActiveCards>(hostDeck);
