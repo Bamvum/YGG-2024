@@ -45,6 +45,7 @@ public class PlayerClient : UnisaveBroadcastingClient
             .Forward<PlayerJoinedMessage>(PlayerJoin)
             .Forward<ReadyMessage>(ReadyReceive)
             .Forward<SendData>(ReceiveEnemy)
+            .Forward<GameStart>(ReceiveStartGame)
             .ElseLogWarning();
         MultiplayerManager.Instance.multiplayerUI.SetActive(false);
         MultiplayerManager.Instance.lobbyUI.SetActive(true);
@@ -64,6 +65,16 @@ public class PlayerClient : UnisaveBroadcastingClient
     void ReadyReceive(ReadyMessage readyMessage){
         if(!readyMessage.playerData.publicKey.Equals(AccountManager.Instance.playerData.publicKey.ToString())){
             MultiplayerManager.Instance.SetEnemyReady(readyMessage.isReady);
+            if(MultiplayerManager.Instance.playerReady && MultiplayerManager.Instance.enemyReady){
+                MultiplayerManager.Instance.StartGame();
+                MultiplayerManager.Instance.gameStarted = true;
+            }
+        }
+    }
+    void ReceiveStartGame(GameStart game){
+        MultiplayerManager.Instance.gameStarted = game.gameStarted;
+        if(game.gameStarted){
+            Debug.Log("Game Started");
         }
     }
     void ReceiveEnemy(SendData data){

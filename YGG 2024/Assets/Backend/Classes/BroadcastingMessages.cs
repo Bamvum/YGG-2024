@@ -13,6 +13,10 @@ namespace ESDatabase.Classes
         public string playerName;
         public PlayerData playerData;
     }
+    public class GameStart : BroadcastingMessage
+    {
+        public bool gameStarted = false;
+    }
 
     public class ReadyMessage : BroadcastingMessage{
         public PlayerData playerData;
