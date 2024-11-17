@@ -32,7 +32,7 @@ public class CardSO : ScriptableObject
     public Sprite cImage { get; set; }
     [field: SerializeField]
     public string ardriveLink { get; set; }
-
+    
     private void OnValidate()
     {
         if (string.IsNullOrEmpty(UniqueID))
@@ -43,6 +43,12 @@ public class CardSO : ScriptableObject
             UnityEditor.EditorUtility.SetDirty(this);
 #endif
         }
+    }
+    public CardSO CreateCopy()
+    {
+        CardSO copy = Instantiate(this);
+        copy.UniqueID = Guid.NewGuid().ToString(); // Ensure unique ID for the copy
+        return copy;
     }
 
 }
