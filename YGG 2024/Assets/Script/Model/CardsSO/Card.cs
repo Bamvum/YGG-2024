@@ -48,6 +48,8 @@ public class Card : MonoBehaviour
         if(CardGameManager.instance != null){
             LobbyData lobby = MultiplayerManager.Instance.lobbyData;
             if(MultiplayerManager.Instance.isJoiner){
+                Debug.Log(lobby.joinerCurrentDeck.Count);
+
                 if(lobby.joinerActiveCards[slotNo].cardHP < 1 && lobby.joinerCurrentDeck.Count > 0 && isPlayercard){
                     CardSO selectedCard = GameManager.instance.cardLists.CardItems.FirstOrDefault(card => card.UniqueID.Equals(lobby.joinerCurrentDeck[0].uniqueID));
                     cardSO = selectedCard;
@@ -66,6 +68,7 @@ public class Card : MonoBehaviour
                     Destroy(gameObject);
                 }
             }else{
+                Debug.Log(lobby.hostCurrentDeck.Count);
                 if(lobby.hostActiveCards[slotNo].cardHP < 1 && lobby.hostCurrentDeck.Count > 0 && isPlayercard){
                     CardSO selectedCard = GameManager.instance.cardLists.CardItems.FirstOrDefault(card => card.UniqueID.Equals(lobby.hostCurrentDeck[0].uniqueID));
                     cardSO = selectedCard;
