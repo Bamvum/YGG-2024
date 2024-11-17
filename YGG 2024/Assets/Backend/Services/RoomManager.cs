@@ -51,6 +51,17 @@ public class RoomManager : Facet
                 turn = turn
             });
     }
+    public void SendAction(string roomID, PlayerData playerData, LobbyData lobbyData, ActionData actionData)
+    {        
+        // new player in the room broadcast
+        Broadcast.Channel<GameLobby>()
+            .Room(roomID)
+            .Send(new ActionMessage {
+                playerData = playerData,
+                lobbyData = lobbyData,
+                actionData = actionData
+            });
+    }
 
     public void SendInGame(string roomID, PlayerData playerData, bool inGame){
         Broadcast.Channel<GameLobby>()

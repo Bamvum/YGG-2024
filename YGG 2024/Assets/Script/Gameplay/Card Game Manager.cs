@@ -109,6 +109,7 @@ public class CardGameManager : MonoBehaviour
                     instantiatedCard.transform.SetParent(cardSlots[j]);
                     availableCardSlots[j] = false;
                     instantiatedCard.cardSO = selectedCard;
+                    instantiatedCard.slotNo = j;
                     instantiatedCard.DisplayCard();
                     hostDeck.Add(instantiatedCard);
                     j++;
@@ -117,6 +118,7 @@ public class CardGameManager : MonoBehaviour
             foreach(ActiveCards activeCards in lobbyData.hostActiveCards){
                     CardSO selectedCard = GameManager.instance.cardLists.CardItems.FirstOrDefault(card => card.UniqueID.Equals(activeCards.uniqueID));
                     joinerDeck[i].cardSO = selectedCard;
+                    joinerDeck[i].slotNo = i;
                     joinerDeck[i].DisplayCard();
                     i++;
             }
@@ -132,6 +134,7 @@ public class CardGameManager : MonoBehaviour
                     instantiatedCard.transform.SetParent(cardSlots[j]);
                     availableCardSlots[j] = false;
                     instantiatedCard.cardSO = selectedCard;
+                    instantiatedCard.slotNo = j;
                     instantiatedCard.DisplayCard();
                     hostDeck.Add(instantiatedCard);
                     j++;
@@ -140,6 +143,7 @@ public class CardGameManager : MonoBehaviour
             foreach(ActiveCards activeCards in lobbyData.joinerActiveCards){
                     CardSO selectedCard = GameManager.instance.cardLists.CardItems.FirstOrDefault(card => card.UniqueID.Equals(activeCards.uniqueID));
                     joinerDeck[i].cardSO = selectedCard;
+                    joinerDeck[i].slotNo = i;
                     joinerDeck[i].DisplayCard();
                     i++;
             }
@@ -218,7 +222,12 @@ public class CardGameManager : MonoBehaviour
         {
             timerValue = 30;
             ticker = 0;
-            MultiplayerManager.Instance.SendSwap();
+            ActionData actionData = new ActionData(){
+                attackerCardID = "",
+                actionType = ActionType.None,
+                attackedSlotNo = 0
+            };
+            MultiplayerManager.Instance.SendAction(lobbyData, actionData);
             Debug.Log("Player End Turn");
         }
     }
@@ -290,15 +299,21 @@ public class CardGameManager : MonoBehaviour
             Debug.Log($"{attacker.name} dealt {totalDamage} damage to {defender.name}. Remaining health: {defender.cardSO.cHealth}");
             timerValue = 30;
             ticker = 0;
-            MultiplayerManager.Instance.SendSwap();
+            ActionData actionData = new ActionData(){
+                attackerCardID = selectedCard[0].cardSO.UniqueID,
+                actionType = ActionType.None,
+                damage = totalDamage,
+                attackedSlotNo = selectedCard[1].slotNo
+            };
+            MultiplayerManager.Instance.SendAction(lobbyData, actionData);
             yourTurn = !yourTurn;
             Debug.Log("Player End Turn");
             // DEFENDER HEALTH CHECKER 
-            if (defender.cardSO.cHealth <= 0)
-            {
-                Destroy(defender.gameObject);
-                Debug.Log($"{defender.name} has been destroyed!");
-            }
+            // if (defender.cardSO.cHealth <= 0)
+            // {
+            //     Destroy(defender.gameObject);
+            //     Debug.Log($"{defender.name} has been destroyed!");
+            // }
         }
         else
         {

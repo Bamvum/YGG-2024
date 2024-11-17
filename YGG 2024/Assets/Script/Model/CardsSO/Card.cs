@@ -1,3 +1,5 @@
+using System.Linq;
+using ESDatabase.Classes;
 using Solana.Unity.Soar.Accounts;
 using TMPro;
 using Unity.VisualScripting;
@@ -20,6 +22,7 @@ public class Card : MonoBehaviour
     [SerializeField] Image cardImage;
     [SerializeField] GameObject selected;
     [SerializeField] public bool isSelected;
+    [SerializeField] public int slotNo = 0;
 
     [Space(10)]
     [SerializeField] Button cardButton;
@@ -37,6 +40,30 @@ public class Card : MonoBehaviour
                 return;
             }            
             CardGameManager.instance.CardSelect(this);
+        }
+    }
+    public void Update(){
+        if(CardGameManager.instance != null){
+            LobbyData lobby = CardGameManager.instance.lobbyData;
+            if(MultiplayerManager.Instance.isJoiner){
+                if(lobby.joinerActiveCards[slotNo].cardHP < 1 && lobby.joinerCurrentDeck.Count > 0){
+                    CardSO selectedCard = GameManager.instance.cardLists.CardItems.FirstOrDefault(card => card.UniqueID.Equals(lobby.joinerCurrentDeck[0].uniqueID));
+                    cardSO = selectedCard;
+                    DisplayCard();
+                    lobby.joinerCurrentDeck.RemoveAt(0);
+                }else if(lobby.joinerActiveCards[slotNo].cardHP < 1 && lobby.joinerCurrentDeck.Count == 0){
+                    Destroy(gameObject);
+                }
+            }else{
+                if(lobby.hostActiveCards[slotNo].cardHP < 1 && lobby.hostCurrentDeck.Count > 0){
+                    CardSO selectedCard = GameManager.instance.cardLists.CardItems.FirstOrDefault(card => card.UniqueID.Equals(lobby.hostCurrentDeck[0].uniqueID));
+                    cardSO = selectedCard;
+                    DisplayCard();
+                    lobby.hostCurrentDeck.RemoveAt(0);
+                }else if(lobby.hostActiveCards[slotNo].cardHP < 1 && lobby.hostCurrentDeck.Count == 0){
+                    Destroy(gameObject);
+                }
+            }
         }
     }
     public void Deselect(){
