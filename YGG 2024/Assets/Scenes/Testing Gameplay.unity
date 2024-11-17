@@ -1202,10 +1202,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 72352e3ebe03ac94698f66444b778ce7, type: 2}
   - {fileID: 11400000, guid: b9ab2f31da547ac43b96a3ee71c1a33c, type: 2}
   - {fileID: 11400000, guid: adb6bdda3e55f004e97c4a5bff2cdbcc, type: 2}
-  hostDeck:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  hostDeck: []
   joinerDeck:
   - {fileID: 28807134}
   - {fileID: 1199493506}

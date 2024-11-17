@@ -312,9 +312,9 @@ public class CardGameManager : MonoBehaviour
         }
 
         // DRAW CARDS IF THERE IS AVAILABLE SLOTS IN THE FIELD
-        if (hostDeck.Count > 0 && AnySlotAvailable())
-        {
-            DrawCard();
-        }
+        // if (hostDeck.Count > 0 && AnySlotAvailable())
+        // {
+        //     DrawCard();
+        // }
     }
 }
