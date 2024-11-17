@@ -241,12 +241,8 @@ public class CardGameManager : MonoBehaviour
                 selectedCard[0].Select();
             }else{
                 selectedCard[0].Deselect();
-                if(selectedCard[0].isSelected){
-                    selectedCard[0] = cSelected;    
-                    selectedCard[0].Select();
-                }else{
-                    selectedCard[0] = null;
-                }
+                selectedCard[0] = cSelected;    
+                selectedCard[0].Select();
             }
         }
         else if (cSelected.gameObject.layer == LayerMask.NameToLayer("Enemy Card"))
@@ -274,6 +270,11 @@ public class CardGameManager : MonoBehaviour
     }
     public void ToggleTurn(){
         yourTurn = !yourTurn;
+        if(yourTurn){
+            ticker = 1;
+        }else{
+            ticker = 0;
+        }
     }
     void CardAttack(Card attacker, Card defender)
     {
@@ -286,8 +287,12 @@ public class CardGameManager : MonoBehaviour
             totalDamage = Mathf.Max(0, totalDamage);
 
             defender.cardSO.cHealth -= totalDamage;
-
             Debug.Log($"{attacker.name} dealt {totalDamage} damage to {defender.name}. Remaining health: {defender.cardSO.cHealth}");
+            timerValue = 30;
+            ticker = 0;
+            MultiplayerManager.Instance.SendSwap();
+            yourTurn = !yourTurn;
+            Debug.Log("Player End Turn");
             // DEFENDER HEALTH CHECKER 
             if (defender.cardSO.cHealth <= 0)
             {
