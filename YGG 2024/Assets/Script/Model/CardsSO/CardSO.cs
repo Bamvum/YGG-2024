@@ -32,7 +32,7 @@ public class CardSO : ScriptableObject
     public Sprite cImage { get; set; }
     [field: SerializeField]
     public string ardriveLink { get; set; }
-
+    
     private void OnValidate()
     {
         if (string.IsNullOrEmpty(UniqueID))
@@ -43,6 +43,24 @@ public class CardSO : ScriptableObject
             UnityEditor.EditorUtility.SetDirty(this);
 #endif
         }
+    }
+    public CardSO CreateCopy()
+    {
+        // Create a new instance of QuestSO
+        CardSO newQuest = ScriptableObject.CreateInstance<CardSO>();
+
+        // Copy all fields from this QuestSO to the new instance
+        newQuest.UniqueID = this.UniqueID;
+        newQuest.MaxStackableSize = this.MaxStackableSize;
+        newQuest.IsStackable = this.IsStackable;
+        newQuest.cHealth = this.cHealth;
+        newQuest.cAttack = this.cAttack;
+        newQuest.cName = this.cName;
+        newQuest.cDescription = this.cDescription;
+        newQuest.cType = this.cType;
+        newQuest.cImage = this.cImage;
+        newQuest.ardriveLink = this.ardriveLink;
+        return newQuest;
     }
 
 }

@@ -159,8 +159,44 @@ public class EarnMoney : MonoBehaviour
     //    }
     //}
 
+    //void SpawnNPC()
+    //{
+    //    Vector3 spawnPosition = spawnPoints[Random.Range(0, spawnPoints.Length)];
+
+    //    // Select a random NPC prefab from the list
+    //    GameObject randomNpcPrefab = npcPrefabs[Random.Range(0, npcPrefabs.Length)];
+
+    //    // Instantiate the selected NPC prefab with the npcSpawnsContainer as parent
+    //    GameObject npc = Instantiate(randomNpcPrefab, npcSpawnsContainer.transform);
+
+    //    // Set the local position of the NPC to the spawn position
+    //    npc.transform.localPosition = spawnPosition;
+
+    //    // Initialize the NPC movement with references to the shop and spawner for interactions
+    //    NPCMovement npcMovement = npc.GetComponent<NPCMovement>();
+    //    if (npcMovement != null)
+    //    {
+    //        npcMovement.Initialize(shopTransform, npcSpeed);
+    //    }
+    //}
+
+    //void DestroyAllNPCs()
+    //{
+    //    // Destroy all child objects under npcSpawnsContainer
+    //    foreach (Transform child in npcSpawnsContainer.transform)
+    //    {
+    //        Destroy(child.gameObject);
+    //    }
+    //}
+
+    private bool isSpawnCooldown = false;
+    public float spawnCooldownTime = .2f; // Time in seconds between spawns
+
     void SpawnNPC()
     {
+        // Check if spawn is on cooldown
+        if (isSpawnCooldown) return;
+
         Vector3 spawnPosition = spawnPoints[Random.Range(0, spawnPoints.Length)];
 
         // Select a random NPC prefab from the list
@@ -178,6 +214,16 @@ public class EarnMoney : MonoBehaviour
         {
             npcMovement.Initialize(shopTransform, npcSpeed);
         }
+
+        // Start cooldown
+        StartCoroutine(SpawnCooldown());
+    }
+
+    IEnumerator SpawnCooldown()
+    {
+        isSpawnCooldown = true;
+        yield return new WaitForSeconds(spawnCooldownTime);
+        isSpawnCooldown = false;
     }
 
     void DestroyAllNPCs()

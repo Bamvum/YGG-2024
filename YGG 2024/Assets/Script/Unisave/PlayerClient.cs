@@ -81,12 +81,12 @@ public class PlayerClient : UnisaveBroadcastingClient
             // }
             Debug.Log("Joiner Current Active Cards:");
             foreach(ActiveCards activeCards in MultiplayerManager.Instance.lobbyData.joinerActiveCards){
-                CardSO selectedCard = GameManager.instance.cardLists.CardItems.FirstOrDefault(card => card.UniqueID.Equals(activeCards.uniqueID));
+                CardSO selectedCard = GameManager.instance.cardLists.CardItems.FirstOrDefault(card => card.UniqueID.Equals(activeCards.uniqueID)).CreateCopy();
                 Debug.Log(activeCards.cardHP);
             }
             Debug.Log("Joiner Current Deck:");
             foreach(ActiveCards activeCards in MultiplayerManager.Instance.lobbyData.joinerCurrentDeck){
-                CardSO selectedCard = GameManager.instance.cardLists.CardItems.FirstOrDefault(card => card.UniqueID.Equals(activeCards.uniqueID));
+                CardSO selectedCard = GameManager.instance.cardLists.CardItems.FirstOrDefault(card => card.UniqueID.Equals(activeCards.uniqueID)).CreateCopy();
                 Debug.Log(activeCards.cardHP);
             }
             
@@ -146,12 +146,12 @@ public class PlayerClient : UnisaveBroadcastingClient
             // }
             Debug.Log("Joiner Current Active Cards:");
             foreach(ActiveCards activeCards in MultiplayerManager.Instance.lobbyData.joinerActiveCards){
-                CardSO selectedCard = GameManager.instance.cardLists.CardItems.FirstOrDefault(card => card.UniqueID.Equals(activeCards.uniqueID));
+                CardSO selectedCard = GameManager.instance.cardLists.CardItems.FirstOrDefault(card => card.UniqueID.Equals(activeCards.uniqueID)).CreateCopy();
                 Debug.Log(activeCards.cardHP);
             }
             Debug.Log("Joiner Current Deck:");
             foreach(ActiveCards activeCards in MultiplayerManager.Instance.lobbyData.joinerCurrentDeck){
-                CardSO selectedCard = GameManager.instance.cardLists.CardItems.FirstOrDefault(card => card.UniqueID.Equals(activeCards.uniqueID));
+                CardSO selectedCard = GameManager.instance.cardLists.CardItems.FirstOrDefault(card => card.UniqueID.Equals(activeCards.uniqueID)).CreateCopy();
                 Debug.Log(activeCards.cardHP);
             }
         }   
@@ -162,8 +162,10 @@ public class PlayerClient : UnisaveBroadcastingClient
             MultiplayerManager.Instance.lobbyData = actionMessage.lobbyData;
             LobbyData lobby = MultiplayerManager.Instance.lobbyData;
             if(MultiplayerManager.Instance.isJoiner){
+                Debug.Log(lobby.joinerActiveCards[actionMessage.actionData.attackedSlotNo].cardHP + " " + actionMessage.actionData.damage);
                 lobby.joinerActiveCards[actionMessage.actionData.attackedSlotNo].cardHP = Math.Max(0, lobby.joinerActiveCards[actionMessage.actionData.attackedSlotNo].cardHP - actionMessage.actionData.damage);
             }else{
+                Debug.Log(lobby.hostActiveCards[actionMessage.actionData.attackedSlotNo].cardHP + " " + actionMessage.actionData.damage);
                 lobby.hostActiveCards[actionMessage.actionData.attackedSlotNo].cardHP = Math.Max(0, lobby.hostActiveCards[actionMessage.actionData.attackedSlotNo].cardHP - actionMessage.actionData.damage);
             }
         }

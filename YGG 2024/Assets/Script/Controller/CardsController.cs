@@ -125,7 +125,7 @@ public class CardsController : MonoBehaviour
             CardData cardData =  playerData.gameData.cardDeck[i];
             if(cardData != null){ 
                 
-                CardSO selectedCard = GameManager.instance.cardLists.CardItems.FirstOrDefault(card => card.UniqueID.Equals(cardData.cardID));
+                CardSO selectedCard = GameManager.instance.cardLists.CardItems.FirstOrDefault(card => card.UniqueID.Equals(cardData.cardID)).CreateCopy();
                 Cards newCard = Utilities.cardtoCards(selectedCard);
 
                 CardsInvItem item = Instantiate(inventoryUI.itemPrefab, cardParents[i].GetChild(0));
@@ -148,7 +148,7 @@ public class CardsController : MonoBehaviour
         }
 
         foreach(CardData cardData in playerData.gameData.cardList){
-            CardSO selectedCard = GameManager.instance.cardLists.CardItems.FirstOrDefault(card => card.UniqueID.Equals(cardData.cardID));
+            CardSO selectedCard = GameManager.instance.cardLists.CardItems.FirstOrDefault(card => card.UniqueID.Equals(cardData.cardID)).CreateCopy();
             Cards newCard = Utilities.cardtoCards(selectedCard);
 
             GameManager.instance.AddItemToTransfer(newCard);
@@ -159,7 +159,7 @@ public class CardsController : MonoBehaviour
     public async void UseCards(int cardIndex, Transform[] parents)
     {
         Cards cards = inventoryData.GetItemAt(cardIndex);
-        CardSO card = cards.item;
+        CardSO card = cards.item.CreateCopy();
 
         // Check if the card is valid
         if (card == null)
@@ -216,7 +216,7 @@ public class CardsController : MonoBehaviour
     {
         // Retrieve the card data from the inventory
         Cards cards = inventoryData.GetItemAt(cardIndex);
-        CardSO card = cards.item;
+        CardSO card = cards.item.CreateCopy();
 
         // Check if the card is valid
         if (card == null)
@@ -283,7 +283,7 @@ public class CardsController : MonoBehaviour
     {
         // Retrieve the card data from the inventory
         Cards cards = inventoryData.GetItemAt(cardIndex);
-        CardSO card = cards.item;
+        CardSO card = cards.item.CreateCopy();
 
         // Check if the card is valid
         if (card == null)

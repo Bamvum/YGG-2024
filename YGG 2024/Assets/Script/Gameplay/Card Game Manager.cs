@@ -100,7 +100,7 @@ public class CardGameManager : MonoBehaviour
         if(MultiplayerManager.Instance.isJoiner){
             int j = 0;
             foreach(ActiveCards activeCards in lobbyData.joinerActiveCards){
-                    CardSO selectedCard = GameManager.instance.cardLists.CardItems.FirstOrDefault(card => card.UniqueID.Equals(activeCards.uniqueID));
+                    CardSO selectedCard = GameManager.instance.cardLists.CardItems.FirstOrDefault(card => card.UniqueID.Equals(activeCards.uniqueID)).CreateCopy();
                     GameObject instantiatedCardObjects = Instantiate(cardPrefab, deckParent.transform);
             
                     instantiatedCardObjects.SetActive(false);
@@ -116,7 +116,7 @@ public class CardGameManager : MonoBehaviour
             }
             int i = 0;
             foreach(ActiveCards activeCards in lobbyData.hostActiveCards){
-                    CardSO selectedCard = GameManager.instance.cardLists.CardItems.FirstOrDefault(card => card.UniqueID.Equals(activeCards.uniqueID));
+                    CardSO selectedCard = GameManager.instance.cardLists.CardItems.FirstOrDefault(card => card.UniqueID.Equals(activeCards.uniqueID)).CreateCopy();
                     joinerDeck[i].cardSO = selectedCard;
                     joinerDeck[i].slotNo = i;
                     joinerDeck[i].DisplayCard();
@@ -125,7 +125,7 @@ public class CardGameManager : MonoBehaviour
         }else{
             int j = 0;
             foreach(ActiveCards activeCards in lobbyData.hostActiveCards){
-                    CardSO selectedCard = GameManager.instance.cardLists.CardItems.FirstOrDefault(card => card.UniqueID.Equals(activeCards.uniqueID));
+                    CardSO selectedCard = GameManager.instance.cardLists.CardItems.FirstOrDefault(card => card.UniqueID.Equals(activeCards.uniqueID)).CreateCopy();
                     GameObject instantiatedCardObjects = Instantiate(cardPrefab, deckParent.transform);
 
                     instantiatedCardObjects.SetActive(false);
@@ -141,7 +141,7 @@ public class CardGameManager : MonoBehaviour
             }
             int i = 0;
             foreach(ActiveCards activeCards in lobbyData.joinerActiveCards){
-                    CardSO selectedCard = GameManager.instance.cardLists.CardItems.FirstOrDefault(card => card.UniqueID.Equals(activeCards.uniqueID));
+                    CardSO selectedCard = GameManager.instance.cardLists.CardItems.FirstOrDefault(card => card.UniqueID.Equals(activeCards.uniqueID)).CreateCopy();
                     joinerDeck[i].cardSO = selectedCard;
                     joinerDeck[i].slotNo = i;
                     joinerDeck[i].DisplayCard();
