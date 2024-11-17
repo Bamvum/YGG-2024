@@ -40,6 +40,15 @@ public class RoomManager : Facet
                 isReady = isReady
             });
     }
+
+    public void SendInGame(string roomID, PlayerData playerData, bool inGame){
+        Broadcast.Channel<GameLobby>()
+            .Room(roomID)
+            .Send(new InGameMessage {
+                playerData = playerData,
+                inGame = inGame
+            });
+    }
     public void SendGameStart(string roomID, bool isStarted)
     {        
         // new player in the room broadcast
@@ -49,13 +58,14 @@ public class RoomManager : Facet
                 gameStarted = isStarted
             });
     }
-    public void SendPlayerData(string roomID, PlayerData playerData)
+    public void SendPlayerData(string roomID, PlayerData playerData, LobbyData lobbyData)
     {        
         // new player in the room broadcast
         Broadcast.Channel<GameLobby>()
             .Room(roomID)
             .Send(new SendData {
-                playerData = playerData
+                playerData = playerData,
+                lobbyData = lobbyData
             });
     }
     public void SendMessage(string room, string msg , PlayerData playerData)
