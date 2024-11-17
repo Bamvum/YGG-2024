@@ -10,7 +10,6 @@ namespace ESDatabase.Classes
     {
         public string attackerCardID;
         public List<ActiveCards> activeDeck;
-        public List<ActiveCards> cardDeck;
         public ActionType actionType;
         public int attackedSlotNo;
     }

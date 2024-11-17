@@ -11,11 +11,12 @@ namespace ESDatabase.Classes
     public class PlayerJoinedMessage : BroadcastingMessage
     {
         public string playerName;
+        public PlayerData playerData;
     }
 
     public class ReadyMessage : BroadcastingMessage{
-        public string playerName;
-        public bool isReady = false;
+        public string playerData;
+        public bool isReady;
     }
     public class CoinflipMessage : BroadcastingMessage
     {
@@ -24,11 +25,11 @@ namespace ESDatabase.Classes
     public class SurrenderMessage : BroadcastingMessage
     {
         public string message;
-        bool isSelf = false;
+        bool isSelf;
     }
     public class WinMessage : BroadcastingMessage
     {
         public string playerName;
-        bool isSelf = false;
+        bool isSelf;
     }
 }
