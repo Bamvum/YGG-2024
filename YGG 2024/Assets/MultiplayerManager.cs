@@ -67,12 +67,13 @@ public class MultiplayerManager : MonoBehaviour
         SendReady();
     }
     public void SetEnemyReady(bool isReady){
-        if(isReady){
+        enemyReady = isReady;
+        if(enemyReady){
             readyImageEnemy.sprite = ready;
         }else{
             readyImageEnemy.sprite = notReady;
         }
-        enemyReady = isReady;
+        
     }
     public void SendReady(){
         this.CallFacet((RoomManager rm) => rm.SendReady(lobbyCode, playerReady));
