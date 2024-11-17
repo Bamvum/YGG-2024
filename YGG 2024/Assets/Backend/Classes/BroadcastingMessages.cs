@@ -23,6 +23,10 @@ namespace ESDatabase.Classes
         public PlayerData playerData;
         public bool isReady;
     }
+    public class SwapTurn : BroadcastingMessage{
+        public PlayerData playerData;
+        public bool turn;
+    }
     public class InGameMessage : BroadcastingMessage{
         public PlayerData playerData;
         public bool inGame;

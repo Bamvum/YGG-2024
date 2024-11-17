@@ -30,7 +30,7 @@ public class CardGameManager : MonoBehaviour
 
     [Header("Flag")]
     [SerializeField] TMP_Text deckCountText;
-    [SerializeField] bool yourTurn;
+    [SerializeField] public bool yourTurn;
 
     [Space(10)]
     public Card[] selectedCard = new Card[2];
@@ -38,7 +38,7 @@ public class CardGameManager : MonoBehaviour
     [Header("Timer")]
     [SerializeField] TMP_Text timerText;
     [SerializeField] float timerValue;
- 
+    [SerializeField] public int ticker = 0;
     void Awake()
     {
         instance = this;
@@ -50,6 +50,9 @@ public class CardGameManager : MonoBehaviour
             yourTurn = lobbyData.joinerTurn;
         }else{
             yourTurn = lobbyData.hostTurn;
+        }
+        if(yourTurn){
+            ticker = 1;
         }
         InstantiateCardDeck();
         DrawThreeCards();
@@ -214,7 +217,8 @@ public class CardGameManager : MonoBehaviour
         if(timerValue <= 0)
         {
             timerValue = 30;
-
+            ticker = 0;
+            MultiplayerManager.Instance.SendSwap();
             Debug.Log("Player End Turn");
         }
     }
@@ -235,6 +239,11 @@ public class CardGameManager : MonoBehaviour
         // CARD SELECT
         if (cSelected.gameObject.layer == LayerMask.NameToLayer("Your Card"))
         {
+            if(selectedCard[0] != null){
+                if(selectedCard[0].isSelected){
+                    selectedCard[0].Deselect();
+                }
+            }
             if (selectedCard[0] == null)
             {
                 if(selectedCard[0].isSelected){
@@ -243,10 +252,6 @@ public class CardGameManager : MonoBehaviour
                     selectedCard[0] = null;
                 }
                 
-            }
-            else
-            {
-                Debug.LogWarning("You cannot select your own card as the target!");
             }
         }
         else if (cSelected.gameObject.layer == LayerMask.NameToLayer("Enemy Card"))
@@ -271,7 +276,9 @@ public class CardGameManager : MonoBehaviour
             // ADD END TURN
         }
     }
-
+    public void ToggleTurn(){
+        yourTurn = !yourTurn;
+    }
     void CardAttack(Card attacker, Card defender)
     {
         if (attacker.cardSO != null && defender.cardSO != null)
