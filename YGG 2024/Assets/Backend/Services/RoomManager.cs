@@ -49,12 +49,13 @@ public class RoomManager : Facet
                 inGame = inGame
             });
     }
-    public void SendGameStart(string roomID, bool isStarted)
+    public void SendGameStart(string roomID, PlayerData playerData, bool isStarted)
     {        
         // new player in the room broadcast
         Broadcast.Channel<GameLobby>()
             .Room(roomID)
             .Send(new GameStart {
+                playerData = playerData,
                 gameStarted = isStarted
             });
     }

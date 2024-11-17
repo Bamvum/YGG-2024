@@ -90,14 +90,19 @@ public class CardGameManager : MonoBehaviour
     void InstantiateCardDeck()
     {
         if(MultiplayerManager.Instance.isJoiner){
+            int j = 0;
             foreach(ActiveCards activeCards in lobbyData.joinerActiveCards){
                     CardSO selectedCard = GameManager.instance.cardLists.CardItems.FirstOrDefault(card => card.UniqueID.Equals(activeCards.uniqueID));
                     GameObject instantiatedCardObjects = Instantiate(cardPrefab, deckParent.transform);
-
+            
                     instantiatedCardObjects.SetActive(false);
                     Card instantiatedCard = instantiatedCardObjects.GetComponent<Card>();
+                    instantiatedCard.transform.position = cardSlots[j].position;
+                    instantiatedCard.transform.SetParent(cardSlots[j]);
+                    availableCardSlots[j] = false;
                     instantiatedCard.cardSO = selectedCard;
                     hostDeck.Add(instantiatedCard);
+                    j++;
             }
             int i = 0;
             foreach(ActiveCards activeCards in lobbyData.hostActiveCards){
@@ -106,14 +111,19 @@ public class CardGameManager : MonoBehaviour
                     i++;
             }
         }else{
+            int j = 0;
             foreach(ActiveCards activeCards in lobbyData.hostActiveCards){
                     CardSO selectedCard = GameManager.instance.cardLists.CardItems.FirstOrDefault(card => card.UniqueID.Equals(activeCards.uniqueID));
                     GameObject instantiatedCardObjects = Instantiate(cardPrefab, deckParent.transform);
 
                     instantiatedCardObjects.SetActive(false);
                     Card instantiatedCard = instantiatedCardObjects.GetComponent<Card>();
+                    instantiatedCard.transform.position = cardSlots[j].position;
+                    instantiatedCard.transform.SetParent(cardSlots[j]);
+                    availableCardSlots[j] = false;
                     instantiatedCard.cardSO = selectedCard;
                     hostDeck.Add(instantiatedCard);
+                    j++;
             }
             int i = 0;
             foreach(ActiveCards activeCards in lobbyData.joinerActiveCards){

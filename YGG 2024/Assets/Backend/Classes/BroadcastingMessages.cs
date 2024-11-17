@@ -15,6 +15,7 @@ namespace ESDatabase.Classes
     }
     public class GameStart : BroadcastingMessage
     {
+        public PlayerData playerData;
         public bool gameStarted = false;
     }
 
