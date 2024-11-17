@@ -161,13 +161,7 @@ public class PlayerClient : UnisaveBroadcastingClient
             CardGameManager.instance.ToggleTurn();
             Debug.Log("Damage Received");
             MultiplayerManager.Instance.lobbyData = actionMessage.lobbyData;
-            LobbyData lobby = MultiplayerManager.Instance.lobbyData;
             if(actionMessage.actionData.actionType == ActionType.None) return;
-            if(MultiplayerManager.Instance.isJoiner){
-                lobby.joinerActiveCards[actionMessage.actionData.attackedSlotNo].cardHP = Math.Max(0, lobby.joinerActiveCards[actionMessage.actionData.attackedSlotNo].cardHP - actionMessage.actionData.damage);
-            }else{
-                lobby.hostActiveCards[actionMessage.actionData.attackedSlotNo].cardHP = Math.Max(0, lobby.hostActiveCards[actionMessage.actionData.attackedSlotNo].cardHP - actionMessage.actionData.damage);
-            }
         }
     }
     public void ProceedGame(){
