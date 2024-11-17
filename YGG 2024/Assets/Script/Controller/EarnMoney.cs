@@ -23,6 +23,7 @@ public class EarnMoney : MonoBehaviour
     public float cooldownTime = 10f; // 2 minutes (in seconds) 120
     private bool isCooldown = false;
 
+    public GameObject npcSpawnsContainer; // Parent GameObject for NPCs
     void Start()
     {
         EarnMoneyBTN.onClick.AddListener(SpawnNPC);
@@ -59,6 +60,7 @@ public class EarnMoney : MonoBehaviour
     void EndEarning()
     {
         EarnMoneyBTN.gameObject.SetActive(false);
+        DestroyAllNPCs(); // Destroy remaining NPCs after timer ends
         StartCoroutine(Cooldown());
     }
 
@@ -159,20 +161,31 @@ public class EarnMoney : MonoBehaviour
 
     void SpawnNPC()
     {
-        // Select a random spawn point
         Vector3 spawnPosition = spawnPoints[Random.Range(0, spawnPoints.Length)];
 
         // Select a random NPC prefab from the list
         GameObject randomNpcPrefab = npcPrefabs[Random.Range(0, npcPrefabs.Length)];
 
-        // Instantiate the selected NPC prefab at the spawn position
-        GameObject npc = Instantiate(randomNpcPrefab, spawnPosition, Quaternion.identity);
+        // Instantiate the selected NPC prefab with the npcSpawnsContainer as parent
+        GameObject npc = Instantiate(randomNpcPrefab, npcSpawnsContainer.transform);
+
+        // Set the local position of the NPC to the spawn position
+        npc.transform.localPosition = spawnPosition;
 
         // Initialize the NPC movement with references to the shop and spawner for interactions
         NPCMovement npcMovement = npc.GetComponent<NPCMovement>();
         if (npcMovement != null)
         {
             npcMovement.Initialize(shopTransform, npcSpeed);
+        }
+    }
+
+    void DestroyAllNPCs()
+    {
+        // Destroy all child objects under npcSpawnsContainer
+        foreach (Transform child in npcSpawnsContainer.transform)
+        {
+            Destroy(child.gameObject);
         }
     }
 
