@@ -14,7 +14,6 @@ using System.Linq;
 public class CardGameManager : MonoBehaviour
 {
     public static CardGameManager instance {get; private set;}
-    [SerializeField] public LobbyData lobbyData;
     [SerializeField] GameObject cardPrefab;
     [SerializeField] GameObject deckParent;
     [SerializeField] CardSO[] cardSOList;
@@ -42,14 +41,13 @@ public class CardGameManager : MonoBehaviour
     void Awake()
     {
         instance = this;
-        lobbyData = MultiplayerManager.Instance.lobbyData;
         for(int i = 0; i < availableCardSlots.Length; i++){
             availableCardSlots[i] = true;
         }
         if(MultiplayerManager.Instance.isJoiner){
-            yourTurn = lobbyData.joinerTurn;
+            yourTurn = MultiplayerManager.Instance.lobbyData.joinerTurn;
         }else{
-            yourTurn = lobbyData.hostTurn;
+            yourTurn = MultiplayerManager.Instance.lobbyData.hostTurn;
         }
         if(yourTurn){
             ticker = 1;
@@ -99,7 +97,7 @@ public class CardGameManager : MonoBehaviour
     {
         if(MultiplayerManager.Instance.isJoiner){
             int j = 0;
-            foreach(ActiveCards activeCards in lobbyData.joinerActiveCards){
+            foreach(ActiveCards activeCards in MultiplayerManager.Instance.lobbyData.joinerActiveCards){
                     CardSO selectedCard = GameManager.instance.cardLists.CardItems.FirstOrDefault(card => card.UniqueID.Equals(activeCards.uniqueID)).CreateCopy();
                     GameObject instantiatedCardObjects = Instantiate(cardPrefab, deckParent.transform);
             
@@ -110,21 +108,23 @@ public class CardGameManager : MonoBehaviour
                     availableCardSlots[j] = false;
                     instantiatedCard.cardSO = selectedCard;
                     instantiatedCard.slotNo = j;
+                    instantiatedCard.isPlayercard = true;
                     instantiatedCard.DisplayCard();
                     hostDeck.Add(instantiatedCard);
                     j++;
             }
             int i = 0;
-            foreach(ActiveCards activeCards in lobbyData.hostActiveCards){
+            foreach(ActiveCards activeCards in MultiplayerManager.Instance.lobbyData.hostActiveCards){
                     CardSO selectedCard = GameManager.instance.cardLists.CardItems.FirstOrDefault(card => card.UniqueID.Equals(activeCards.uniqueID)).CreateCopy();
                     joinerDeck[i].cardSO = selectedCard;
                     joinerDeck[i].slotNo = i;
+                    joinerDeck[i].isPlayercard = false;
                     joinerDeck[i].DisplayCard();
                     i++;
             }
         }else{
             int j = 0;
-            foreach(ActiveCards activeCards in lobbyData.hostActiveCards){
+            foreach(ActiveCards activeCards in MultiplayerManager.Instance.lobbyData.hostActiveCards){
                     CardSO selectedCard = GameManager.instance.cardLists.CardItems.FirstOrDefault(card => card.UniqueID.Equals(activeCards.uniqueID)).CreateCopy();
                     GameObject instantiatedCardObjects = Instantiate(cardPrefab, deckParent.transform);
 
@@ -135,15 +135,17 @@ public class CardGameManager : MonoBehaviour
                     availableCardSlots[j] = false;
                     instantiatedCard.cardSO = selectedCard;
                     instantiatedCard.slotNo = j;
+                    instantiatedCard.isPlayercard = true;
                     instantiatedCard.DisplayCard();
                     hostDeck.Add(instantiatedCard);
                     j++;
             }
             int i = 0;
-            foreach(ActiveCards activeCards in lobbyData.joinerActiveCards){
+            foreach(ActiveCards activeCards in MultiplayerManager.Instance.lobbyData.joinerActiveCards){
                     CardSO selectedCard = GameManager.instance.cardLists.CardItems.FirstOrDefault(card => card.UniqueID.Equals(activeCards.uniqueID)).CreateCopy();
                     joinerDeck[i].cardSO = selectedCard;
                     joinerDeck[i].slotNo = i;
+                    joinerDeck[i].isPlayercard = false;
                     joinerDeck[i].DisplayCard();
                     i++;
             }
@@ -227,7 +229,7 @@ public class CardGameManager : MonoBehaviour
                 actionType = ActionType.None,
                 attackedSlotNo = 0
             };
-            MultiplayerManager.Instance.SendAction(lobbyData, actionData);
+            MultiplayerManager.Instance.SendAction(MultiplayerManager.Instance.lobbyData, actionData);
             Debug.Log("Player End Turn");
         }
     }
@@ -295,17 +297,15 @@ public class CardGameManager : MonoBehaviour
             int totalDamage = attackDamage + damageModifier;
             totalDamage = Mathf.Max(0, totalDamage);
 
-            defender.cardSO.cHealth -= totalDamage;
-            Debug.Log($"{attacker.name} dealt {totalDamage} damage to {defender.name}. Remaining health: {defender.cardSO.cHealth}");
             timerValue = 30;
             ticker = 0;
             ActionData actionData = new ActionData(){
                 attackerCardID = selectedCard[0].cardSO.UniqueID,
-                actionType = ActionType.None,
+                actionType = ActionType.Attack,
                 damage = totalDamage,
                 attackedSlotNo = selectedCard[1].slotNo
             };
-            MultiplayerManager.Instance.SendAction(lobbyData, actionData);
+            MultiplayerManager.Instance.SendAction(MultiplayerManager.Instance.lobbyData, actionData);
             yourTurn = !yourTurn;
             Debug.Log("Player End Turn");
             // DEFENDER HEALTH CHECKER 

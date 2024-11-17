@@ -159,16 +159,14 @@ public class PlayerClient : UnisaveBroadcastingClient
     void ReceiveAction(ActionMessage actionMessage){
         if(!actionMessage.playerData.publicKey.Equals(AccountManager.Instance.playerData.publicKey.ToString())){
             CardGameManager.instance.ToggleTurn();
+            Debug.Log("Damage Received");
             MultiplayerManager.Instance.lobbyData = actionMessage.lobbyData;
             LobbyData lobby = MultiplayerManager.Instance.lobbyData;
+            if(actionMessage.actionData.actionType == ActionType.None) return;
             if(MultiplayerManager.Instance.isJoiner){
-                Debug.Log(lobby.joinerActiveCards[actionMessage.actionData.attackedSlotNo]);
-                Debug.Log(Math.Max(0, lobby.joinerActiveCards[actionMessage.actionData.attackedSlotNo].cardHP - actionMessage.actionData.damage));
-                lobby.joinerActiveCards[actionMessage.actionData.attackedSlotNo].cardHP -= Math.Max(0, lobby.joinerActiveCards[actionMessage.actionData.attackedSlotNo].cardHP - actionMessage.actionData.damage);
+                lobby.joinerActiveCards[actionMessage.actionData.attackedSlotNo].cardHP = Math.Max(0, lobby.joinerActiveCards[actionMessage.actionData.attackedSlotNo].cardHP - actionMessage.actionData.damage);
             }else{
-                Debug.Log(lobby.joinerActiveCards[actionMessage.actionData.attackedSlotNo]);
-                Debug.Log(Math.Max(0, lobby.joinerActiveCards[actionMessage.actionData.attackedSlotNo].cardHP - actionMessage.actionData.damage));
-                lobby.hostActiveCards[actionMessage.actionData.attackedSlotNo].cardHP -= Math.Max(0, lobby.hostActiveCards[actionMessage.actionData.attackedSlotNo].cardHP - actionMessage.actionData.damage);
+                lobby.hostActiveCards[actionMessage.actionData.attackedSlotNo].cardHP = Math.Max(0, lobby.hostActiveCards[actionMessage.actionData.attackedSlotNo].cardHP - actionMessage.actionData.damage);
             }
         }
     }
