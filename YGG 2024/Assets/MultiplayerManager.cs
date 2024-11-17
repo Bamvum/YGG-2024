@@ -21,6 +21,8 @@ public class MultiplayerManager : MonoBehaviour
     [SerializeField] public List<Card> playerCards = new List<Card>();
     [SerializeField] public List<Card> enemyCards = new List<Card>();
     [Header("UIs")]
+    [SerializeField] public Image readyImagePlayer;
+    [SerializeField] public Image readyImageEnemy;
     [SerializeField] public Sprite ready;
     [SerializeField] public Sprite notReady;
     [SerializeField] public GameObject multiplayerUI;
@@ -48,12 +50,32 @@ public class MultiplayerManager : MonoBehaviour
     }
 
     public void LoadEnemy(PlayerData enemyData){
-        playerPubKey.text = "Opponent: " + enemyData.publicKey;
+        enemyPubKey.text = "Opponent: " + enemyData.publicKey;
         enemyPlayerData = enemyData;
         int i = 0;
         foreach(CardData cardData in enemyPlayerData.gameData.cardDeck){
             Debug.Log(cardData.cardID);
         }
+    }
+    public void SetPlayerReady(){
+        playerReady = !playerReady;
+        if(playerReady){
+            readyImagePlayer.sprite = ready;
+        }else{
+            readyImagePlayer.sprite = notReady;
+        }
+        SendReady();
+    }
+    public void SetEnemyReady(bool isReady){
+        if(isReady){
+            readyImageEnemy.sprite = ready;
+        }else{
+            readyImageEnemy.sprite = notReady;
+        }
+        enemyReady = isReady;
+    }
+    public void SendReady(){
+        this.CallFacet((RoomManager rm) => rm.SendReady(lobbyCode, playerReady));
     }
     public void SendPlayerData(){
         this.CallFacet((RoomManager rm) => rm.SendPlayerData(lobbyCode, AccountManager.Instance.playerData));
