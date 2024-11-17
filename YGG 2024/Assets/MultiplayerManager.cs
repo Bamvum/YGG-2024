@@ -26,8 +26,8 @@ public class MultiplayerManager : MonoBehaviour
     [SerializeField] public Text enemyPubKey;
     [SerializeField] public List<Card> playerCards = new List<Card>();
     [SerializeField] public List<Card> enemyCards = new List<Card>();
-    [SerializeField] public List<ActiveCards> playerDeck = new List<ActiveCards>();
-    [SerializeField] public List<ActiveCards> enemyDeck = new List<ActiveCards>();
+    [SerializeField] public List<ActiveCards> playerDeck = new List<ActiveCards>{null, null, null, null, null, null};
+    [SerializeField] public List<ActiveCards> enemyDeck = new List<ActiveCards>{null, null, null, null, null, null};
     [Header("UIs")]
     [SerializeField] public Image readyImagePlayer;
     [SerializeField] public Image readyImageEnemy;
