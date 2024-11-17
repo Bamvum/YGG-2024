@@ -18,7 +18,6 @@ public class PlayerClient : UnisaveBroadcastingClient
         Debug.Log("Player Logged out");
     }
     public async void CreateLobby(){
-        PlayerUIManager.Instance.OpenLoader();
         MultiplayerManager.Instance.lobbyCode = Utilities.GenerateCode(5);
         var subscription = await OnFacet<RoomManager>
             .CallAsync<ChannelSubscription>(
