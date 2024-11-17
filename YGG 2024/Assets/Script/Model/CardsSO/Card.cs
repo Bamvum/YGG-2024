@@ -55,12 +55,12 @@ public class Card : MonoBehaviour
                     Destroy(gameObject);
                 }
             }else{
-                if(lobby.hostActiveCards[slotNo].cardHP < 1 && lobby.hostActiveCards.Count > 0){
-                    CardSO selectedCard = GameManager.instance.cardLists.CardItems.FirstOrDefault(card => card.UniqueID.Equals(lobby.hostActiveCards[0].uniqueID));
+                if(lobby.hostActiveCards[slotNo].cardHP < 1 && lobby.hostCurrentDeck.Count > 0){
+                    CardSO selectedCard = GameManager.instance.cardLists.CardItems.FirstOrDefault(card => card.UniqueID.Equals(lobby.hostCurrentDeck[0].uniqueID));
                     cardSO = selectedCard;
                     DisplayCard();
-                    lobby.hostActiveCards.RemoveAt(0);
-                }else if(lobby.hostCurrentDeck[slotNo].cardHP < 1 && lobby.hostCurrentDeck.Count == 0){
+                    lobby.hostCurrentDeck.RemoveAt(0);
+                }else if(lobby.hostActiveCards[slotNo].cardHP < 1 && lobby.hostCurrentDeck.Count == 0){
                     Destroy(gameObject);
                 }
             }
