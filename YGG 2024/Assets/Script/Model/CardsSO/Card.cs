@@ -19,6 +19,7 @@ public class Card : MonoBehaviour
     [SerializeField] TMP_Text cardTypes;
     [SerializeField] Image cardImage;
     [SerializeField] GameObject selected;
+    [SerializeField] public bool isSelected;
 
     [Space(10)]
     [SerializeField] Button cardButton;
@@ -30,10 +31,23 @@ public class Card : MonoBehaviour
 
     public void OnClickEvent()
     {
-        selected.SetActive(true);
-        CardGameManager.instance.CardSelect(this);
+        if(CardGameManager.instance != null){
+            if(isSelected){
+                Deselect();
+            }else{
+                Select();
+            }
+            CardGameManager.instance.CardSelect(this);
+        }
     }
-
+    public void Deselect(){
+        selected.SetActive(false);
+        isSelected = false;
+    }
+    public void Select(){
+        selected.SetActive(true);
+        isSelected = true;
+    }
     public void DisplayCard()
     {
         cardHealth = cardSO.cHealth;

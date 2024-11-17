@@ -1,8 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Unisave;
-using UnityEngine;
 
 namespace ESDatabase.Classes
 {
@@ -37,6 +35,9 @@ namespace ESDatabase.Classes
         public bool joinerTurn = false;
 
         public LobbyData(List<ActiveCards> hd, List<ActiveCards> ed){
+            bool hostFirst = CoinFlip();
+            hostTurn = hostFirst;
+            joinerTurn = !hostTurn;
             hostDeck = hd;
             joinerDeck = ed;
             hostActiveCards = DrawCards(hostDeck, 3);
@@ -55,5 +56,10 @@ namespace ESDatabase.Classes
             deck.RemoveRange(0, numberOfCards);
             return drawnCards;
         } 
+        public bool CoinFlip()
+        {
+            Random random = new Random();
+            return random.Next(0, 2) == 0;
+        }
     }
 }
