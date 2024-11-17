@@ -30,7 +30,7 @@ public class RoomManager : Facet
 
         return subscription;
     }
-    public void SendReady(string roomID, PlayerData playerData, bool isReady)
+    public void SendReady(string roomID, bool isReady)
     {        
         // new player in the room broadcast
         Broadcast.Channel<GameLobby>()
@@ -44,8 +44,7 @@ public class RoomManager : Facet
         // new player in the room broadcast
         Broadcast.Channel<GameLobby>()
             .Room(roomID)
-            .Send(new PlayerJoinedMessage {
-                playerName = playerData.gameData.playerName,
+            .Send(new SendData {
                 playerData = playerData
             });
     }

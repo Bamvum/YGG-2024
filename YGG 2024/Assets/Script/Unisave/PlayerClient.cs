@@ -26,6 +26,7 @@ public class PlayerClient : UnisaveBroadcastingClient
 
             FromSubscription(subscription)
             .Forward<PlayerJoinedMessage>(PlayerJoin)
+            .Forward<ReadyMessage>(ReadyReceive)
             .ElseLogWarning();
             MultiplayerManager.Instance.multiplayerUI.SetActive(false);
             MultiplayerManager.Instance.lobbyUI.SetActive(true);
@@ -41,6 +42,7 @@ public class PlayerClient : UnisaveBroadcastingClient
         MultiplayerManager.Instance.lobbyCode = MultiplayerManager.Instance.lobbyCodeInput.text.ToUpper();
         FromSubscription(subscription)
             .Forward<PlayerJoinedMessage>(PlayerJoin)
+            .Forward<ReadyMessage>(ReadyReceive)
             .ElseLogWarning();
         MultiplayerManager.Instance.multiplayerUI.SetActive(false);
         MultiplayerManager.Instance.lobbyUI.SetActive(true);
@@ -54,10 +56,10 @@ public class PlayerClient : UnisaveBroadcastingClient
         if(!msg.playerData.publicKey.Equals(AccountManager.Instance.playerData.publicKey.ToString())){
             MultiplayerManager.Instance.LoadEnemy(msg.playerData);
             MultiplayerManager.Instance.enemyPlayerData = msg.playerData;
-            // MultiplayerManager.Instance.SendPlayerData();
+            MultiplayerManager.Instance.SendPlayerData();
         }
     }
     void ReadyReceive(ReadyMessage readyMessage){
-        MultiplayerManager.Instance.enemyReady = readyMessage.isReady;
+        MultiplayerManager.Instance.SetEnemyReady(readyMessage.isReady);
     }
 }

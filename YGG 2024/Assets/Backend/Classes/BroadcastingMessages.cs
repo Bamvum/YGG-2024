@@ -15,8 +15,10 @@ namespace ESDatabase.Classes
     }
 
     public class ReadyMessage : BroadcastingMessage{
-        public string playerData;
         public bool isReady;
+    }
+    public class SendData : BroadcastingMessage{
+        public PlayerData playerData;
     }
     public class CoinflipMessage : BroadcastingMessage
     {
