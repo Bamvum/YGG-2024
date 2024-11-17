@@ -76,7 +76,7 @@ public class MultiplayerManager : MonoBehaviour
         
     }
     public void SendReady(){
-        this.CallFacet((RoomManager rm) => rm.SendReady(lobbyCode, playerReady));
+        this.CallFacet((RoomManager rm) => rm.SendReady(lobbyCode, AccountManager.Instance.playerData,playerReady));
     }
     public void SendPlayerData(){
         this.CallFacet((RoomManager rm) => rm.SendPlayerData(lobbyCode, AccountManager.Instance.playerData));
