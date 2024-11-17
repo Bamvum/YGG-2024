@@ -18,6 +18,7 @@ public class PlayerClient : UnisaveBroadcastingClient
         Debug.Log("Player Logged out");
     }
     public async void CreateLobby(){
+        PlayerUIManager.Instance.OpenLoader();
         MultiplayerManager.Instance.lobbyCode = Utilities.GenerateCode(5);
         var subscription = await OnFacet<RoomManager>
             .CallAsync<ChannelSubscription>(
@@ -36,6 +37,7 @@ public class PlayerClient : UnisaveBroadcastingClient
             MultiplayerManager.Instance.multiplayerUI.SetActive(false);
             MultiplayerManager.Instance.lobbyUI.SetActive(true);
             MultiplayerManager.Instance.StartLobby();
+            PlayerUIManager.Instance.CloseLoader();
     }
     public async void JoinLobby(){
         var subscription = await OnFacet<RoomManager>
@@ -96,7 +98,7 @@ public class PlayerClient : UnisaveBroadcastingClient
             if(MultiplayerManager.Instance.playerReady && MultiplayerManager.Instance.enemyReady){
                 MultiplayerManager.Instance.lobbyUI.SetActive(false);
                 PlayerUIManager.Instance.mainMenuCamera.SetActive(false);
-                PlayerUIManager.Instance.mainMenu.SetActive(false);
+                PlayerUIManager.Instance.parentMainMenu.SetActive(false);
                 PlayerUIManager.Instance.OpenLoader();
                 MultiplayerManager.Instance.StartGame();
                 MultiplayerManager.Instance.gameStarted = true;
@@ -116,7 +118,7 @@ public class PlayerClient : UnisaveBroadcastingClient
         if(!game.playerData.publicKey.Equals(AccountManager.Instance.playerData.publicKey.ToString())){
             MultiplayerManager.Instance.lobbyUI.SetActive(false);
             PlayerUIManager.Instance.mainMenuCamera.SetActive(false);
-            PlayerUIManager.Instance.mainMenu.SetActive(false);
+            PlayerUIManager.Instance.parentMainMenu.SetActive(false);
             PlayerUIManager.Instance.OpenLoader();
             MultiplayerManager.Instance.gameStarted = game.gameStarted;
             if(game.gameStarted){

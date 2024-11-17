@@ -101,6 +101,7 @@ public class CardGameManager : MonoBehaviour
                     instantiatedCard.transform.SetParent(cardSlots[j]);
                     availableCardSlots[j] = false;
                     instantiatedCard.cardSO = selectedCard;
+                    instantiatedCard.DisplayCard();
                     hostDeck.Add(instantiatedCard);
                     j++;
             }
@@ -108,6 +109,7 @@ public class CardGameManager : MonoBehaviour
             foreach(ActiveCards activeCards in lobbyData.hostActiveCards){
                     CardSO selectedCard = GameManager.instance.cardLists.CardItems.FirstOrDefault(card => card.UniqueID.Equals(activeCards.uniqueID));
                     joinerDeck[i].cardSO = selectedCard;
+                    joinerDeck[i].DisplayCard();
                     i++;
             }
         }else{
@@ -122,6 +124,7 @@ public class CardGameManager : MonoBehaviour
                     instantiatedCard.transform.SetParent(cardSlots[j]);
                     availableCardSlots[j] = false;
                     instantiatedCard.cardSO = selectedCard;
+                    instantiatedCard.DisplayCard();
                     hostDeck.Add(instantiatedCard);
                     j++;
             }
@@ -129,6 +132,7 @@ public class CardGameManager : MonoBehaviour
             foreach(ActiveCards activeCards in lobbyData.joinerActiveCards){
                     CardSO selectedCard = GameManager.instance.cardLists.CardItems.FirstOrDefault(card => card.UniqueID.Equals(activeCards.uniqueID));
                     joinerDeck[i].cardSO = selectedCard;
+                    joinerDeck[i].DisplayCard();
                     i++;
             }
         }
