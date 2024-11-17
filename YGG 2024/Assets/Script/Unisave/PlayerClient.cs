@@ -94,7 +94,10 @@ public class PlayerClient : UnisaveBroadcastingClient
         if(!readyMessage.playerData.publicKey.Equals(AccountManager.Instance.playerData.publicKey.ToString())){
             MultiplayerManager.Instance.SetEnemyReady(readyMessage.isReady);
             if(MultiplayerManager.Instance.playerReady && MultiplayerManager.Instance.enemyReady){
+                MultiplayerManager.Instance.lobbyUI.SetActive(false);
+                PlayerUIManager.Instance.mainMenu.SetActive(false);
                 PlayerUIManager.Instance.OpenLoader();
+                
                 MultiplayerManager.Instance.StartGame();
                 MultiplayerManager.Instance.gameStarted = true;
                 ProceedGame();
@@ -110,6 +113,8 @@ public class PlayerClient : UnisaveBroadcastingClient
         }
     }
     void ReceiveStartGame(GameStart game){
+        MultiplayerManager.Instance.lobbyUI.SetActive(false);
+        PlayerUIManager.Instance.mainMenu.SetActive(false);
         PlayerUIManager.Instance.OpenLoader();
         MultiplayerManager.Instance.gameStarted = game.gameStarted;
         if(game.gameStarted){
