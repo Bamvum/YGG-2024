@@ -157,11 +157,10 @@ public class PlayerClient : UnisaveBroadcastingClient
         }   
     }
     void ReceiveAction(ActionMessage actionMessage){
+        MultiplayerManager.Instance.lobbyData = actionMessage.lobbyData;
         if(!actionMessage.playerData.publicKey.Equals(AccountManager.Instance.playerData.publicKey.ToString())){
             CardGameManager.instance.ToggleTurn();
             Debug.Log("Damage Received");
-            MultiplayerManager.Instance.lobbyData = actionMessage.lobbyData;
-            if(actionMessage.actionData.actionType == ActionType.None) return;
         }
     }
     public void ProceedGame(){
