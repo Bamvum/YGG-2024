@@ -358,10 +358,23 @@ public class CardGameManager : MonoBehaviour
 
     void Update()
     {
-        deckCountText.text = hostDeck.Count.ToString();
-
+        if (MultiplayerManager.Instance.isJoiner) {
+            LobbyData lobby = MultiplayerManager.Instance.lobbyData;
+            deckCountText.text = lobby.joinerCurrentDeck.Count.ToString();
+            if(lobby.joinerActiveCards.Count == 0){
+                // SEND DITO YUNG SURRENDER SA KABILA
+            }
+            Debug.Log($"Updated joiner card HP: {lobby.joinerActiveCards[selectedCard[1].slotNo].cardHP}");
+        } else {
+            LobbyData lobby = MultiplayerManager.Instance.lobbyData;
+            deckCountText.text = lobby.hostCurrentDeck.Count.ToString();
+            if(lobby.hostActiveCards.Count == 0){
+                // SEND DITO YUNG SURRENDER SA KABILA
+            }
+            Debug.Log($"Updated joiner card HP: {lobby.joinerActiveCards[selectedCard[1].slotNo].cardHP}");
+        }
         TimerToEndTurn();
-
+        
         // DECK IS EMPTY AND CARDS SLOTS ARE EMPTY 
         if (hostDeck.Count == 0 && AllSlotsAvailable())
         {
