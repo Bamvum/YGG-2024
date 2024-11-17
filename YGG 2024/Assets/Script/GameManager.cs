@@ -20,6 +20,8 @@ public class GameManager : MonoBehaviour
 
     public CardList cardLists;
 
+    public int PlayerMoney = 0;
+
     void Start()
     {
         // Editor.onClick.AddListener(OpenEditor);

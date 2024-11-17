@@ -15,7 +15,10 @@ MonoBehaviour:
   <UniqueID>k__BackingField: f57d3546-babc-4e18-9244-b2091263d96f
   <MaxStackableSize>k__BackingField: 1
   <IsStackable>k__BackingField: 0
+  <cHealth>k__BackingField: 16
+  <cAttack>k__BackingField: 4
   <cName>k__BackingField: Ember Guardian
   <cDescription>k__BackingField: asdas
-  <cType>k__BackingField: dasdasd
+  <cType>k__BackingField: Inferno
   <cImage>k__BackingField: {fileID: -7008412969330441016, guid: efcce9b9312267649ad3455ccfbc0dd6, type: 3}
+  <ardriveLink>k__BackingField: 

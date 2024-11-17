@@ -6,9 +6,7 @@ using DG.Tweening;
 
 /*
     TODO    - WHO WILL GO FIRST? COIN FLIP? 
-            - TURN-BASED COMBAT
-            - CARD HEALTH DESTROY GAMEOBJECT AND AVAILABLE SLOT IS TRUE
-            - CARD TYPE BUFF AND DEBUFF 
+            - TURN-BASED COMBAT 
 */
 
 public class CardGameManager : MonoBehaviour
@@ -27,15 +25,22 @@ public class CardGameManager : MonoBehaviour
     [SerializeField] GameObject gameDoneHUD;
     [SerializeField] Text topPanelText;
 
-
     [Header("Flag")]
     [SerializeField] TMP_Text deckCountText;
     [SerializeField] bool yourTurn;
+
+    [Space(10)]
+    public Card[] selectedCard = new Card[2];
 
     [Header("Timer")]
     [SerializeField] TMP_Text timerText;
     [SerializeField] float timerValue;
  
+    void Awake()
+    {
+        instance = this;
+    }
+
     void Start()
     {
         // SET ALL AVAILABLE CARDS SLOT TO TRUE AT THE START OF THE GAME
@@ -190,6 +195,97 @@ public class CardGameManager : MonoBehaviour
 
     #endregion
 
+    #region  - COMBAT -
+
+    public void CardSelect(Card cSelected)
+    {
+        Debug.Log("Card Select Method!!");
+
+        // CARD SELECT
+        if (cSelected.gameObject.layer == LayerMask.NameToLayer("Your Card"))
+        {
+            if (selectedCard[0] == null)
+            {
+                selectedCard[0] = cSelected;
+            }
+            else
+            {
+                Debug.LogWarning("You cannot select your own card as the target!");
+            }
+        }
+        else if (cSelected.gameObject.layer == LayerMask.NameToLayer("Enemy Card"))
+        {
+            if (selectedCard[1] == null && selectedCard[1] != selectedCard[0])
+            {
+                selectedCard[1] = cSelected;
+                Debug.Log("Second Selected Card: " + cSelected.name);
+            }
+        }
+
+
+        // CARD COMBAT 
+        if (selectedCard[0] != null && selectedCard[1] != null)
+        {
+            CardAttack(selectedCard[0], selectedCard[1]);
+            
+            selectedCard[0] = null;
+            selectedCard[1] = null; 
+
+            // ADD END TURN
+        }
+    }
+
+    void CardAttack(Card attacker, Card defender)
+    {
+        if (attacker.cardSO != null && defender.cardSO != null)
+        {
+            int attackDamage =  attacker.cardSO.cAttack;
+            int damageModifier = GetTypeDamageModifier(attacker.cardSO.cType, defender.cardSO.cType);
+
+            int totalDamage = attackDamage + damageModifier;
+            totalDamage = Mathf.Max(0, totalDamage);
+
+            defender.cardSO.cHealth -= totalDamage;
+
+            Debug.Log($"{attacker.name} dealt {totalDamage} damage to {defender.name}. Remaining health: {defender.cardSO.cHealth}");
+
+            // DEFENDER HEALTH CHECKER 
+            if (defender.cardSO.cHealth <= 0)
+            {
+                Destroy(defender.gameObject);
+                Debug.Log($"{defender.name} has been destroyed!");
+            }
+        }
+        else
+        {
+            Debug.LogWarning("One or both cards are missing CardSO data.");
+        }  
+    }
+
+    int GetTypeDamageModifier(string attackerType, string defenderType)
+    {
+        if (attackerType == "Inferno")
+        {
+            if (defenderType == "Nature") return 1;    // Strong against Nature
+            if (defenderType == "Hydro") return -1;   // Weak against Hydro
+        }
+        else if (attackerType == "Nature")
+        {
+            if (defenderType == "Hydro") return 1;    // Strong against Hydro
+            if (defenderType == "Inferno") return -1; // Weak against Inferno
+        }
+        else if (attackerType == "Hydro")
+        {
+            if (defenderType == "Inferno") return 1;  // Strong against Inferno
+            if (defenderType == "Nature") return -1;  // Weak against Nature
+        }
+
+        // Neutral interaction (no bonus/penalty)
+        return 0;
+    }
+
+    #endregion
+
     void Update()
     {
         deckCountText.text = deck.Count.ToString();
@@ -214,5 +310,4 @@ public class CardGameManager : MonoBehaviour
             DrawCard();
         }
     }
-
 }

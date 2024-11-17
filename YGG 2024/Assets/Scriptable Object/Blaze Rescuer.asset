@@ -15,8 +15,10 @@ MonoBehaviour:
   <UniqueID>k__BackingField: 8a00d940-659b-4e40-870c-654f176fd11e
   <MaxStackableSize>k__BackingField: 1
   <IsStackable>k__BackingField: 0
+  <cHealth>k__BackingField: 20
+  <cAttack>k__BackingField: 4
   <cName>k__BackingField: Blaze Rescuer
   <cDescription>k__BackingField: asdas
-  <cType>k__BackingField: sdasdsa
+  <cType>k__BackingField: Inferno
   <cImage>k__BackingField: {fileID: -7008412969330441016, guid: 02ac95bcdf4830146babd4489563288a, type: 3}
-  <isEquipped>k__BackingField: 0
+  <ardriveLink>k__BackingField: 

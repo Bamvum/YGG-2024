@@ -15,7 +15,10 @@ MonoBehaviour:
   <UniqueID>k__BackingField: f6cb22c9-fd99-4728-b07f-46fa86661ef5
   <MaxStackableSize>k__BackingField: 1
   <IsStackable>k__BackingField: 0
+  <cHealth>k__BackingField: 20
+  <cAttack>k__BackingField: 4
   <cName>k__BackingField: Ashen Phoenix
   <cDescription>k__BackingField: sadasd
-  <cType>k__BackingField: dasdasd
+  <cType>k__BackingField: Inferno
   <cImage>k__BackingField: {fileID: -7008412969330441016, guid: 2fc74fa7747dc0049add021cd64d7a48, type: 3}
+  <ardriveLink>k__BackingField: 
