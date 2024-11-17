@@ -6,7 +6,7 @@ public class GameLobby : BroadcastingChannel
     {
         return SpecificChannel.From<GameLobby>(roomID);
     }
-    public SpecificChannel JoinRoom(string roomID)
+    public SpecificChannel Room(string roomID)
     {
         return SpecificChannel.From<GameLobby>(roomID);
     }

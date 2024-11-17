@@ -4,6 +4,7 @@ using UnityEngine;
 
 using ESDatabase.Classes;
 using TMPro;
+using Solana.Unity.SDK;
 
 public class PlayerClient : UnisaveBroadcastingClient
 {
@@ -12,7 +13,7 @@ public class PlayerClient : UnisaveBroadcastingClient
         Debug.Log("Player logged in");        
     }
     public async void CreateLobby(){
-        UnisaveManager.Instance.lobbyCode = Utilities.GenerateCode(5);
+        MultiplayerManager.Instance.lobbyCode = Utilities.GenerateCode(5);
         var subscription = await OnFacet<RoomManager>
             .CallAsync<ChannelSubscription>(
                 nameof(RoomManager.JoinOnlineChannel),
@@ -21,7 +22,7 @@ public class PlayerClient : UnisaveBroadcastingClient
             );
 
             FromSubscription(subscription)
-            .Forward<PlayerJoinedMessage>(PlayerJoined)
+            .Forward<PlayerJoinedMessage>(PlayerJoin)
             .ElseLogWarning();
             Debug.Log(UnisaveManager.Instance.lobbyCode);
     }
@@ -34,19 +35,20 @@ public class PlayerClient : UnisaveBroadcastingClient
             );
         UnisaveManager.Instance.lobbyCode = UnisaveManager.Instance.lobby.text.ToUpper();
         FromSubscription(subscription)
-            .Forward<PlayerJoinedMessage>(PlayerJoined)
+            .Forward<PlayerJoinedMessage>(PlayerJoin)
             .ElseLogWarning();
     }
-    void ChatMessageReceived(ChatMessage msg)
-    {
-        // "[John]: Hello people!"
-        Debug.Log($"[{msg.playerName}]: {msg.message}");
-    }
 
-    void PlayerJoined(PlayerJoinedMessage msg)
+    // Receiver
+    void PlayerJoin(PlayerJoinedMessage msg)
     {
-        // "John joined the room"
-        Debug.Log($"{msg.playerName} joined the room");
+        Debug.Log("Player Joined: " + msg.playerData.publicKey);
+        if(!msg.playerData.gameData.Equals(Web3.Account.PublicKey)){
+            MultiplayerManager.Instance.LoadEnemy(msg.playerData);
+            MultiplayerManager.Instance.enemyPlayerData = msg.playerData;
+        }
     }
-
+    void ReadyReceive(ReadyMessage readyMessage){
+        MultiplayerManager.Instance.enemyReady = readyMessage.isReady;
+    }
 }
