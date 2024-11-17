@@ -48,22 +48,11 @@ public class Card : MonoBehaviour
         if(CardGameManager.instance != null){
             LobbyData lobby = MultiplayerManager.Instance.lobbyData;
             if(MultiplayerManager.Instance.isJoiner){
-                if(lobby.hostActiveCards[slotNo].cardHP < 1 && lobby.hostCurrentDeck.Count > 0 && !isPlayercard){
-                    CardSO selectedCard = GameManager.instance.cardLists.CardItems.FirstOrDefault(card => card.UniqueID.Equals(lobby.hostCurrentDeck[0].uniqueID));
-                    cardSO = selectedCard;
-                    hp = selectedCard.cHealth;
-                    lobby.hostActiveCards[slotNo].uniqueID = selectedCard.UniqueID;
-                    lobby.hostActiveCards[slotNo].cardHP = selectedCard.cHealth;
-                    DisplayCard();
-                    lobby.hostCurrentDeck.RemoveAt(0);
-                }else if(lobby.hostActiveCards[slotNo].cardHP < 1 && lobby.hostCurrentDeck.Count == 0 && !isPlayercard){
-                    Destroy(gameObject);
-                }
-
                 if(lobby.joinerActiveCards[slotNo].cardHP < 1 && lobby.joinerCurrentDeck.Count > 0 && isPlayercard){
-                    CardSO selectedCard = GameManager.instance.cardLists.CardItems.FirstOrDefault(card => card.UniqueID.Equals(lobby.joinerCurrentDeck[0].uniqueID));
+                    CardSO selectedCard = GameManager.instance.cardLists.CardItems.FirstOrDefault(card => card.UniqueID == lobby.joinerCurrentDeck[0].uniqueID);
                     cardSO = selectedCard;
                     hp = selectedCard.cHealth;
+                    isPlayercard = true;
                     lobby.joinerActiveCards[slotNo].uniqueID = selectedCard.UniqueID;
                     lobby.joinerActiveCards[slotNo].cardHP = selectedCard.cHealth;
                     DisplayCard();
@@ -71,11 +60,25 @@ public class Card : MonoBehaviour
                 }else if(lobby.joinerActiveCards[slotNo].cardHP < 1 && lobby.joinerCurrentDeck.Count == 0 && isPlayercard){
                     Destroy(gameObject);
                 }
-            }else{
-                if(lobby.hostActiveCards[slotNo].cardHP < 1 && lobby.hostCurrentDeck.Count > 0 && isPlayercard){
-                    CardSO selectedCard = GameManager.instance.cardLists.CardItems.FirstOrDefault(card => card.UniqueID.Equals(lobby.hostCurrentDeck[0].uniqueID));
+
+                if(lobby.hostActiveCards[slotNo].cardHP < 1 && lobby.hostCurrentDeck.Count > 0 && !isPlayercard){
+                    CardSO selectedCard = GameManager.instance.cardLists.CardItems.FirstOrDefault(card => card.UniqueID == lobby.hostCurrentDeck[0].uniqueID);
                     cardSO = selectedCard;
                     hp = selectedCard.cHealth;
+                    isPlayercard = false;
+                    lobby.hostActiveCards[slotNo].uniqueID = selectedCard.UniqueID;
+                    lobby.hostActiveCards[slotNo].cardHP = selectedCard.cHealth;
+                    DisplayCard();
+                    lobby.hostCurrentDeck.RemoveAt(0);
+                }else if(lobby.hostActiveCards[slotNo].cardHP < 1 && lobby.hostCurrentDeck.Count == 0 && !isPlayercard){
+                    Destroy(gameObject);
+                }
+            }else{
+                if(lobby.hostActiveCards[slotNo].cardHP < 1 && lobby.hostCurrentDeck.Count > 0 && isPlayercard){
+                    CardSO selectedCard = GameManager.instance.cardLists.CardItems.FirstOrDefault(card => card.UniqueID == lobby.hostCurrentDeck[0].uniqueID);
+                    cardSO = selectedCard;
+                    hp = selectedCard.cHealth;
+                    isPlayercard = true;
                     lobby.hostActiveCards[slotNo].uniqueID = selectedCard.UniqueID;
                     lobby.hostActiveCards[slotNo].cardHP = selectedCard.cHealth;
                     DisplayCard();
@@ -85,9 +88,10 @@ public class Card : MonoBehaviour
                 }
 
                 if(lobby.joinerActiveCards[slotNo].cardHP < 1 && lobby.joinerCurrentDeck.Count > 0 && !isPlayercard){
-                    CardSO selectedCard = GameManager.instance.cardLists.CardItems.FirstOrDefault(card => card.UniqueID.Equals(lobby.joinerCurrentDeck[0].uniqueID));
+                    CardSO selectedCard = GameManager.instance.cardLists.CardItems.FirstOrDefault(card => card.UniqueID == lobby.joinerCurrentDeck[0].uniqueID);
                     cardSO = selectedCard;
                     hp = selectedCard.cHealth;
+                    isPlayercard = false;
                     lobby.joinerActiveCards[slotNo].uniqueID = selectedCard.UniqueID;
                     lobby.joinerActiveCards[slotNo].cardHP = selectedCard.cHealth;
                     DisplayCard();
