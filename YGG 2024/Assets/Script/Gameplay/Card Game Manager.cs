@@ -99,7 +99,7 @@ public class CardGameManager : MonoBehaviour
         if(MultiplayerManager.Instance.isJoiner){
             int j = 0;
             foreach(ActiveCards activeCards in MultiplayerManager.Instance.lobbyData.joinerActiveCards){
-                    CardSO selectedCard = GameManager.instance.cardLists.CardItems.FirstOrDefault(card => card.UniqueID.Equals(activeCards.uniqueID)).CreateCopy();
+                    CardSO selectedCard = GameManager.instance.cardLists.CardItems.FirstOrDefault(card => card.UniqueID == activeCards.uniqueID).CreateCopy();
                     GameObject instantiatedCardObjects = Instantiate(cardPrefab, deckParent.transform);
             
                     instantiatedCardObjects.SetActive(false);
@@ -116,7 +116,7 @@ public class CardGameManager : MonoBehaviour
             }
             int i = 0;
             foreach(ActiveCards activeCards in MultiplayerManager.Instance.lobbyData.hostActiveCards){
-                    CardSO selectedCard = GameManager.instance.cardLists.CardItems.FirstOrDefault(card => card.UniqueID.Equals(activeCards.uniqueID)).CreateCopy();
+                    CardSO selectedCard = GameManager.instance.cardLists.CardItems.FirstOrDefault(card => card.UniqueID == activeCards.uniqueID).CreateCopy();
                     joinerDeck[i].cardSO = selectedCard;
                     joinerDeck[i].slotNo = i;
                     joinerDeck[i].isPlayercard = false;
@@ -126,7 +126,7 @@ public class CardGameManager : MonoBehaviour
         }else{
             int j = 0;
             foreach(ActiveCards activeCards in MultiplayerManager.Instance.lobbyData.hostActiveCards){
-                    CardSO selectedCard = GameManager.instance.cardLists.CardItems.FirstOrDefault(card => card.UniqueID.Equals(activeCards.uniqueID)).CreateCopy();
+                    CardSO selectedCard = GameManager.instance.cardLists.CardItems.FirstOrDefault(card => card.UniqueID == activeCards.uniqueID).CreateCopy();
                     GameObject instantiatedCardObjects = Instantiate(cardPrefab, deckParent.transform);
 
                     instantiatedCardObjects.SetActive(false);
@@ -143,7 +143,7 @@ public class CardGameManager : MonoBehaviour
             }
             int i = 0;
             foreach(ActiveCards activeCards in MultiplayerManager.Instance.lobbyData.joinerActiveCards){
-                    CardSO selectedCard = GameManager.instance.cardLists.CardItems.FirstOrDefault(card => card.UniqueID.Equals(activeCards.uniqueID)).CreateCopy();
+                    CardSO selectedCard = GameManager.instance.cardLists.CardItems.FirstOrDefault(card => card.UniqueID == activeCards.uniqueID).CreateCopy();
                     joinerDeck[i].cardSO = selectedCard;
                     joinerDeck[i].slotNo = i;
                     joinerDeck[i].isPlayercard = false;
@@ -307,10 +307,14 @@ public class CardGameManager : MonoBehaviour
                 damage = totalDamage,
                 attackedSlotNo = selectedCard[1].slotNo
             };
-            if(!MultiplayerManager.Instance.isJoiner){
-                lobby.joinerActiveCards[selectedCard[1].slotNo].cardHP = Math.Max(0, lobby.joinerActiveCards[selectedCard[1].slotNo].cardHP - totalDamage);
-            }else{
-                lobby.hostActiveCards[selectedCard[1].slotNo].cardHP = Math.Max(0, lobby.hostActiveCards[selectedCard[1].slotNo].cardHP - totalDamage);
+            Debug.Log($"Attacking card in slot {selectedCard[1].slotNo} with {totalDamage} damage");
+        
+            if (!MultiplayerManager.Instance.isJoiner) {
+                lobby.joinerActiveCards[selectedCard[1].slotNo].cardHP = Mathf.Max(0, lobby.joinerActiveCards[selectedCard[1].slotNo].cardHP - totalDamage);
+                Debug.Log($"Updated joiner card HP: {lobby.joinerActiveCards[selectedCard[1].slotNo].cardHP}");
+            } else {
+                lobby.hostActiveCards[selectedCard[1].slotNo].cardHP = Mathf.Max(0, lobby.hostActiveCards[selectedCard[1].slotNo].cardHP - totalDamage);
+                Debug.Log($"Updated host card HP: {lobby.hostActiveCards[selectedCard[1].slotNo].cardHP}");
             }
             MultiplayerManager.Instance.SendAction(MultiplayerManager.Instance.lobbyData, actionData);
             yourTurn = !yourTurn;
