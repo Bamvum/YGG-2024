@@ -14,6 +14,16 @@ public class CardsInvDesc : MonoBehaviour
     [SerializeField]
     private TMP_Text Type;
 
+    [SerializeField]
+    private TMP_Text cName;
+    [SerializeField]
+    private TMP_Text cDescription;
+    [SerializeField]
+    private TMP_Text cType;
+
+
+
+
     void Start()
     {
         
@@ -30,7 +40,11 @@ public class CardsInvDesc : MonoBehaviour
         itemImage.sprite = Image;
         Name.text = name;
         Description.text = desc;
-        Type.text = type;   
+        Type.text = type;
+
+        cName.text = name;
+        cDescription.text = desc;
+        cType.text = type;
     }
 
     public void Show()
