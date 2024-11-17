@@ -12534,6 +12534,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d21bb32b83f7ae54ab99d711ea88be56, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &953732448 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 116601329065333278, guid: 43e0feb1371fcd146af5d406cb355cc2, type: 3}
+  m_PrefabInstance: {fileID: 1548584831}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &957465042
 GameObject:
   m_ObjectHideFlags: 0
@@ -26514,7 +26519,7 @@ MonoBehaviour:
   - {fileID: 2110339944}
   ready: {fileID: 21300000, guid: 7ebb475d33a81634e8f3eb98388fc651, type: 3}
   notReady: {fileID: 21300000, guid: 38350092e13fab14eb5b051a9331a083, type: 3}
-  multiplayerUI: {fileID: 1090577385}
+  multiplayerUI: {fileID: 953732448}
   lobbyUI: {fileID: 1506813577}
   lobbyCodeText: {fileID: 1259177061}
   lobbyCodeInput: {fileID: 846981769}
