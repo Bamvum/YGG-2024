@@ -293,13 +293,11 @@ public class CardGameManager : MonoBehaviour
             int totalDamage = attackDamage + damageModifier;
             totalDamage = Mathf.Max(0, totalDamage);
 
-            defender.cardSO.cHealth -= totalDamage;
-            Debug.Log($"{attacker.name} dealt {totalDamage} damage to {defender.name}. Remaining health: {defender.cardSO.cHealth}");
             timerValue = 30;
             ticker = 0;
             ActionData actionData = new ActionData(){
                 attackerCardID = selectedCard[0].cardSO.UniqueID,
-                actionType = ActionType.None,
+                actionType = ActionType.Attack,
                 damage = totalDamage,
                 attackedSlotNo = selectedCard[1].slotNo
             };
