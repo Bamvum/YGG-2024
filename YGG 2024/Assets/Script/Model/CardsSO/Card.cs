@@ -44,7 +44,7 @@ public class Card : MonoBehaviour
     }
     public void Update(){
         if(CardGameManager.instance != null){
-            LobbyData lobby = CardGameManager.instance.lobbyData;
+            LobbyData lobby = MultiplayerManager.Instance.lobbyData;
             if(MultiplayerManager.Instance.isJoiner){
                 Debug.Log(lobby.joinerActiveCards[slotNo].cardHP);
                 if(lobby.joinerActiveCards[slotNo].cardHP < 1 && lobby.joinerCurrentDeck.Count > 0){
