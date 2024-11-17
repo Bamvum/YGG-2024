@@ -20,7 +20,7 @@ public class BuyPacks : MonoBehaviour
             int randomIndex = Random.Range(0, GameManager.instance.cardLists.CardItems.Count);
 
             // Create a new Cards instance for the selected item
-            CardSO selectedCard = GameManager.instance.cardLists.CardItems[randomIndex];
+            CardSO selectedCard = GameManager.instance.cardLists.CardItems[randomIndex].CreateCopy();
             Cards newCard = Utilities.cardtoCards(selectedCard); // Assuming quantity is 1 for each selection
 
             // Add the newCard to itemsToTransfer
