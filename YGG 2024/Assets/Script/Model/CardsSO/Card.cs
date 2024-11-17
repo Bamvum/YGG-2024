@@ -51,7 +51,7 @@ public class Card : MonoBehaviour
                     cardSO = selectedCard;
                     DisplayCard();
                     lobby.joinerCurrentDeck.RemoveAt(0);
-                }else{
+                }else if(lobby.joinerActiveCards[slotNo].cardHP < 1 && lobby.joinerCurrentDeck.Count == 0){
                     Destroy(gameObject);
                 }
             }else{
@@ -60,7 +60,7 @@ public class Card : MonoBehaviour
                     cardSO = selectedCard;
                     DisplayCard();
                     lobby.hostActiveCards.RemoveAt(0);
-                }else{
+                }else if(lobby.hostCurrentDeck[slotNo].cardHP < 1 && lobby.hostCurrentDeck.Count == 0){
                     Destroy(gameObject);
                 }
             }
