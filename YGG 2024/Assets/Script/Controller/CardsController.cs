@@ -193,7 +193,7 @@ public class CardsController : MonoBehaviour
                 inventoryData.UpdateCardAt(cardIndex, cards);
                 ListofUsedItems.Add(item);
                 CardData cardData = new CardData(cards.item.UniqueID);
-                playerData.gameData.cardDeck[cardIndex] = cardData;
+                playerData.gameData.cardDeck[ListofUsedItems.Count - 1] = cardData;
 
                 item.OnItemClicked += HandleItemSelection;
                 usedItemsIndexMap[ListofUsedItems.Count - 1] = cardIndex;
@@ -424,7 +424,6 @@ public class CardsController : MonoBehaviour
 
         CardIndex = itemIndex;
         inventoryUI.SelectItemAtIndex(itemIndex);
-        //DecorSO item = DecorationItem.item;
         inventoryDesc.Show();
         inventoryDesc.UpdateData(inventoryItem.item.cImage, inventoryItem.item.cName, inventoryItem.item.cDescription, inventoryItem.item.cType);
     }
