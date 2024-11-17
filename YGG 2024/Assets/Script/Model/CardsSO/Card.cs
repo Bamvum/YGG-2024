@@ -35,12 +35,7 @@ public class Card : MonoBehaviour
             if(!CardGameManager.instance.yourTurn){
                 Debug.Log("Not Your Turn!");
                 return;
-            }
-            if(isSelected){
-                Deselect();
-            }else{
-                Select();
-            }
+            }            
             CardGameManager.instance.CardSelect(this);
         }
     }
