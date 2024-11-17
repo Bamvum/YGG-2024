@@ -158,21 +158,7 @@ public class PlayerClient : UnisaveBroadcastingClient
     }
     void ReceiveAction(ActionMessage actionMessage){
         MultiplayerManager.Instance.lobbyData = actionMessage.lobbyData;
-        int i = 0;
-        Debug.Log("Joiner: ");
-        foreach(ActiveCards activeCards in actionMessage.lobbyData.joinerActiveCards){
-            Debug.Log(i + " " + activeCards.uniqueID);
-        }
-        foreach(ActiveCards activeCards in actionMessage.lobbyData.joinerCurrentDeck){
-            Debug.Log(i + " " + activeCards.uniqueID);
-        }
-        Debug.Log("Host: ");
-        foreach(ActiveCards activeCards in actionMessage.lobbyData.hostActiveCards){
-            Debug.Log(i + " " + activeCards.uniqueID);
-        }
-        foreach(ActiveCards activeCards in actionMessage.lobbyData.hostCurrentDeck){
-            Debug.Log(i + " " + activeCards.uniqueID);
-        }
+
         if(!actionMessage.playerData.publicKey.Equals(AccountManager.Instance.playerData.publicKey.ToString())){
             CardGameManager.instance.ToggleTurn();
             Debug.Log("Damage Received");
