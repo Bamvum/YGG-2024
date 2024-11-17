@@ -12,6 +12,7 @@ public class MultiplayerManager : MonoBehaviour
     public string lobbyCode = "";
     [SerializeField] public bool playerReady = false;
     [SerializeField] public bool enemyReady = false;
+    [SerializeField] public bool gameStarted = false;
     [Header("Player Data")]
     [SerializeField] public PlayerData playerData;
     [SerializeField] public PlayerData enemyPlayerData;
@@ -58,6 +59,14 @@ public class MultiplayerManager : MonoBehaviour
         }
     }
     public void SetPlayerReady(){
+        if(enemyPlayerData == null) {
+            Debug.Log("Wait for opponent to set ready");
+            return;
+        }
+        if(gameStarted) {
+            Debug.Log("Game is Starting you can't unready!");
+            return;
+        }
         playerReady = !playerReady;
         if(playerReady){
             readyImagePlayer.sprite = ready;
@@ -74,6 +83,9 @@ public class MultiplayerManager : MonoBehaviour
             readyImageEnemy.sprite = notReady;
         }
         
+    }
+    public void StartGame(){
+        this.CallFacet((RoomManager rm) => rm.SendGameStart(lobbyCode, true));
     }
     public void SendReady(){
         this.CallFacet((RoomManager rm) => rm.SendReady(lobbyCode, AccountManager.Instance.playerData,playerReady));

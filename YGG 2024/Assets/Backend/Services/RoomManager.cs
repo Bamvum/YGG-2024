@@ -40,6 +40,15 @@ public class RoomManager : Facet
                 isReady = isReady
             });
     }
+    public void SendGameStart(string roomID, bool isStarted)
+    {        
+        // new player in the room broadcast
+        Broadcast.Channel<GameLobby>()
+            .Room(roomID)
+            .Send(new GameStart {
+                gameStarted = isStarted
+            });
+    }
     public void SendPlayerData(string roomID, PlayerData playerData)
     {        
         // new player in the room broadcast
