@@ -4,49 +4,67 @@ using UnityEngine;
 
 using ESDatabase.Classes;
 using TMPro;
+using Solana.Unity.SDK;
 
 public class PlayerClient : UnisaveBroadcastingClient
 {
     private void OnEnable()
     {
-        Debug.Log("Player logged in");        
+        Debug.Log("Player Logged in");
+    }
+    private void OnDisable(){
+        Debug.Log("Player Logged out");
     }
     public async void CreateLobby(){
-        UnisaveManager.Instance.lobbyCode = Utilities.GenerateCode(5);
+        MultiplayerManager.Instance.lobbyCode = Utilities.GenerateCode(5);
         var subscription = await OnFacet<RoomManager>
             .CallAsync<ChannelSubscription>(
                 nameof(RoomManager.JoinOnlineChannel),
-                UnisaveManager.Instance.lobbyCode,
-                UnisaveManager.Instance.playerData
+                MultiplayerManager.Instance.lobbyCode,
+                AccountManager.Instance.playerData
             );
 
             FromSubscription(subscription)
-            .Forward<PlayerJoinedMessage>(PlayerJoined)
+            .Forward<PlayerJoinedMessage>(PlayerJoin)
+            .Forward<ReadyMessage>(ReadyReceive)
+            .Forward<SendData>(ReceiveEnemy)
             .ElseLogWarning();
-            Debug.Log(UnisaveManager.Instance.lobbyCode);
+            MultiplayerManager.Instance.multiplayerUI.SetActive(false);
+            MultiplayerManager.Instance.lobbyUI.SetActive(true);
+            MultiplayerManager.Instance.StartLobby();
     }
     public async void JoinLobby(){
         var subscription = await OnFacet<RoomManager>
             .CallAsync<ChannelSubscription>(
                 nameof(RoomManager.JoinOnlineChannel),
-                UnisaveManager.Instance.lobby.text.ToUpper(),
-                UnisaveManager.Instance.playerData
+                MultiplayerManager.Instance.lobbyCodeInput.text.ToUpper(),
+                AccountManager.Instance.playerData
             );
-        UnisaveManager.Instance.lobbyCode = UnisaveManager.Instance.lobby.text.ToUpper();
+        MultiplayerManager.Instance.lobbyCode = MultiplayerManager.Instance.lobbyCodeInput.text.ToUpper();
         FromSubscription(subscription)
-            .Forward<PlayerJoinedMessage>(PlayerJoined)
+            .Forward<PlayerJoinedMessage>(PlayerJoin)
+            .Forward<ReadyMessage>(ReadyReceive)
+            .Forward<SendData>(ReceiveEnemy)
             .ElseLogWarning();
-    }
-    void ChatMessageReceived(ChatMessage msg)
-    {
-        // "[John]: Hello people!"
-        Debug.Log($"[{msg.playerName}]: {msg.message}");
+        MultiplayerManager.Instance.multiplayerUI.SetActive(false);
+        MultiplayerManager.Instance.lobbyUI.SetActive(true);
+        MultiplayerManager.Instance.StartLobby();
     }
 
-    void PlayerJoined(PlayerJoinedMessage msg)
+    // Receiver
+    void PlayerJoin(PlayerJoinedMessage msg)
     {
-        // "John joined the room"
-        Debug.Log($"{msg.playerName} joined the room");
+        Debug.Log("Player Joined: " + msg.playerData.publicKey);
+        if(!msg.playerData.publicKey.Equals(AccountManager.Instance.playerData.publicKey.ToString())){
+            MultiplayerManager.Instance.LoadEnemy(msg.playerData);
+            MultiplayerManager.Instance.enemyPlayerData = msg.playerData;
+            MultiplayerManager.Instance.SendPlayerData();
+        }
     }
-
+    void ReadyReceive(ReadyMessage readyMessage){
+        MultiplayerManager.Instance.SetEnemyReady(readyMessage.isReady);
+    }
+    void ReceiveEnemy(SendData data){
+        MultiplayerManager.Instance.LoadEnemy(data.playerData);
+    }
 }
