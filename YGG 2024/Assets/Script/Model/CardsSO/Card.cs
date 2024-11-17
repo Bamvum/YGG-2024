@@ -54,6 +54,9 @@ public class Card : MonoBehaviour
                     CardSO selectedCard = GameManager.instance.cardLists.CardItems.FirstOrDefault(card => card.UniqueID.Equals(lobby.joinerCurrentDeck[0].uniqueID));
                     cardSO = selectedCard;
                     hp = selectedCard.cHealth;
+                    lobby.joinerActiveCards[slotNo].uniqueID = selectedCard.UniqueID;
+                    lobby.joinerActiveCards[slotNo].cardHP = selectedCard.cHealth;
+                    
                     DisplayCard();
                     lobby.joinerCurrentDeck.RemoveAt(0);
                 }else if(lobby.joinerActiveCards[slotNo].cardHP < 1 && lobby.joinerCurrentDeck.Count == 0 && isPlayercard){
@@ -64,6 +67,8 @@ public class Card : MonoBehaviour
                     CardSO selectedCard = GameManager.instance.cardLists.CardItems.FirstOrDefault(card => card.UniqueID.Equals(lobby.hostCurrentDeck[0].uniqueID));
                     cardSO = selectedCard;
                     hp = selectedCard.cHealth;
+                    lobby.hostActiveCards[slotNo].uniqueID = selectedCard.UniqueID;
+                    lobby.hostActiveCards[slotNo].cardHP = selectedCard.cHealth;
                     DisplayCard();
                     lobby.hostCurrentDeck.RemoveAt(0);
                 }else if(lobby.joinerActiveCards[slotNo].cardHP < 1 && lobby.hostCurrentDeck.Count == 0&& !isPlayercard){
@@ -75,6 +80,8 @@ public class Card : MonoBehaviour
                     CardSO selectedCard = GameManager.instance.cardLists.CardItems.FirstOrDefault(card => card.UniqueID.Equals(lobby.hostCurrentDeck[0].uniqueID));
                     cardSO = selectedCard;
                     hp = selectedCard.cHealth;
+                    lobby.hostActiveCards[slotNo].uniqueID = selectedCard.UniqueID;
+                    lobby.hostActiveCards[slotNo].cardHP = selectedCard.cHealth;
                     DisplayCard();
                     lobby.hostCurrentDeck.RemoveAt(0);
                 }else if(lobby.hostActiveCards[slotNo].cardHP < 1 && lobby.hostCurrentDeck.Count == 0 && isPlayercard){
@@ -85,6 +92,8 @@ public class Card : MonoBehaviour
                     CardSO selectedCard = GameManager.instance.cardLists.CardItems.FirstOrDefault(card => card.UniqueID.Equals(lobby.joinerCurrentDeck[0].uniqueID));
                     cardSO = selectedCard;
                     hp = selectedCard.cHealth;
+                    lobby.joinerActiveCards[slotNo].uniqueID = selectedCard.UniqueID;
+                    lobby.joinerActiveCards[slotNo].cardHP = selectedCard.cHealth;
                     DisplayCard();
                     lobby.joinerCurrentDeck.RemoveAt(0);
                 }else if(lobby.joinerActiveCards[slotNo].cardHP < 1 && lobby.joinerCurrentDeck.Count == 0 && !isPlayercard){
