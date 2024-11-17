@@ -62,7 +62,9 @@ public class PlayerClient : UnisaveBroadcastingClient
         }
     }
     void ReadyReceive(ReadyMessage readyMessage){
-        MultiplayerManager.Instance.SetEnemyReady(readyMessage.isReady);
+        if(!readyMessage.playerData.publicKey.Equals(AccountManager.Instance.playerData.publicKey.ToString())){
+            MultiplayerManager.Instance.SetEnemyReady(readyMessage.isReady);
+        }
     }
     void ReceiveEnemy(SendData data){
         MultiplayerManager.Instance.LoadEnemy(data.playerData);

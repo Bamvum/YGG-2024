@@ -15,6 +15,7 @@ namespace ESDatabase.Classes
     }
 
     public class ReadyMessage : BroadcastingMessage{
+        public PlayerData playerData;
         public bool isReady;
     }
     public class SendData : BroadcastingMessage{
