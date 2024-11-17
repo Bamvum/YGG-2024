@@ -47,7 +47,6 @@ public class MultiplayerManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
-
     public void StartLobby(){
         lobbyCodeText.text = "Lobby Code: " + lobbyCode;
         playerPubKey.text = "Player: " + Web3.Account.PublicKey;
