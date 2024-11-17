@@ -208,7 +208,7 @@ public class CardGameManager : MonoBehaviour
 
     void TimerToEndTurn()
     {
-        timerValue -= 1 * Time.deltaTime;
+        timerValue -= ticker * Time.deltaTime;
 
         int seconds = Mathf.FloorToInt(timerValue % 60);
 
@@ -230,36 +230,28 @@ public class CardGameManager : MonoBehaviour
     public void CardSelect(Card cSelected)
     {
         
-        if(!yourTurn){
-            Debug.Log("Not Your Turn!");
-            return;
-        }
         Debug.Log("Card Select Method!!");
 
         // CARD SELECT
         if (cSelected.gameObject.layer == LayerMask.NameToLayer("Your Card"))
         {
-            if(selectedCard[0] != null){
-                if(selectedCard[0].isSelected){
-                    selectedCard[0].Deselect();
-                }
-            }
             if (selectedCard[0] == null)
             {
-                if(selectedCard[0].isSelected){
-                    selectedCard[0] = cSelected;    
-                }else{
-                    selectedCard[0] = null;
-                }
-                
+                selectedCard[0] = cSelected;
+                selectedCard[0].Select();
+            }else{
+                selectedCard[0].Deselect();
+                selectedCard[0] = cSelected;    
+                selectedCard[0].Select();
             }
         }
         else if (cSelected.gameObject.layer == LayerMask.NameToLayer("Enemy Card"))
         {
-            if (selectedCard[1] == null && selectedCard[1] != selectedCard[0])
-            {
+            if(selectedCard[0] != null && selectedCard[1] == null){
                 selectedCard[1] = cSelected;
-                Debug.Log("Second Selected Card: " + cSelected.name);
+                selectedCard[1].Select();
+            }else{
+                Debug.Log("Select a card first");
             }
         }
 
@@ -278,6 +270,11 @@ public class CardGameManager : MonoBehaviour
     }
     public void ToggleTurn(){
         yourTurn = !yourTurn;
+        if(yourTurn){
+            ticker = 1;
+        }else{
+            ticker = 0;
+        }
     }
     void CardAttack(Card attacker, Card defender)
     {
@@ -290,8 +287,12 @@ public class CardGameManager : MonoBehaviour
             totalDamage = Mathf.Max(0, totalDamage);
 
             defender.cardSO.cHealth -= totalDamage;
-
             Debug.Log($"{attacker.name} dealt {totalDamage} damage to {defender.name}. Remaining health: {defender.cardSO.cHealth}");
+            timerValue = 30;
+            ticker = 0;
+            MultiplayerManager.Instance.SendSwap();
+            yourTurn = !yourTurn;
+            Debug.Log("Player End Turn");
             // DEFENDER HEALTH CHECKER 
             if (defender.cardSO.cHealth <= 0)
             {
