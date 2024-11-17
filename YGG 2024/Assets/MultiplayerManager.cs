@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using ESDatabase.Classes;
 using Solana.Unity.SDK;
 using Solana.Unity.Wallet;
+using Unisave.Facets;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -25,6 +26,7 @@ public class MultiplayerManager : MonoBehaviour
     [SerializeField] public GameObject multiplayerUI;
     [SerializeField] public GameObject lobbyUI;
     [SerializeField] public Text lobbyCodeText;
+    [SerializeField] public InputField lobbyCodeInput;
     [Header("Singleton")]
     public static MultiplayerManager Instance;
     public void Awake(){
@@ -33,7 +35,10 @@ public class MultiplayerManager : MonoBehaviour
         }else{
             Destroy(gameObject);
         }
-        lobbyCodeText.text = lobbyCode;
+    }
+
+    public void StartLobby(){
+        lobbyCodeText.text = "Lobby Code: " + lobbyCode;
         playerPubKey.text = "Player: " + Web3.Account.PublicKey;
         playerData = AccountManager.Instance.playerData;
         int i = 0;
@@ -50,5 +55,7 @@ public class MultiplayerManager : MonoBehaviour
             Debug.Log(cardData.cardID);
         }
     }
-
+    public void SendPlayerData(){
+        this.CallFacet((RoomManager rm) => rm.SendPlayerData(lobbyCode, AccountManager.Instance.playerData));
+    }
 }

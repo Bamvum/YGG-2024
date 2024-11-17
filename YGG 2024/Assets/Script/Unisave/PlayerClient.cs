@@ -10,33 +10,40 @@ public class PlayerClient : UnisaveBroadcastingClient
 {
     private void OnEnable()
     {
-        Debug.Log("Player logged in");        
+        Debug.Log("Player Logged in");
+    }
+    private void OnDisable(){
+        Debug.Log("Player Logged out");
     }
     public async void CreateLobby(){
         MultiplayerManager.Instance.lobbyCode = Utilities.GenerateCode(5);
         var subscription = await OnFacet<RoomManager>
             .CallAsync<ChannelSubscription>(
                 nameof(RoomManager.JoinOnlineChannel),
-                UnisaveManager.Instance.lobbyCode,
-                UnisaveManager.Instance.playerData
+                MultiplayerManager.Instance.lobbyCode,
+                AccountManager.Instance.playerData
             );
 
             FromSubscription(subscription)
-            .Forward<PlayerJoinedMessage>(PlayerJoin)
             .ElseLogWarning();
-            Debug.Log(UnisaveManager.Instance.lobbyCode);
+            MultiplayerManager.Instance.multiplayerUI.SetActive(false);
+            MultiplayerManager.Instance.lobbyUI.SetActive(true);
+            MultiplayerManager.Instance.StartLobby();
     }
     public async void JoinLobby(){
         var subscription = await OnFacet<RoomManager>
             .CallAsync<ChannelSubscription>(
                 nameof(RoomManager.JoinOnlineChannel),
-                UnisaveManager.Instance.lobby.text.ToUpper(),
-                UnisaveManager.Instance.playerData
+                MultiplayerManager.Instance.lobbyCodeInput.text.ToUpper(),
+                AccountManager.Instance.playerData
             );
-        UnisaveManager.Instance.lobbyCode = UnisaveManager.Instance.lobby.text.ToUpper();
+        MultiplayerManager.Instance.lobbyCode = MultiplayerManager.Instance.lobbyCodeInput.text.ToUpper();
         FromSubscription(subscription)
             .Forward<PlayerJoinedMessage>(PlayerJoin)
             .ElseLogWarning();
+        MultiplayerManager.Instance.multiplayerUI.SetActive(false);
+        MultiplayerManager.Instance.lobbyUI.SetActive(true);
+        MultiplayerManager.Instance.StartLobby();
     }
 
     // Receiver
@@ -46,6 +53,7 @@ public class PlayerClient : UnisaveBroadcastingClient
         if(!msg.playerData.gameData.Equals(Web3.Account.PublicKey)){
             MultiplayerManager.Instance.LoadEnemy(msg.playerData);
             MultiplayerManager.Instance.enemyPlayerData = msg.playerData;
+            // MultiplayerManager.Instance.SendPlayerData();
         }
     }
     void ReadyReceive(ReadyMessage readyMessage){

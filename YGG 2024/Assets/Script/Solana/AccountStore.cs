@@ -10,6 +10,7 @@ public class AccountStore : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI publicKey;
     [SerializeField] TextMeshProUGUI balance;
+    [SerializeField] public PlayerClient playerClient;
     private void OnEnable(){
         Web3.OnLogin += OnLogin;
         Web3.OnLogout += OnLogout;
@@ -27,6 +28,7 @@ public class AccountStore : MonoBehaviour
             PlayerUIManager.Instance.CloseLoader();
             PlayerUIManager.Instance.CloseConnection();
             PlayerUIManager.Instance.OpenMainmenu();
+            playerClient.enabled = true;
         }).Catch(error => 
         {
             PlayerUIManager.Instance.CloseLoader();
@@ -36,6 +38,7 @@ public class AccountStore : MonoBehaviour
     private void OnLogout(){
         publicKey.SetText("");
         balance.SetText("");
+        playerClient.enabled = false;
         PlayerUIManager.Instance.CloseMainmenu();
         PlayerUIManager.Instance.OpenConnection();
     }
