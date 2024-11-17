@@ -7,30 +7,42 @@ public class BuyPacks : MonoBehaviour
 {
     public async void BuyRandomItems()
     {
-        GameManager.instance.itemsToTransfer.Clear();
-        PlayerData playerData = AccountManager.Instance.playerData;
-        // Randomly select 6 items from CardItems
-        List<CardData> listCards = new List<CardData>(); 
-        for (int i = 0; i < 6; i++)
+
+        if (GameManager.instance.PlayerMoney >= 1000)
         {
-            // Ensure we have items to select from
-            if (GameManager.instance.cardLists.CardItems.Count == 0) return;
 
-            // Select a random index
-            int randomIndex = Random.Range(0, GameManager.instance.cardLists.CardItems.Count);
+            GameManager.instance.itemsToTransfer.Clear();
+            PlayerData playerData = AccountManager.Instance.playerData;
+            // Randomly select 6 items from CardItems
+            List<CardData> listCards = new List<CardData>();
+            for (int i = 0; i < 6; i++)
+            {
+                // Ensure we have items to select from
+                if (GameManager.instance.cardLists.CardItems.Count == 0) return;
 
-            // Create a new Cards instance for the selected item
-            CardSO selectedCard = GameManager.instance.cardLists.CardItems[randomIndex].CreateCopy();
-            Cards newCard = Utilities.cardtoCards(selectedCard); // Assuming quantity is 1 for each selection
+                // Select a random index
+                int randomIndex = Random.Range(0, GameManager.instance.cardLists.CardItems.Count);
 
-            // Add the newCard to itemsToTransfer
-            GameManager.instance.AddItemToTransfer(newCard);
-            CardData cardData = new CardData(newCard.item.UniqueID);
-            listCards.Add(cardData);
+                // Create a new Cards instance for the selected item
+                CardSO selectedCard = GameManager.instance.cardLists.CardItems[randomIndex].CreateCopy();
+                Cards newCard = Utilities.cardtoCards(selectedCard); // Assuming quantity is 1 for each selection
+
+                // Add the newCard to itemsToTransfer
+                GameManager.instance.AddItemToTransfer(newCard);
+                CardData cardData = new CardData(newCard.item.UniqueID);
+                listCards.Add(cardData);
+            }
+
+            playerData.gameData.cardList.AddRange(listCards);
+            await AccountManager.SaveData(playerData);
+
+            GameManager.instance.PlayerMoney -= 1000;
+
         }
-        
-        playerData.gameData.cardList.AddRange(listCards);
-        await AccountManager.SaveData(playerData);
+        else
+        {
+            Debug.Log("Not Enough Money");
+        }
     }
 
 
