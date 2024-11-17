@@ -1,6 +1,7 @@
 using System.Linq;
 using Assets.PixelHeroes.Scripts.CharacterScrips;
 using Assets.PixelHeroes.Scripts.EditorScripts;
+using DG.Tweening;
 using ESDatabase.Classes;
 using Solana.Unity.Soar.Accounts;
 using UnityEngine;
@@ -19,6 +20,9 @@ public class PlayerUIManager : MonoBehaviour
     [SerializeField] public GameObject characterBuilder;
     [Header("Cameras")]
     [SerializeField] public GameObject mainMenuCamera;
+    [Header("Loader")]
+    [SerializeField] public GameObject loader;
+    [SerializeField] public CanvasGroup loaderCG;
     [Header("Scripts")]
     [SerializeField] public CharacterEditor characterEditor;
     [SerializeField] public CardsController cardsController;
@@ -43,6 +47,14 @@ public class PlayerUIManager : MonoBehaviour
     }
     public void CloseConnection(){
         connectionMenu.GetComponent<DoMove>().Close();
+    }
+    public async void OpenLoader(){
+        loader.SetActive(true);
+        await loaderCG.DOFade(1, 0.5f).SetEase(Ease.InOutSine).SetUpdate(true).AsyncWaitForCompletion();
+    }
+    public async void CloseLoader(){
+        await loaderCG.DOFade(0, 0.5f).SetEase(Ease.InOutSine).SetUpdate(true).AsyncWaitForCompletion();
+        loader.SetActive(false);
     }
     // Play Game
     public void PlayGame(){
@@ -80,11 +92,13 @@ public class PlayerUIManager : MonoBehaviour
             // GameManager.instance.characterBuilder.Cape = layers["Cape"];
             // GameManager.instance.characterBuilder.Back = layers["Back"];
             playerData.gameData.isNew = false;
+            
             GameManager.instance.characterBuilder.Head = playerSkin.head;
             GameManager.instance.characterBuilder.Body = playerSkin.body;
             GameManager.instance.characterBuilder.Hair = playerSkin.hair;
             GameManager.instance.characterBuilder.Armor = playerSkin.armor;
             GameManager.instance.characterBuilder.Rebuild();
+            GameManager.instance.PlayerMoney = playerData.gameData.money;
             cardsController.LoadDatabase();
             await AccountManager.SaveData(playerData);
             playerUI.SetActive(true);

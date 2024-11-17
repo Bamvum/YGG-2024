@@ -17,15 +17,21 @@ public class AccountStore : MonoBehaviour
         Web3.OnNFTsUpdate += OnNFTsUpdate;
     }
 
-    private void OnLogin(Account account){
+    private async void OnLogin(Account account){
+        PlayerUIManager.Instance.OpenLoader();
         publicKey.SetText("Public Key: " + account.PublicKey);
-        this.CallFacet((DatabaseService ds) => ds.CreateAccount(account.PublicKey))
+        await this.CallFacet((DatabaseService ds) => ds.CreateAccount(account.PublicKey))
         .Then(response => {
             AccountManager.Instance.playerData = response;
             Debug.Log("Success");
+            PlayerUIManager.Instance.CloseLoader();
+            PlayerUIManager.Instance.CloseConnection();
+            PlayerUIManager.Instance.OpenMainmenu();
+        }).Catch(error => 
+        {
+            PlayerUIManager.Instance.CloseLoader();
         });
-        PlayerUIManager.Instance.CloseConnection();
-        PlayerUIManager.Instance.OpenMainmenu();
+        
     }
     private void OnLogout(){
         publicKey.SetText("");

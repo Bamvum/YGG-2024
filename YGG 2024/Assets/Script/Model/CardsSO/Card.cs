@@ -28,9 +28,9 @@ public class Card : MonoBehaviour
 
     private void Start()
     {
-        cardButton.onClick.AddListener(() => CardGameManager.instance.CardSelect(this));
+        //cardButton.onClick.AddListener(() => CardGameManager.instance.CardSelect(this));
 
-        DisplayCard();
+        //DisplayCard();
     }
 
     void DisplayCard()
