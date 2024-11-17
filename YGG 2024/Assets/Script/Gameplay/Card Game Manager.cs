@@ -46,6 +46,11 @@ public class CardGameManager : MonoBehaviour
         for(int i = 0; i < availableCardSlots.Length; i++){
             availableCardSlots[i] = true;
         }
+        if(MultiplayerManager.Instance.isJoiner){
+            yourTurn = lobbyData.joinerTurn;
+        }else{
+            yourTurn = lobbyData.hostTurn;
+        }
         InstantiateCardDeck();
         DrawThreeCards();
     }
@@ -220,6 +225,11 @@ public class CardGameManager : MonoBehaviour
 
     public void CardSelect(Card cSelected)
     {
+        
+        if(!yourTurn){
+            Debug.Log("Not Your Turn!");
+            return;
+        }
         Debug.Log("Card Select Method!!");
 
         // CARD SELECT
@@ -227,7 +237,12 @@ public class CardGameManager : MonoBehaviour
         {
             if (selectedCard[0] == null)
             {
-                selectedCard[0] = cSelected;
+                if(selectedCard[0].isSelected){
+                    selectedCard[0] = cSelected;    
+                }else{
+                    selectedCard[0] = null;
+                }
+                
             }
             else
             {
@@ -248,7 +263,8 @@ public class CardGameManager : MonoBehaviour
         if (selectedCard[0] != null && selectedCard[1] != null)
         {
             CardAttack(selectedCard[0], selectedCard[1]);
-            
+            selectedCard[0].Deselect();
+            selectedCard[1].Deselect();
             selectedCard[0] = null;
             selectedCard[1] = null; 
 
@@ -269,7 +285,6 @@ public class CardGameManager : MonoBehaviour
             defender.cardSO.cHealth -= totalDamage;
 
             Debug.Log($"{attacker.name} dealt {totalDamage} damage to {defender.name}. Remaining health: {defender.cardSO.cHealth}");
-
             // DEFENDER HEALTH CHECKER 
             if (defender.cardSO.cHealth <= 0)
             {

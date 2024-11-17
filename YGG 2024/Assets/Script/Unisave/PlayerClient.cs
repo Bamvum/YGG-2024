@@ -92,6 +92,7 @@ public class PlayerClient : UnisaveBroadcastingClient
             MultiplayerManager.Instance.SendPlayerData();
         }
     }
+    // NANDITO YUNG START GAME NA ISA
     void ReadyReceive(ReadyMessage readyMessage){
         if(!readyMessage.playerData.publicKey.Equals(AccountManager.Instance.playerData.publicKey.ToString())){
             MultiplayerManager.Instance.SetEnemyReady(readyMessage.isReady);
@@ -114,6 +115,7 @@ public class PlayerClient : UnisaveBroadcastingClient
             }
         }
     }
+    // NANDITO YUNG START GAME RECEIVE
     void ReceiveStartGame(GameStart game){
         if(!game.playerData.publicKey.Equals(AccountManager.Instance.playerData.publicKey.ToString())){
             MultiplayerManager.Instance.lobbyUI.SetActive(false);
