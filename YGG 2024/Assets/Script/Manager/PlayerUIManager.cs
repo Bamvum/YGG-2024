@@ -80,11 +80,13 @@ public class PlayerUIManager : MonoBehaviour
             // GameManager.instance.characterBuilder.Cape = layers["Cape"];
             // GameManager.instance.characterBuilder.Back = layers["Back"];
             playerData.gameData.isNew = false;
+            
             GameManager.instance.characterBuilder.Head = playerSkin.head;
             GameManager.instance.characterBuilder.Body = playerSkin.body;
             GameManager.instance.characterBuilder.Hair = playerSkin.hair;
             GameManager.instance.characterBuilder.Armor = playerSkin.armor;
             GameManager.instance.characterBuilder.Rebuild();
+            GameManager.instance.PlayerMoney = playerData.gameData.money;
             cardsController.LoadDatabase();
             await AccountManager.SaveData(playerData);
             playerUI.SetActive(true);

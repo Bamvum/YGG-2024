@@ -20,10 +20,14 @@ public class GameManager : MonoBehaviour
 
     public CardList cardLists;
 
-    public int PlayerMoney = 0;
+    public double PlayerMoney = 0;
+    public Text PlayerMoneyText;
 
+    
     void Start()
     {
+        
+        
         // Editor.onClick.AddListener(OpenEditor);
     }
 
@@ -36,7 +40,15 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        PlayerMoneyText.text = PlayerMoney.ToString();
         
+    }
+
+    public async void OnApplicationQuit()
+    {
+        PlayerData playerData = AccountManager.Instance.playerData;
+        playerData.gameData.money = PlayerMoney;
+        await AccountManager.SaveData(playerData);
     }
 
     public void OpenEditor()
@@ -46,7 +58,7 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        //questEvents = new QuestEvent();
+       
         if (instance == null)
         {
 
