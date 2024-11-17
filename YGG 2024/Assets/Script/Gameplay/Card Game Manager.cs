@@ -6,8 +6,7 @@ using DG.Tweening;
 
 /*
     TODO    - WHO WILL GO FIRST? COIN FLIP? 
-            - TURN-BASED COMBAT
-            - CARD TYPE BUFF AND DEBUFF 
+            - TURN-BASED COMBAT 
 */
 
 public class CardGameManager : MonoBehaviour
@@ -198,26 +197,31 @@ public class CardGameManager : MonoBehaviour
 
     #region  - COMBAT -
 
-    // BUGS -  YOUR CARD TO YOUR CARD DAMAGE
-     
-
     public void CardSelect(Card cSelected)
     {
         Debug.Log("Card Select Method!!");
-        
-        if (selectedCard[0] == null)
+
+        // CARD SELECT
+        if (cSelected.gameObject.layer == LayerMask.NameToLayer("Your Card"))
         {
-            selectedCard[0] = cSelected;
+            if (selectedCard[0] == null)
+            {
+                selectedCard[0] = cSelected;
+            }
+            else
+            {
+                Debug.LogWarning("You cannot select your own card as the target!");
+            }
         }
-        else if (selectedCard[1] == null && selectedCard[1] != selectedCard[0])
+        else if (cSelected.gameObject.layer == LayerMask.NameToLayer("Enemy Card"))
         {
-            selectedCard[1] = cSelected;
-            Debug.Log("Second Selected Card: " + cSelected.name);
+            if (selectedCard[1] == null && selectedCard[1] != selectedCard[0])
+            {
+                selectedCard[1] = cSelected;
+                Debug.Log("Second Selected Card: " + cSelected.name);
+            }
         }
-        else
-        {
-            Debug.LogWarning("Both slots are filled or the same card is being selected twice.");
-        }
+
 
         // CARD COMBAT 
         if (selectedCard[0] != null && selectedCard[1] != null)
@@ -227,11 +231,7 @@ public class CardGameManager : MonoBehaviour
             selectedCard[0] = null;
             selectedCard[1] = null; 
 
-            // END TURN
-        }
-        else
-        {
-            Debug.LogWarning("You must select an attacking card and a target card before performing damage.");
+            // ADD END TURN
         }
     }
 
@@ -240,13 +240,14 @@ public class CardGameManager : MonoBehaviour
         if (attacker.cardSO != null && defender.cardSO != null)
         {
             int attackDamage =  attacker.cardSO.cAttack;
-            defender.cardSO.cHealth -= attackDamage;
+            int damageModifier = GetTypeDamageModifier(attacker.cardSO.cType, defender.cardSO.cType);
 
-            /*
-                INSERT CARD TYPE DAMAGE
-            */
+            int totalDamage = attackDamage + damageModifier;
+            totalDamage = Mathf.Max(0, totalDamage);
 
-            Debug.Log($"{attacker.name} dealt {attackDamage} damage to {defender.name}. Remaining health: {defender.cardSO.cHealth}");
+            defender.cardSO.cHealth -= totalDamage;
+
+            Debug.Log($"{attacker.name} dealt {totalDamage} damage to {defender.name}. Remaining health: {defender.cardSO.cHealth}");
 
             // DEFENDER HEALTH CHECKER 
             if (defender.cardSO.cHealth <= 0)
@@ -261,8 +262,29 @@ public class CardGameManager : MonoBehaviour
         }  
     }
 
-    #endregion
+    int GetTypeDamageModifier(string attackerType, string defenderType)
+    {
+        if (attackerType == "Inferno")
+        {
+            if (defenderType == "Nature") return 1;    // Strong against Nature
+            if (defenderType == "Hydro") return -1;   // Weak against Hydro
+        }
+        else if (attackerType == "Nature")
+        {
+            if (defenderType == "Hydro") return 1;    // Strong against Hydro
+            if (defenderType == "Inferno") return -1; // Weak against Inferno
+        }
+        else if (attackerType == "Hydro")
+        {
+            if (defenderType == "Inferno") return 1;  // Strong against Inferno
+            if (defenderType == "Nature") return -1;  // Weak against Nature
+        }
 
+        // Neutral interaction (no bonus/penalty)
+        return 0;
+    }
+
+    #endregion
 
     void Update()
     {
@@ -288,5 +310,4 @@ public class CardGameManager : MonoBehaviour
             DrawCard();
         }
     }
-
 }
