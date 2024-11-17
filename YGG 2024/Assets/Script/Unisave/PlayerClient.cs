@@ -25,6 +25,7 @@ public class PlayerClient : UnisaveBroadcastingClient
             );
 
             FromSubscription(subscription)
+            .Forward<PlayerJoinedMessage>(PlayerJoin)
             .ElseLogWarning();
             MultiplayerManager.Instance.multiplayerUI.SetActive(false);
             MultiplayerManager.Instance.lobbyUI.SetActive(true);
