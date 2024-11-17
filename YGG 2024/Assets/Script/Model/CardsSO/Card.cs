@@ -2,6 +2,7 @@ using Solana.Unity.Soar.Accounts;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class Card : MonoBehaviour
@@ -28,9 +29,13 @@ public class Card : MonoBehaviour
 
     private void Start()
     {
-        //cardButton.onClick.AddListener(() => CardGameManager.instance.CardSelect(this));
+        if (SceneManager.GetActiveScene().name == "Testing Gameplay")
+        {
+            cardButton.onClick.AddListener(() => CardGameManager.instance.CardSelect(this));
 
-        //DisplayCard();
+            DisplayCard();
+        }
+
     }
 
     void DisplayCard()
@@ -41,11 +46,6 @@ public class Card : MonoBehaviour
         cardImage.sprite = cardSO.cImage;
         
         cardTypes.text = cardSO.cType;
-
-        // CHANGE COLOR OF TEXT
-        // INFERNO = RED
-        // NATURE = GREEN
-        // HYDRO = BLUE
 
         if (cardSO.cType == "Inferno")
         {
