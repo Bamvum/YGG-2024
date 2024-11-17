@@ -144,20 +144,35 @@ public class PlayerClient : UnisaveBroadcastingClient
             //     CardSO selectedCard = GameManager.instance.cardLists.CardItems.FirstOrDefault(card => card.UniqueID.Equals(activeCards.uniqueID));
             //     Debug.Log(selectedCard.cName);
             // }
-            Debug.Log("Joiner Current Active Cards:");
-            foreach(ActiveCards activeCards in MultiplayerManager.Instance.lobbyData.joinerActiveCards){
-                CardSO selectedCard = GameManager.instance.cardLists.CardItems.FirstOrDefault(card => card.UniqueID.Equals(activeCards.uniqueID)).CreateCopy();
-                Debug.Log(activeCards.cardHP);
-            }
-            Debug.Log("Joiner Current Deck:");
-            foreach(ActiveCards activeCards in MultiplayerManager.Instance.lobbyData.joinerCurrentDeck){
-                CardSO selectedCard = GameManager.instance.cardLists.CardItems.FirstOrDefault(card => card.UniqueID.Equals(activeCards.uniqueID)).CreateCopy();
-                Debug.Log(activeCards.cardHP);
-            }
+            // Debug.Log("Joiner Current Active Cards:");
+            // foreach(ActiveCards activeCards in MultiplayerManager.Instance.lobbyData.joinerActiveCards){
+            //     CardSO selectedCard = GameManager.instance.cardLists.CardItems.FirstOrDefault(card => card.UniqueID.Equals(activeCards.uniqueID)).CreateCopy();
+            //     Debug.Log(activeCards.cardHP);
+            // }
+            // Debug.Log("Joiner Current Deck:");
+            // foreach(ActiveCards activeCards in MultiplayerManager.Instance.lobbyData.joinerCurrentDeck){
+            //     CardSO selectedCard = GameManager.instance.cardLists.CardItems.FirstOrDefault(card => card.UniqueID.Equals(activeCards.uniqueID)).CreateCopy();
+            //     Debug.Log(activeCards.cardHP);
+            // }
         }   
     }
     void ReceiveAction(ActionMessage actionMessage){
         MultiplayerManager.Instance.lobbyData = actionMessage.lobbyData;
+        int i = 0;
+        Debug.Log("Joiner: ");
+        foreach(ActiveCards activeCards in actionMessage.lobbyData.joinerActiveCards){
+            Debug.Log(i + " " + activeCards.uniqueID);
+        }
+        foreach(ActiveCards activeCards in actionMessage.lobbyData.joinerCurrentDeck){
+            Debug.Log(i + " " + activeCards.uniqueID);
+        }
+        Debug.Log("Host: ");
+        foreach(ActiveCards activeCards in actionMessage.lobbyData.hostActiveCards){
+            Debug.Log(i + " " + activeCards.uniqueID);
+        }
+        foreach(ActiveCards activeCards in actionMessage.lobbyData.hostCurrentDeck){
+            Debug.Log(i + " " + activeCards.uniqueID);
+        }
         if(!actionMessage.playerData.publicKey.Equals(AccountManager.Instance.playerData.publicKey.ToString())){
             CardGameManager.instance.ToggleTurn();
             Debug.Log("Damage Received");
