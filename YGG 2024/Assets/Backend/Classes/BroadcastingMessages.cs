@@ -22,8 +22,13 @@ namespace ESDatabase.Classes
         public PlayerData playerData;
         public bool isReady;
     }
+    public class InGameMessage : BroadcastingMessage{
+        public PlayerData playerData;
+        public bool inGame;
+    }
     public class SendData : BroadcastingMessage{
         public PlayerData playerData;
+        public LobbyData lobbyData;
     }
     public class CoinflipMessage : BroadcastingMessage
     {

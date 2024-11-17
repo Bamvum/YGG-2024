@@ -38,7 +38,7 @@ public class Card : MonoBehaviour
 
     }
 
-    void DisplayCard()
+    public void DisplayCard()
     {
         cardHealth = cardSO.cHealth;
         cardName.text = cardSO.cName;

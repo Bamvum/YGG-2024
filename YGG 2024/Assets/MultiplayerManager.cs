@@ -1,17 +1,22 @@
 using System.Collections.Generic;
+using System.Linq;
 using ESDatabase.Classes;
 using Solana.Unity.SDK;
 using Solana.Unity.Wallet;
 using Unisave.Facets;
 using UnityEngine;
 using UnityEngine.UI;
+using static CardSOData;
 
 public class MultiplayerManager : MonoBehaviour
 {
     [Header("Lobby Data")]
     public string lobbyCode = "";
+    [SerializeField] public LobbyData lobbyData;
     [SerializeField] public bool playerReady = false;
     [SerializeField] public bool enemyReady = false;
+    [SerializeField] public bool playerInGame = false;
+    [SerializeField] public bool enemyInGame = false;
     [SerializeField] public bool gameStarted = false;
     [Header("Player Data")]
     [SerializeField] public PlayerData playerData;
@@ -46,16 +51,31 @@ public class MultiplayerManager : MonoBehaviour
         playerData = AccountManager.Instance.playerData;
         int i = 0;
         foreach(CardData cardData in playerData.gameData.cardDeck){
-            Debug.Log(cardData.cardID);
+            if(cardData != null){
+                CardSO selectedCard = GameManager.instance.cardLists.CardItems.FirstOrDefault(card => card.UniqueID.Equals(cardData.cardID));
+                Cards newCard = Utilities.cardtoCards(selectedCard);
+                playerCards[i].cardSO = selectedCard;
+                playerCards[i].DisplayCard();
+                playerCards[i].gameObject.SetActive(true);
+            }
+            i++;
         }
     }
 
     public void LoadEnemy(PlayerData enemyData){
         enemyPubKey.text = "Opponent: " + enemyData.publicKey;
         enemyPlayerData = enemyData;
+
         int i = 0;
         foreach(CardData cardData in enemyPlayerData.gameData.cardDeck){
-            Debug.Log(cardData.cardID);
+            if(cardData != null){
+                CardSO selectedCard = GameManager.instance.cardLists.CardItems.FirstOrDefault(card => card.UniqueID.Equals(cardData.cardID));
+                Cards newCard = Utilities.cardtoCards(selectedCard);
+                enemyCards[i].cardSO = selectedCard;
+                enemyCards[i].DisplayCard();
+                enemyCards[i].gameObject.SetActive(true);
+            }
+            i++;
         }
     }
     public void SetPlayerReady(){
@@ -82,15 +102,20 @@ public class MultiplayerManager : MonoBehaviour
         }else{
             readyImageEnemy.sprite = notReady;
         }
-        
+    }
+    public void SetEnemyInGame(bool inGame){
+        enemyInGame = inGame;
     }
     public void StartGame(){
         this.CallFacet((RoomManager rm) => rm.SendGameStart(lobbyCode, true));
     }
     public void SendReady(){
-        this.CallFacet((RoomManager rm) => rm.SendReady(lobbyCode, AccountManager.Instance.playerData,playerReady));
+        this.CallFacet((RoomManager rm) => rm.SendReady(lobbyCode, AccountManager.Instance.playerData, playerReady));
+    }
+    public void SendInGame(){
+        this.CallFacet((RoomManager rm) => rm.SendInGame(lobbyCode, AccountManager.Instance.playerData, true));
     }
     public void SendPlayerData(){
-        this.CallFacet((RoomManager rm) => rm.SendPlayerData(lobbyCode, AccountManager.Instance.playerData));
+        this.CallFacet((RoomManager rm) => rm.SendPlayerData(lobbyCode, AccountManager.Instance.playerData, lobbyData));
     }
 }

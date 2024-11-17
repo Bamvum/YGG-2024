@@ -5,6 +5,7 @@ using UnityEngine;
 using ESDatabase.Classes;
 using TMPro;
 using Solana.Unity.SDK;
+using System.Linq;
 
 public class PlayerClient : UnisaveBroadcastingClient
 {
@@ -28,6 +29,8 @@ public class PlayerClient : UnisaveBroadcastingClient
             .Forward<PlayerJoinedMessage>(PlayerJoin)
             .Forward<ReadyMessage>(ReadyReceive)
             .Forward<SendData>(ReceiveEnemy)
+            .Forward<GameStart>(ReceiveStartGame)
+            .Forward<InGameMessage>(ReceiveInGame)
             .ElseLogWarning();
             MultiplayerManager.Instance.multiplayerUI.SetActive(false);
             MultiplayerManager.Instance.lobbyUI.SetActive(true);
@@ -46,6 +49,7 @@ public class PlayerClient : UnisaveBroadcastingClient
             .Forward<ReadyMessage>(ReadyReceive)
             .Forward<SendData>(ReceiveEnemy)
             .Forward<GameStart>(ReceiveStartGame)
+            .Forward<InGameMessage>(ReceiveInGame)
             .ElseLogWarning();
         MultiplayerManager.Instance.multiplayerUI.SetActive(false);
         MultiplayerManager.Instance.lobbyUI.SetActive(true);
@@ -58,6 +62,27 @@ public class PlayerClient : UnisaveBroadcastingClient
         Debug.Log("Player Joined: " + msg.playerData.publicKey);
         if(!msg.playerData.publicKey.Equals(AccountManager.Instance.playerData.publicKey.ToString())){
             MultiplayerManager.Instance.LoadEnemy(msg.playerData);
+            MultiplayerManager.Instance.lobbyData = new LobbyData();
+            Debug.Log("Host Current Active Cards:");
+            foreach(ActiveCards activeCards in MultiplayerManager.Instance.lobbyData.hostActiveCards){
+                CardSO selectedCard = GameManager.instance.cardLists.CardItems.FirstOrDefault(card => card.UniqueID.Equals(activeCards.uniqueID));
+                Debug.Log(selectedCard.cName);
+            }
+            Debug.Log("Host Current Deck:");
+            foreach(ActiveCards activeCards in MultiplayerManager.Instance.lobbyData.hostCurrentDeck){
+                CardSO selectedCard = GameManager.instance.cardLists.CardItems.FirstOrDefault(card => card.UniqueID.Equals(activeCards.uniqueID));
+                Debug.Log(selectedCard.cName);
+            }
+            Debug.Log("Joiner Current Active Cards:");
+            foreach(ActiveCards activeCards in MultiplayerManager.Instance.lobbyData.joinerActiveCards){
+                CardSO selectedCard = GameManager.instance.cardLists.CardItems.FirstOrDefault(card => card.UniqueID.Equals(activeCards.uniqueID));
+                Debug.Log(selectedCard.cName);
+            }
+            Debug.Log("Joiner Current Deck:");
+            foreach(ActiveCards activeCards in MultiplayerManager.Instance.lobbyData.joinerCurrentDeck){
+                CardSO selectedCard = GameManager.instance.cardLists.CardItems.FirstOrDefault(card => card.UniqueID.Equals(activeCards.uniqueID));
+                Debug.Log(selectedCard.cName);
+            }
             MultiplayerManager.Instance.enemyPlayerData = msg.playerData;
             MultiplayerManager.Instance.SendPlayerData();
         }
@@ -71,6 +96,11 @@ public class PlayerClient : UnisaveBroadcastingClient
             }
         }
     }
+    void ReceiveInGame(InGameMessage inGameMessage){
+        if(!inGameMessage.playerData.publicKey.Equals(AccountManager.Instance.playerData.publicKey.ToString())){
+            MultiplayerManager.Instance.SetEnemyInGame(inGameMessage.inGame);
+        }
+    }
     void ReceiveStartGame(GameStart game){
         MultiplayerManager.Instance.gameStarted = game.gameStarted;
         if(game.gameStarted){
@@ -79,5 +109,26 @@ public class PlayerClient : UnisaveBroadcastingClient
     }
     void ReceiveEnemy(SendData data){
         MultiplayerManager.Instance.LoadEnemy(data.playerData);
+        MultiplayerManager.Instance.lobbyData = data.lobbyData;
+        Debug.Log("Host Current Active Cards:");
+        foreach(ActiveCards activeCards in data.lobbyData.hostActiveCards){
+            CardSO selectedCard = GameManager.instance.cardLists.CardItems.FirstOrDefault(card => card.UniqueID.Equals(activeCards.uniqueID));
+            Debug.Log(selectedCard.cName);
+        }
+        Debug.Log("Host Current Deck:");
+        foreach(ActiveCards activeCards in data.lobbyData.hostCurrentDeck){
+            CardSO selectedCard = GameManager.instance.cardLists.CardItems.FirstOrDefault(card => card.UniqueID.Equals(activeCards.uniqueID));
+            Debug.Log(selectedCard.cName);
+        }
+        Debug.Log("Joiner Current Active Cards:");
+        foreach(ActiveCards activeCards in data.lobbyData.joinerActiveCards){
+            CardSO selectedCard = GameManager.instance.cardLists.CardItems.FirstOrDefault(card => card.UniqueID.Equals(activeCards.uniqueID));
+            Debug.Log(selectedCard.cName);
+        }
+        Debug.Log("Joiner Current Deck:");
+        foreach(ActiveCards activeCards in data.lobbyData.joinerCurrentDeck){
+            CardSO selectedCard = GameManager.instance.cardLists.CardItems.FirstOrDefault(card => card.UniqueID.Equals(activeCards.uniqueID));
+            Debug.Log(selectedCard.cName);
+        }
     }
 }
