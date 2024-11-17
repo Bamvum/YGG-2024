@@ -237,12 +237,8 @@ public class CardGameManager : MonoBehaviour
         {
             if (selectedCard[0] == null)
             {
-                if(selectedCard[0].isSelected){
-                    selectedCard[0] = cSelected;
-                    selectedCard[0].Select();
-                }else{
-                    selectedCard[0] = null;
-                }
+                selectedCard[0] = cSelected;
+                selectedCard[0].Select();
             }else{
                 selectedCard[0].Deselect();
                 if(selectedCard[0].isSelected){
