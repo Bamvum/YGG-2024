@@ -108,6 +108,7 @@ public class CardGameManager : MonoBehaviour
                     availableCardSlots[j] = false;
                     instantiatedCard.cardSO = selectedCard;
                     instantiatedCard.slotNo = j;
+                    instantiatedCard.isPlayercard = true;
                     instantiatedCard.DisplayCard();
                     hostDeck.Add(instantiatedCard);
                     j++;
@@ -117,6 +118,7 @@ public class CardGameManager : MonoBehaviour
                     CardSO selectedCard = GameManager.instance.cardLists.CardItems.FirstOrDefault(card => card.UniqueID.Equals(activeCards.uniqueID)).CreateCopy();
                     joinerDeck[i].cardSO = selectedCard;
                     joinerDeck[i].slotNo = i;
+                    joinerDeck[i].isPlayercard = false;
                     joinerDeck[i].DisplayCard();
                     i++;
             }
@@ -133,6 +135,7 @@ public class CardGameManager : MonoBehaviour
                     availableCardSlots[j] = false;
                     instantiatedCard.cardSO = selectedCard;
                     instantiatedCard.slotNo = j;
+                    instantiatedCard.isPlayercard = true;
                     instantiatedCard.DisplayCard();
                     hostDeck.Add(instantiatedCard);
                     j++;
@@ -142,6 +145,7 @@ public class CardGameManager : MonoBehaviour
                     CardSO selectedCard = GameManager.instance.cardLists.CardItems.FirstOrDefault(card => card.UniqueID.Equals(activeCards.uniqueID)).CreateCopy();
                     joinerDeck[i].cardSO = selectedCard;
                     joinerDeck[i].slotNo = i;
+                    joinerDeck[i].isPlayercard = false;
                     joinerDeck[i].DisplayCard();
                     i++;
             }
