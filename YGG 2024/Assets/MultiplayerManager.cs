@@ -118,7 +118,7 @@ public class MultiplayerManager : MonoBehaviour
         enemyInGame = inGame;
     }
     public void StartGame(){
-        this.CallFacet((RoomManager rm) => rm.SendGameStart(lobbyCode, true));
+        this.CallFacet((RoomManager rm) => rm.SendGameStart(lobbyCode, AccountManager.Instance.playerData, true));
     }
     public void SendReady(){
         this.CallFacet((RoomManager rm) => rm.SendReady(lobbyCode, AccountManager.Instance.playerData, playerReady));
