@@ -33,6 +33,7 @@ public class PlayerClient : UnisaveBroadcastingClient
             .Forward<SendData>(ReceiveEnemy)
             .Forward<GameStart>(ReceiveStartGame)
             .Forward<InGameMessage>(ReceiveInGame)
+            .Forward<ActionMessage>(ReceiveAction)
             .ElseLogWarning();
             MultiplayerManager.Instance.multiplayerUI.SetActive(false);
             MultiplayerManager.Instance.lobbyUI.SetActive(true);
