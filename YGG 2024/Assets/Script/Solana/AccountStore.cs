@@ -15,7 +15,7 @@ public class AccountStore : MonoBehaviour
         Web3.OnLogin += OnLogin;
         Web3.OnLogout += OnLogout;
         Web3.OnBalanceChange += OnBalanceChange;
-        Web3.OnNFTsUpdate += OnNFTsUpdate;
+        //Web3.OnNFTsUpdate += OnNFTsUpdate;
     }
 
     private async void OnLogin(Account account){
@@ -45,10 +45,10 @@ public class AccountStore : MonoBehaviour
     private void OnBalanceChange(double sol){
         balance.SetText("Balance: " + sol.ToString("#.#########"));
     }
-    private void OnNFTsUpdate(List<Nft> nft, int total){
-        foreach(Nft nftData in nft){
-            Debug.Log("NFT Data: " + nftData.metaplexData.data.offchainData.name);
-        }
+    // private void OnNFTsUpdate(List<Nft> nft, int total){
+    //     foreach(Nft nftData in nft){
+    //         Debug.Log("NFT Data: " + nftData.metaplexData.data.offchainData.name);
+    //     }
 
-    }
+    // }
 }
