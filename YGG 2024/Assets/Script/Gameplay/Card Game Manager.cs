@@ -307,7 +307,7 @@ public class CardGameManager : MonoBehaviour
                 damage = totalDamage,
                 attackedSlotNo = selectedCard[1].slotNo
             };
-            if(MultiplayerManager.Instance.isJoiner){
+            if(!MultiplayerManager.Instance.isJoiner){
                 lobby.joinerActiveCards[selectedCard[1].slotNo].cardHP = Math.Max(0, lobby.joinerActiveCards[selectedCard[1].slotNo].cardHP - totalDamage);
             }else{
                 lobby.hostActiveCards[selectedCard[1].slotNo].cardHP = Math.Max(0, lobby.hostActiveCards[selectedCard[1].slotNo].cardHP - totalDamage);
