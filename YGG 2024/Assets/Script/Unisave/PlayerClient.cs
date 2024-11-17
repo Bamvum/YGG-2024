@@ -51,7 +51,7 @@ public class PlayerClient : UnisaveBroadcastingClient
     void PlayerJoin(PlayerJoinedMessage msg)
     {
         Debug.Log("Player Joined: " + msg.playerData.publicKey);
-        if(!msg.playerData.gameData.Equals(Web3.Account.PublicKey)){
+        if(!msg.playerData.publicKey.Equals(AccountManager.Instance.playerData.publicKey.ToString())){
             MultiplayerManager.Instance.LoadEnemy(msg.playerData);
             MultiplayerManager.Instance.enemyPlayerData = msg.playerData;
             // MultiplayerManager.Instance.SendPlayerData();
