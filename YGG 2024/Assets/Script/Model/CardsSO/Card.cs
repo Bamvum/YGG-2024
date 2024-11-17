@@ -18,6 +18,7 @@ public class Card : MonoBehaviour
     [SerializeField] TMP_Text cardDescription;
     [SerializeField] TMP_Text cardTypes;
     [SerializeField] Image cardImage;
+    [SerializeField] GameObject selected;
 
     [Space(10)]
     [SerializeField] Button cardButton;
@@ -27,15 +28,10 @@ public class Card : MonoBehaviour
     public bool hasBeenPlayed;
     public int handIndex;
 
-    private void Start()
+    public void OnClickEvent()
     {
-        if (SceneManager.GetActiveScene().name == "Testing Gameplay")
-        {
-            cardButton.onClick.AddListener(() => CardGameManager.instance.CardSelect(this));
-
-            DisplayCard();
-        }
-
+        selected.SetActive(true);
+        CardGameManager.instance.CardSelect(this);
     }
 
     public void DisplayCard()
