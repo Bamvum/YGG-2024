@@ -27,6 +27,7 @@ public class PlayerClient : UnisaveBroadcastingClient
             FromSubscription(subscription)
             .Forward<PlayerJoinedMessage>(PlayerJoin)
             .Forward<ReadyMessage>(ReadyReceive)
+            .Forward<SendData>(ReceiveEnemy)
             .ElseLogWarning();
             MultiplayerManager.Instance.multiplayerUI.SetActive(false);
             MultiplayerManager.Instance.lobbyUI.SetActive(true);
@@ -43,6 +44,7 @@ public class PlayerClient : UnisaveBroadcastingClient
         FromSubscription(subscription)
             .Forward<PlayerJoinedMessage>(PlayerJoin)
             .Forward<ReadyMessage>(ReadyReceive)
+            .Forward<SendData>(ReceiveEnemy)
             .ElseLogWarning();
         MultiplayerManager.Instance.multiplayerUI.SetActive(false);
         MultiplayerManager.Instance.lobbyUI.SetActive(true);
@@ -61,5 +63,8 @@ public class PlayerClient : UnisaveBroadcastingClient
     }
     void ReadyReceive(ReadyMessage readyMessage){
         MultiplayerManager.Instance.SetEnemyReady(readyMessage.isReady);
+    }
+    void ReceiveEnemy(SendData data){
+        MultiplayerManager.Instance.LoadEnemy(data.playerData);
     }
 }
