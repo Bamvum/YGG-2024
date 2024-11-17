@@ -62,7 +62,7 @@ public class PlayerClient : UnisaveBroadcastingClient
         Debug.Log("Player Joined: " + msg.playerData.publicKey);
         if(!msg.playerData.publicKey.Equals(AccountManager.Instance.playerData.publicKey.ToString())){
             MultiplayerManager.Instance.LoadEnemy(msg.playerData);
-            MultiplayerManager.Instance.lobbyData = new LobbyData();
+            MultiplayerManager.Instance.lobbyData = new LobbyData(MultiplayerManager.Instance.playerDeck, MultiplayerManager.Instance.enemyDeck);
             Debug.Log("Host Current Active Cards:");
             foreach(ActiveCards activeCards in MultiplayerManager.Instance.lobbyData.hostActiveCards){
                 CardSO selectedCard = GameManager.instance.cardLists.CardItems.FirstOrDefault(card => card.UniqueID.Equals(activeCards.uniqueID));
