@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using DG.Tweening;
 using ESDatabase.Classes;
 using System.Linq;
+using System;
 
 /*
     TODO    - WHO WILL GO FIRST? COIN FLIP? 
@@ -58,29 +59,29 @@ public class CardGameManager : MonoBehaviour
 
     #region - DRAW CARDS -
 
-    public void DrawCard()
-    {
-        // IF (yourTurn = true)
-        if(hostDeck.Count >= 1)
-        {
-            Card randCard = hostDeck[Random.Range(0, hostDeck.Count)];
+    // public void DrawCard()
+    // {
+    //     // IF (yourTurn = true)
+    //     if(hostDeck.Count >= 1)
+    //     {
+    //         Card randCard = hostDeck[Random.Range(0, hostDeck.Count)];
         
-            for (int i = 0; i < availableCardSlots.Length; i++)
-            {
-                if (availableCardSlots[i] == true)
-                {
-                    randCard.gameObject.SetActive(true);
-                    randCard.handIndex= i;
+    //         for (int i = 0; i < availableCardSlots.Length; i++)
+    //         {
+    //             if (availableCardSlots[i] == true)
+    //             {
+    //                 randCard.gameObject.SetActive(true);
+    //                 randCard.handIndex= i;
 
-                    randCard.transform.position = cardSlots[i].position;
-                    randCard.transform.SetParent(cardSlots[i]);
-                    availableCardSlots[i] = false;
-                    hostDeck.Remove(randCard);
-                    return;
-                }
-            }
-        }
-    }
+    //                 randCard.transform.position = cardSlots[i].position;
+    //                 randCard.transform.SetParent(cardSlots[i]);
+    //                 availableCardSlots[i] = false;
+    //                 hostDeck.Remove(randCard);
+    //                 return;
+    //             }
+    //         }
+    //     }
+    // }
 
     public void DrawThreeCards()
     {
@@ -299,12 +300,18 @@ public class CardGameManager : MonoBehaviour
 
             timerValue = 30;
             ticker = 0;
+            LobbyData lobby = MultiplayerManager.Instance.lobbyData;
             ActionData actionData = new ActionData(){
                 attackerCardID = selectedCard[0].cardSO.UniqueID,
                 actionType = ActionType.Attack,
                 damage = totalDamage,
                 attackedSlotNo = selectedCard[1].slotNo
             };
+            if(MultiplayerManager.Instance.isJoiner){
+                lobby.joinerActiveCards[selectedCard[1].slotNo].cardHP = Math.Max(0, lobby.joinerActiveCards[selectedCard[1].slotNo].cardHP - totalDamage);
+            }else{
+                lobby.hostActiveCards[selectedCard[1].slotNo].cardHP = Math.Max(0, lobby.hostActiveCards[selectedCard[1].slotNo].cardHP - totalDamage);
+            }
             MultiplayerManager.Instance.SendAction(MultiplayerManager.Instance.lobbyData, actionData);
             yourTurn = !yourTurn;
             Debug.Log("Player End Turn");
