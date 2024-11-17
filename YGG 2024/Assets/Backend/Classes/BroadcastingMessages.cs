@@ -49,4 +49,12 @@ namespace ESDatabase.Classes
         public string playerName;
         bool isSelf;
     }
+
+    public class ActionMessage : BroadcastingMessage{
+        public PlayerData playerData;
+        public LobbyData lobbyData;
+        public ActionData actionData;
+        
+        public int target = 0;
+    }
 }
