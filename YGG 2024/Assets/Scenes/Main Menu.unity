@@ -5479,6 +5479,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 316617612}
     m_Modifications:
+    - target: {fileID: 1162879677280071759, guid: def9cf0e1efb8f44cbaf40637b30365c, type: 3}
+      propertyPath: m_EffectColor.b
+      value: 0.031772893
+      objectReference: {fileID: 0}
+    - target: {fileID: 1162879677280071759, guid: def9cf0e1efb8f44cbaf40637b30365c, type: 3}
+      propertyPath: m_EffectColor.g
+      value: 0.64077604
+      objectReference: {fileID: 0}
+    - target: {fileID: 1162879677280071759, guid: def9cf0e1efb8f44cbaf40637b30365c, type: 3}
+      propertyPath: m_EffectColor.r
+      value: 0.9622642
+      objectReference: {fileID: 0}
     - target: {fileID: 2007411766277004743, guid: def9cf0e1efb8f44cbaf40637b30365c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
       value: 1
@@ -5533,10 +5545,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: Equip Cards
       objectReference: {fileID: 0}
+    - target: {fileID: 4474801378612887481, guid: def9cf0e1efb8f44cbaf40637b30365c, type: 3}
+      propertyPath: m_EffectColor.b
+      value: 0.18431374
+      objectReference: {fileID: 0}
+    - target: {fileID: 4474801378612887481, guid: def9cf0e1efb8f44cbaf40637b30365c, type: 3}
+      propertyPath: m_EffectColor.g
+      value: 0.3748105
+      objectReference: {fileID: 0}
+    - target: {fileID: 4474801378612887481, guid: def9cf0e1efb8f44cbaf40637b30365c, type: 3}
+      propertyPath: m_EffectColor.r
+      value: 0.49019608
+      objectReference: {fileID: 0}
     - target: {fileID: 5715964700534786743, guid: def9cf0e1efb8f44cbaf40637b30365c, type: 3}
       propertyPath: m_Name
       value: Text
       objectReference: {fileID: 0}
+    - target: {fileID: 6971263648716823685, guid: def9cf0e1efb8f44cbaf40637b30365c, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 3d130df3f3d4cb94b8e8ce0f493841dd, type: 3}
     - target: {fileID: 9206032922162342980, guid: def9cf0e1efb8f44cbaf40637b30365c, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -6038,6 +6066,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 316617612}
     m_Modifications:
+    - target: {fileID: 1162879677280071759, guid: def9cf0e1efb8f44cbaf40637b30365c, type: 3}
+      propertyPath: m_EffectColor.b
+      value: 0.38431373
+      objectReference: {fileID: 0}
+    - target: {fileID: 1162879677280071759, guid: def9cf0e1efb8f44cbaf40637b30365c, type: 3}
+      propertyPath: m_EffectColor.g
+      value: 0.8447502
+      objectReference: {fileID: 0}
+    - target: {fileID: 1162879677280071759, guid: def9cf0e1efb8f44cbaf40637b30365c, type: 3}
+      propertyPath: m_EffectColor.r
+      value: 0.84705883
+      objectReference: {fileID: 0}
     - target: {fileID: 2007411766277004743, guid: def9cf0e1efb8f44cbaf40637b30365c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
       value: 1
@@ -6090,6 +6130,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: Pack Shop
       objectReference: {fileID: 0}
+    - target: {fileID: 4474801378612887481, guid: def9cf0e1efb8f44cbaf40637b30365c, type: 3}
+      propertyPath: m_EffectColor.b
+      value: 0.18431374
+      objectReference: {fileID: 0}
+    - target: {fileID: 4474801378612887481, guid: def9cf0e1efb8f44cbaf40637b30365c, type: 3}
+      propertyPath: m_EffectColor.g
+      value: 0.47771463
+      objectReference: {fileID: 0}
+    - target: {fileID: 4474801378612887481, guid: def9cf0e1efb8f44cbaf40637b30365c, type: 3}
+      propertyPath: m_EffectColor.r
+      value: 0.49019608
+      objectReference: {fileID: 0}
+    - target: {fileID: 6971263648716823685, guid: def9cf0e1efb8f44cbaf40637b30365c, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: b30d1ea06a8fe4943b2a886f793baf52, type: 3}
     - target: {fileID: 9206032922162342980, guid: def9cf0e1efb8f44cbaf40637b30365c, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -14396,6 +14452,8 @@ MonoBehaviour:
   itemsToTransfer: []
   tempindex: 0
   cardLists: {fileID: 11400000, guid: 9c3d2865f5795c141a9f2f9ea796e931, type: 2}
+  PlayerMoney: 0
+  PlayerMoneyText: {fileID: 273382428}
 --- !u!1 &1284154352
 GameObject:
   m_ObjectHideFlags: 0
