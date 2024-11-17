@@ -18,6 +18,7 @@ public class MultiplayerManager : MonoBehaviour
     [SerializeField] public bool playerInGame = false;
     [SerializeField] public bool enemyInGame = false;
     [SerializeField] public bool gameStarted = false;
+    [SerializeField] public bool isJoiner = false;
     [Header("Player Data")]
     [SerializeField] public PlayerData playerData;
     [SerializeField] public PlayerData enemyPlayerData;

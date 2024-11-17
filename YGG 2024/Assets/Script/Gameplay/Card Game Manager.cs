@@ -3,6 +3,8 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using ESDatabase.Classes;
+using System.Linq;
 
 /*
     TODO    - WHO WILL GO FIRST? COIN FLIP? 
@@ -12,12 +14,13 @@ using DG.Tweening;
 public class CardGameManager : MonoBehaviour
 {
     public static CardGameManager instance {get; private set;}
-
+    [SerializeField] public LobbyData lobbyData;
     [SerializeField] GameObject cardPrefab;
     [SerializeField] GameObject deckParent;
     [SerializeField] CardSO[] cardSOList;
     
-    [SerializeField] List<Card> deck = new List<Card>();
+    [SerializeField] List<Card> hostDeck = new List<Card>();
+    [SerializeField] List<Card> joinerDeck = new List<Card>();
     [SerializeField] Transform[] cardSlots;
     [SerializeField] bool[] availableCardSlots;
 
@@ -39,17 +42,11 @@ public class CardGameManager : MonoBehaviour
     void Awake()
     {
         instance = this;
-    }
-
-    void Start()
-    {
-        // SET ALL AVAILABLE CARDS SLOT TO TRUE AT THE START OF THE GAME
-        for(int i = 0; i < availableCardSlots.Length; i++)
-        {
+        lobbyData = MultiplayerManager.Instance.lobbyData;
+        for(int i = 0; i < availableCardSlots.Length; i++){
             availableCardSlots[i] = true;
         }
-
-        InstantiateCardDeck();   
+        InstantiateCardDeck();
         DrawThreeCards();
     }
 
@@ -58,9 +55,9 @@ public class CardGameManager : MonoBehaviour
     public void DrawCard()
     {
         // IF (yourTurn = true)
-        if(deck.Count >= 1)
+        if(hostDeck.Count >= 1)
         {
-            Card randCard = deck[Random.Range(0, deck.Count)];
+            Card randCard = hostDeck[Random.Range(0, hostDeck.Count)];
         
             for (int i = 0; i < availableCardSlots.Length; i++)
             {
@@ -72,7 +69,7 @@ public class CardGameManager : MonoBehaviour
                     randCard.transform.position = cardSlots[i].position;
                     randCard.transform.SetParent(cardSlots[i]);
                     availableCardSlots[i] = false;
-                    deck.Remove(randCard);
+                    hostDeck.Remove(randCard);
                     return;
                 }
             }
@@ -81,10 +78,9 @@ public class CardGameManager : MonoBehaviour
 
     public void DrawThreeCards()
     {
-        for (int i = 0; i < 3; i++)
-        {
-            DrawCard();
-        }
+        hostDeck[0].gameObject.SetActive(true);
+        hostDeck[1].gameObject.SetActive(true);
+        hostDeck[2].gameObject.SetActive(true);
     }
 
     #endregion
@@ -93,26 +89,37 @@ public class CardGameManager : MonoBehaviour
 
     void InstantiateCardDeck()
     {
-        // CHANGE NA LANG DIPENDE SA NUMBER NG CARD NA NILAGAY NILA SA DECK (MAXIMUN KASI 9, RIGHT?)
-        for (int i = 0; i < 9; i++)
-        {
-            GameObject instantiatedCardObjects = Instantiate(cardPrefab, deckParent.transform);
+        if(MultiplayerManager.Instance.isJoiner){
+            foreach(ActiveCards activeCards in lobbyData.joinerActiveCards){
+                    CardSO selectedCard = GameManager.instance.cardLists.CardItems.FirstOrDefault(card => card.UniqueID.Equals(activeCards.uniqueID));
+                    GameObject instantiatedCardObjects = Instantiate(cardPrefab, deckParent.transform);
 
-            instantiatedCardObjects.SetActive(false);
-
-            Card instantiatedCard = instantiatedCardObjects.GetComponent<Card>();
-            if (instantiatedCardObjects != null)
-            {
-                if (i < cardSOList.Length)
-                {
-                    instantiatedCard.cardSO = cardSOList[i]; 
-                }
-
-                deck.Add(instantiatedCard);
+                    instantiatedCardObjects.SetActive(false);
+                    Card instantiatedCard = instantiatedCardObjects.GetComponent<Card>();
+                    instantiatedCard.cardSO = selectedCard;
+                    hostDeck.Add(instantiatedCard);
             }
-            else
-            {
-                Debug.LogWarning("The instantiated object does not contain a Card component.");
+            int i = 0;
+            foreach(ActiveCards activeCards in lobbyData.hostActiveCards){
+                    CardSO selectedCard = GameManager.instance.cardLists.CardItems.FirstOrDefault(card => card.UniqueID.Equals(activeCards.uniqueID));
+                    joinerDeck[i].cardSO = selectedCard;
+                    i++;
+            }
+        }else{
+            foreach(ActiveCards activeCards in lobbyData.hostActiveCards){
+                    CardSO selectedCard = GameManager.instance.cardLists.CardItems.FirstOrDefault(card => card.UniqueID.Equals(activeCards.uniqueID));
+                    GameObject instantiatedCardObjects = Instantiate(cardPrefab, deckParent.transform);
+
+                    instantiatedCardObjects.SetActive(false);
+                    Card instantiatedCard = instantiatedCardObjects.GetComponent<Card>();
+                    instantiatedCard.cardSO = selectedCard;
+                    hostDeck.Add(instantiatedCard);
+            }
+            int i = 0;
+            foreach(ActiveCards activeCards in lobbyData.joinerActiveCards){
+                    CardSO selectedCard = GameManager.instance.cardLists.CardItems.FirstOrDefault(card => card.UniqueID.Equals(activeCards.uniqueID));
+                    joinerDeck[i].cardSO = selectedCard;
+                    i++;
             }
         }
     }
@@ -288,12 +295,12 @@ public class CardGameManager : MonoBehaviour
 
     void Update()
     {
-        deckCountText.text = deck.Count.ToString();
+        deckCountText.text = hostDeck.Count.ToString();
 
         TimerToEndTurn();
 
         // DECK IS EMPTY AND CARDS SLOTS ARE EMPTY 
-        if (deck.Count == 0 && AllSlotsAvailable())
+        if (hostDeck.Count == 0 && AllSlotsAvailable())
         {
             Debug.Log("Game Over");
 
@@ -305,7 +312,7 @@ public class CardGameManager : MonoBehaviour
         }
 
         // DRAW CARDS IF THERE IS AVAILABLE SLOTS IN THE FIELD
-        if (deck.Count > 0 && AnySlotAvailable())
+        if (hostDeck.Count > 0 && AnySlotAvailable())
         {
             DrawCard();
         }
