@@ -99,6 +99,7 @@ MonoBehaviour:
   cardDescription: {fileID: 4480673417286698652}
   cardTypes: {fileID: 4295126817231986664}
   cardImage: {fileID: 7721981930642150314}
+  selected: {fileID: 4804392275030331645}
   cardButton: {fileID: 3482981359170191608}
   cardHealth: 0
   hasBeenPlayed: 0
@@ -165,7 +166,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 345616309551996525}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 412183309357906426}
+        m_TargetAssemblyTypeName: Card, Assembly-CSharp
+        m_MethodName: OnClickEvent
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &2019589173616201156
 GameObject:
   m_ObjectHideFlags: 0
