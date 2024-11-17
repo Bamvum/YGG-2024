@@ -54,9 +54,7 @@ public class MultiplayerManager : MonoBehaviour
         int i = 0;
         foreach(CardData cardData in playerData.gameData.cardDeck){
             if(cardData != null){
-                
-                CardSO selectedCard = GameManager.instance.cardLists.CardItems.FirstOrDefault(card => card.UniqueID.Equals(cardData.cardID));
-                Cards newCard = Utilities.cardtoCards(selectedCard);
+                CardSO selectedCard = GameManager.instance.cardLists.CardItems.FirstOrDefault(card => card.UniqueID.Equals(cardData.cardID)).CreateCopy();
                 ActiveCards actCard = new ActiveCards();
                 actCard.uniqueID = selectedCard.UniqueID;
                 actCard.cardHP = selectedCard.cHealth;
@@ -76,8 +74,7 @@ public class MultiplayerManager : MonoBehaviour
         int i = 0;
         foreach(CardData cardData in enemyPlayerData.gameData.cardDeck){
             if(cardData != null){
-                CardSO selectedCard = GameManager.instance.cardLists.CardItems.FirstOrDefault(card => card.UniqueID.Equals(cardData.cardID));
-                Cards newCard = Utilities.cardtoCards(selectedCard);
+                CardSO selectedCard = GameManager.instance.cardLists.CardItems.FirstOrDefault(card => card.UniqueID.Equals(cardData.cardID)).CreateCopy();
                 ActiveCards actCard = new ActiveCards();
                 actCard.uniqueID = selectedCard.UniqueID;
                 actCard.cardHP = selectedCard.cHealth;
