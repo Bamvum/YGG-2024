@@ -46,9 +46,21 @@ public class CardSO : ScriptableObject
     }
     public CardSO CreateCopy()
     {
-        CardSO copy = Instantiate(this);
-        copy.UniqueID = Guid.NewGuid().ToString(); // Ensure unique ID for the copy
-        return copy;
+        // Create a new instance of QuestSO
+        CardSO newQuest = ScriptableObject.CreateInstance<CardSO>();
+
+        // Copy all fields from this QuestSO to the new instance
+        newQuest.UniqueID = this.UniqueID;
+        newQuest.MaxStackableSize = this.MaxStackableSize;
+        newQuest.IsStackable = this.IsStackable;
+        newQuest.cHealth = this.cHealth;
+        newQuest.cAttack = this.cAttack;
+        newQuest.cName = this.cName;
+        newQuest.cDescription = this.cDescription;
+        newQuest.cType = this.cType;
+        newQuest.cImage = this.cImage;
+        newQuest.ardriveLink = this.ardriveLink;
+        return newQuest;
     }
 
 }
