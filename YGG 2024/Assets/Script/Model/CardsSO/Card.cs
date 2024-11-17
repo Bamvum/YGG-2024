@@ -32,6 +32,10 @@ public class Card : MonoBehaviour
     public void OnClickEvent()
     {
         if(CardGameManager.instance != null){
+            if(!CardGameManager.instance.yourTurn){
+                Debug.Log("Not Your Turn!");
+                return;
+            }
             if(isSelected){
                 Deselect();
             }else{

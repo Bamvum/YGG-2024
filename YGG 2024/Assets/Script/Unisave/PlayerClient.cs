@@ -33,6 +33,7 @@ public class PlayerClient : UnisaveBroadcastingClient
             .Forward<SendData>(ReceiveEnemy)
             .Forward<GameStart>(ReceiveStartGame)
             .Forward<InGameMessage>(ReceiveInGame)
+            .Forward<SwapTurn>(ReceiveSwapTurn)
             .ElseLogWarning();
             MultiplayerManager.Instance.multiplayerUI.SetActive(false);
             MultiplayerManager.Instance.lobbyUI.SetActive(true);
@@ -54,6 +55,7 @@ public class PlayerClient : UnisaveBroadcastingClient
             .Forward<SendData>(ReceiveEnemy)
             .Forward<GameStart>(ReceiveStartGame)
             .Forward<InGameMessage>(ReceiveInGame)
+            .Forward<SwapTurn>(ReceiveSwapTurn)
             .ElseLogWarning();
         MultiplayerManager.Instance.multiplayerUI.SetActive(false);
         MultiplayerManager.Instance.lobbyUI.SetActive(true);
@@ -153,6 +155,11 @@ public class PlayerClient : UnisaveBroadcastingClient
             //     Debug.Log(selectedCard.cName);
             // }
         }   
+    }
+    void ReceiveSwapTurn(SwapTurn swapMessage){
+        if(!swapMessage.playerData.publicKey.Equals(AccountManager.Instance.playerData.publicKey.ToString())){
+            CardGameManager.instance.ToggleTurn();
+        }
     }
     public void ProceedGame(){
         SceneManager.LoadSceneAsync("Testing Gameplay", LoadSceneMode.Additive).completed += async (operation) => {
