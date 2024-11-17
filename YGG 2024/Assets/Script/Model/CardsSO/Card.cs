@@ -53,10 +53,10 @@ public class Card : MonoBehaviour
                     Debug.Log($"Replacing joiner card in slot {slotNo}");
                     CardSO selectedCard = GameManager.instance.cardLists.CardItems.FirstOrDefault(card => card.UniqueID == lobby.joinerCurrentDeck[0].uniqueID);
                     cardSO = selectedCard;
-                    hp = selectedCard.cHealth;
+                    hp = 20;
                     isPlayercard = true;
                     lobby.joinerActiveCards[slotNo].uniqueID = selectedCard.UniqueID;
-                    lobby.joinerActiveCards[slotNo].cardHP = selectedCard.cHealth;
+                    lobby.joinerActiveCards[slotNo].cardHP = 20;
                     DisplayCard();
                     lobby.joinerCurrentDeck.RemoveAt(0);
                 } else if (lobby.joinerActiveCards[slotNo].cardHP < 1 && lobby.joinerCurrentDeck.Count == 0 && isPlayercard) {
@@ -69,10 +69,10 @@ public class Card : MonoBehaviour
                     Debug.Log($"Replacing host card in slot {slotNo} by joiner");
                     CardSO selectedCard = GameManager.instance.cardLists.CardItems.FirstOrDefault(card => card.UniqueID == lobby.hostCurrentDeck[0].uniqueID);
                     cardSO = selectedCard;
-                    hp = selectedCard.cHealth;
+                    hp = 20;
                     isPlayercard = false;
                     lobby.hostActiveCards[slotNo].uniqueID = selectedCard.UniqueID;
-                    lobby.hostActiveCards[slotNo].cardHP = selectedCard.cHealth;
+                    lobby.hostActiveCards[slotNo].cardHP = 20;
                     DisplayCard();
                     lobby.hostCurrentDeck.RemoveAt(0);
                 } else if (lobby.hostActiveCards[slotNo].cardHP < 1 && lobby.hostCurrentDeck.Count == 0 && !isPlayercard) {
@@ -85,10 +85,10 @@ public class Card : MonoBehaviour
                     Debug.Log($"Replacing host card in slot {slotNo}");
                     CardSO selectedCard = GameManager.instance.cardLists.CardItems.FirstOrDefault(card => card.UniqueID == lobby.hostCurrentDeck[0].uniqueID);
                     cardSO = selectedCard;
-                    hp = selectedCard.cHealth;
+                    hp = 20;
                     isPlayercard = true;
                     lobby.hostActiveCards[slotNo].uniqueID = selectedCard.UniqueID;
-                    lobby.hostActiveCards[slotNo].cardHP = selectedCard.cHealth;
+                    lobby.hostActiveCards[slotNo].cardHP = 20;
                     DisplayCard();
                     lobby.hostCurrentDeck.RemoveAt(0);
                 } else if (lobby.hostActiveCards[slotNo].cardHP < 1 && lobby.hostCurrentDeck.Count == 0 && isPlayercard) {
@@ -101,10 +101,10 @@ public class Card : MonoBehaviour
                     Debug.Log($"Replacing joiner card in slot {slotNo} by host");
                     CardSO selectedCard = GameManager.instance.cardLists.CardItems.FirstOrDefault(card => card.UniqueID == lobby.joinerCurrentDeck[0].uniqueID);
                     cardSO = selectedCard;
-                    hp = selectedCard.cHealth;
+                    hp = 20;
                     isPlayercard = false;
                     lobby.joinerActiveCards[slotNo].uniqueID = selectedCard.UniqueID;
-                    lobby.joinerActiveCards[slotNo].cardHP = selectedCard.cHealth;
+                    lobby.joinerActiveCards[slotNo].cardHP = 20;
                     DisplayCard();
                     lobby.joinerCurrentDeck.RemoveAt(0);
                 } else if (lobby.joinerActiveCards[slotNo].cardHP < 1 && lobby.joinerCurrentDeck.Count == 0 && !isPlayercard) {
