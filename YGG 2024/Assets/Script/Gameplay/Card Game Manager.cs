@@ -7,6 +7,8 @@ using ESDatabase.Classes;
 using System.Linq;
 using System;
 using UnityEngine.SceneManagement;
+using System.Threading.Tasks;
+using Solana.Unity.Soar.Accounts;
 
 /*
     TODO    - WHO WILL GO FIRST? COIN FLIP? 
@@ -227,6 +229,7 @@ public class CardGameManager : MonoBehaviour
             ActionData actionData = new ActionData(){
                 attackerCardID = "",
                 actionType = ActionType.None,
+                attackerSlotNo = 0,
                 attackedSlotNo = 0
             };
             MultiplayerManager.Instance.SendAction(MultiplayerManager.Instance.lobbyData, actionData);
@@ -279,12 +282,27 @@ public class CardGameManager : MonoBehaviour
             // ADD END TURN
         }
     }
-    public void ToggleTurn(){
+    public async void ToggleTurn(ActionMessage actionMessage){
         yourTurn = !yourTurn;
+        await AnimateAttacker(actionMessage);
         if(yourTurn){
             ticker = 1;
         }else{
             ticker = 0;
+        }
+    }
+
+    private async Task AnimateAttacker(ActionMessage actionMessage){
+        if(MultiplayerManager.Instance.isJoiner){
+            Card card = joinerDeck[actionMessage.actionData.attackerSlotNo];
+            await card.Select();
+            Transform cardTransfrom = card.gameObject.transform;
+            Vector3 defaultPos = cardTransfrom.gameObject.transform.position;
+  
+            Transform targetTransform = cardSlots[actionMessage.actionData.attackedSlotNo];
+            await cardTransfrom.DOMove(new Vector3(targetTransform.position.x, targetTransform.position.y, targetTransform.position.z), 0.3f).SetUpdate(true).AsyncWaitForCompletion();
+            await cardTransfrom.DOMove(new Vector3(defaultPos.x, defaultPos.y, defaultPos.z), 0.3f).SetUpdate(true).AsyncWaitForCompletion();
+            await card.Deselect();
         }
     }
     void CardAttack(Card attacker, Card defender)
@@ -304,6 +322,7 @@ public class CardGameManager : MonoBehaviour
                 attackerCardID = selectedCard[0].cardSO.UniqueID,
                 actionType = ActionType.Attack,
                 damage = totalDamage,
+                attackerSlotNo = selectedCard[0].slotNo,
                 attackedSlotNo = selectedCard[1].slotNo
             };
             Debug.Log($"Attacking card in slot {selectedCard[1].slotNo} with {totalDamage} damage");
