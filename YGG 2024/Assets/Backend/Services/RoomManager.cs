@@ -51,6 +51,17 @@ public class RoomManager : Facet
                 turn = turn
             });
     }
+    public void SendSurrender(string roomID, PlayerData playerData, bool throughWinComplete, bool throughSurrenderButton)
+    {        
+        // new player in the room broadcast
+        Broadcast.Channel<GameLobby>()
+            .Room(roomID)
+            .Send(new SurrenderMessage {
+                playerData = playerData,
+                throughWinComplete = throughWinComplete,
+                throughSurrenderButton = throughSurrenderButton
+            });
+    }
     public void SendAction(string roomID, PlayerData playerData, LobbyData lobbyData, ActionData actionData)
     {        
         // new player in the room broadcast

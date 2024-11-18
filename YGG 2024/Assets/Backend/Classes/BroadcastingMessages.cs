@@ -41,8 +41,9 @@ namespace ESDatabase.Classes
     }
     public class SurrenderMessage : BroadcastingMessage
     {
-        public string message;
-        bool isSelf;
+        public PlayerData playerData;
+        public bool throughWinComplete = false;
+        public bool throughSurrenderButton = false;
     }
     public class WinMessage : BroadcastingMessage
     {
