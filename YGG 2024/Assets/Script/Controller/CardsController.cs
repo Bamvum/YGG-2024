@@ -75,6 +75,7 @@ public class CardsController : MonoBehaviour
         UseButton.onClick.AddListener(() => UseCards(CardIndex, cardParents));
         UnequippedButton.onClick.AddListener(() => UnequipCard(CardIndex));
         SellButton.onClick.AddListener(() => SellCard(CardIndex));
+        MintButton.onClick.AddListener(() => MintCard(CardIndex));
     }
 
     // Update is called once per frame
@@ -134,6 +135,9 @@ public class CardsController : MonoBehaviour
                 item.SetData(selectedCard.cImage, newCard.quantity, selectedCard.cName, selectedCard.cDescription, selectedCard.cType, newCard.isEquipped);
 
                 newCard.isEquipped = true;
+                newCard.cardData = cardData;
+                newCard.isMinted = cardData.isMinted;
+
                 inventoryData.UpdateCardAt(i, newCard);
                 ListofUsedItems.Add(item);
 
@@ -150,7 +154,7 @@ public class CardsController : MonoBehaviour
         foreach(CardData cardData in playerData.gameData.cardList){
             CardSO selectedCard = GameManager.instance.cardLists.CardItems.FirstOrDefault(card => card.UniqueID.Equals(cardData.cardID)).CreateCopy();
             Cards newCard = Utilities.cardtoCards(selectedCard);
-
+            newCard.cardData = cardData;
             GameManager.instance.AddItemToTransfer(newCard);
         }
     }
@@ -188,7 +192,7 @@ public class CardsController : MonoBehaviour
                 item.DeSelect();
                 // Set the card image
                 item.SetData(card.cImage, cards.quantity, card.cName, card.cDescription, card.cType, cards.isEquipped);
-
+                
                 cards.isEquipped = true;
                 inventoryData.UpdateCardAt(cardIndex, cards);
                 ListofUsedItems.Add(item);
@@ -300,12 +304,28 @@ public class CardsController : MonoBehaviour
         }
        
         // Remove the card from the inventory
-        inventoryData.RemoveItem(cardIndex,1, false); // 'false' indicates that we are not equipping the item
+        inventoryData.RemoveItem(cardIndex,1, false, false); // 'false' indicates that we are not equipping the item
 
         Debug.Log($"Card '{card.cName}' has been sold.");
         ToggleALLButton();
     }
+    public async void MintCard(int cardIndex)
+    {
+        try{
+            Cards cards = inventoryData.GetItemAt(cardIndex);
+            CardSO card = cards.item.CreateCopy();
 
+            NFTResponse nFTResponse = await SolanaUtility.MintNFT(card, AccountManager.Instance.price);
+            if(nFTResponse.response){
+                cards.isMinted = true;
+                
+                Debug.Log(nFTResponse.url);
+            }
+        }catch(Exception err){
+            Debug.Log("Transaction Reverted");
+        }
+        ToggleALLButton();
+    }
     private CardsInvItem previouslySelectedItem;
     private void HandleItemSelection(CardsInvItem InventoryItemUI)
     {
