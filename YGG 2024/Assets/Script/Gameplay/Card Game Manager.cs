@@ -193,14 +193,13 @@ public class CardGameManager : MonoBehaviour
         Debug.Log("You Surrendered!");
         
         ticker = 0;
-        MultiplayerManager.Instance.SendSurrender(false, true);
         gameHudLose.SetActive(true);
+        MultiplayerManager.Instance.SendSurrender(false, true);
     }
 
     public void Return()
     {
-        Return();
-
+        MultiplayerManager.Instance.Return();
     }
 
     public void Battle()

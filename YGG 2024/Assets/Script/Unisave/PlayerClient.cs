@@ -166,7 +166,7 @@ public class PlayerClient : UnisaveBroadcastingClient
     }
     async void ReceiveSurrender(SurrenderMessage surrenderMessage){
         if(!surrenderMessage.playerData.publicKey.Equals(AccountManager.Instance.playerData.publicKey.ToString())){
-            CardGameManager.instance.gameHudLose.SetActive(true);
+            CardGameManager.instance.gameHudWin.SetActive(true);
             PlayerData playerData = AccountManager.Instance.playerData;
             if(surrenderMessage.throughWinComplete){
                 playerData.gameData.money += 2000;
