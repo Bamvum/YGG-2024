@@ -1,10 +1,12 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using ESDatabase.Classes;
 using Solana.Unity.SDK;
 using Solana.Unity.Wallet;
 using Unisave.Facets;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using static CardSOData;
 
@@ -114,6 +116,41 @@ public class MultiplayerManager : MonoBehaviour
     public void SetEnemyInGame(bool inGame){
         enemyInGame = inGame;
     }
+    public void ClearMultiplayer(){
+        enemyPlayerData = null;
+        lobbyCode = "";
+        lobbyData = null;
+        playerReady = false;
+        enemyReady = false;
+        playerInGame = false;
+        enemyInGame = false;
+        gameStarted = false;
+        isJoiner = false;
+        playerPubKey.text = "";
+        enemyPubKey.text = "Waiting...";
+        for(int i = 0; i < 6; i++){
+            playerCards[i].gameObject.SetActive(false);
+            i++;
+        }
+        for(int i = 0; i < 6; i++){
+            enemyCards[i].gameObject.SetActive(false);
+            i++;
+        }
+        playerDeck = new List<ActiveCards>{null, null, null, null, null, null};
+        enemyDeck = new List<ActiveCards>{null, null, null, null, null, null};
+        readyImagePlayer.sprite = notReady;
+        readyImageEnemy.sprite = notReady;
+        lobbyCodeText.text = "";
+        lobbyCodeInput.text = "";
+    }
+    public void Return(){
+        SceneManager.UnloadSceneAsync("Testing Gameplay").completed += async (operation) => {
+                PlayerUIManager.Instance.createLobby.gameObject.SetActive(true);
+                PlayerUIManager.Instance.gameCamera.SetActive(true);
+                ClearMultiplayer();
+                PlayerUIManager.Instance.playerUI.SetActive(true);
+        };
+    }
     public void StartGame(){
         this.CallFacet((RoomManager rm) => rm.SendGameStart(lobbyCode, AccountManager.Instance.playerData, true));
     }
@@ -122,6 +159,9 @@ public class MultiplayerManager : MonoBehaviour
     }
     public void SendAction(LobbyData lobbyData, ActionData actionData){
         this.CallFacet((RoomManager rm) => rm.SendAction(lobbyCode, AccountManager.Instance.playerData, lobbyData, actionData));
+    }
+    public void SendSurrender(bool throughWinComplete, bool throughSurrenderButton){
+        this.CallFacet((RoomManager rm) => rm.SendSurrender(lobbyCode, AccountManager.Instance.playerData, throughSurrenderButton, throughSurrenderButton));
     }
     public void SendInGame(){
         this.CallFacet((RoomManager rm) => rm.SendInGame(lobbyCode, AccountManager.Instance.playerData, true));

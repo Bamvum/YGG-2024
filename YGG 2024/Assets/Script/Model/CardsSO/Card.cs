@@ -1,4 +1,6 @@
 using System.Linq;
+using System.Threading.Tasks;
+using DG.Tweening;
 using ESDatabase.Classes;
 using Solana.Unity.Soar.Accounts;
 using TMPro;
@@ -25,6 +27,7 @@ public class Card : MonoBehaviour
     [SerializeField] public int slotNo = 0;
     [SerializeField] public int hp = 0;
     [SerializeField] public bool isPlayercard = false;
+    [SerializeField] public bool isAnimating = false;
 
     [Space(10)]
     [SerializeField] Button cardButton;
@@ -40,7 +43,10 @@ public class Card : MonoBehaviour
             if(!CardGameManager.instance.yourTurn){
                 Debug.Log("Not Your Turn!");
                 return;
-            }            
+            }
+            if(isAnimating){
+                return;
+            }
             CardGameManager.instance.CardSelect(this);
         }
     }
@@ -108,12 +114,18 @@ public class Card : MonoBehaviour
             }
         }
     }
-    public void Deselect(){
+    public async Task Deselect(){
         selected.SetActive(false);
+        isAnimating = true;
+        await transform.DOScale(new Vector3(1.2f, 1.2f, 1.2f) - new Vector3(0.2f, 0.2f, 0.2f), 0.3f).AsyncWaitForCompletion();
+        isAnimating = false;
         isSelected = false;
     }
-    public void Select(){
+    public async Task Select(){
         selected.SetActive(true);
+        isAnimating = true;
+        await transform.DOScale(new Vector3(1, 1, 1) + new Vector3(0.2f, 0.2f, 0.2f), 0.3f).AsyncWaitForCompletion();
+        isAnimating = false;
         isSelected = true;
     }
     public void DisplayCard()

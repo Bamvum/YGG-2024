@@ -6,6 +6,7 @@ using DG.Tweening;
 using ESDatabase.Classes;
 using System.Linq;
 using System;
+using UnityEngine.SceneManagement;
 
 /*
     TODO    - WHO WILL GO FIRST? COIN FLIP? 
@@ -25,8 +26,8 @@ public class CardGameManager : MonoBehaviour
     [SerializeField] bool[] availableCardSlots;
 
     [Header("HUD/UI")]
-    [SerializeField] GameObject gameDoneHUD;
-    [SerializeField] Text topPanelText;
+    [SerializeField] public GameObject gameHudLose;
+    [SerializeField] public GameObject gameHudWin;
 
     [Header("Flag")]
     [SerializeField] TMP_Text deckCountText;
@@ -191,16 +192,14 @@ public class CardGameManager : MonoBehaviour
     {
         Debug.Log("You Surrendered!");
         
-        Time.timeScale = 0;
-        
-        gameDoneHUD.SetActive(true);
-        topPanelText.text = "Nice Try";
+        ticker = 0;
+        gameHudLose.SetActive(true);
+        MultiplayerManager.Instance.SendSurrender(false, true);
     }
 
     public void Return()
     {
-        Debug.Log("Return!");
-
+        MultiplayerManager.Instance.Return();
     }
 
     public void Battle()
@@ -239,29 +238,29 @@ public class CardGameManager : MonoBehaviour
 
     #region  - COMBAT -
 
-    public void CardSelect(Card cSelected)
+    public async void CardSelect(Card cSelected)
     {
         
         Debug.Log("Card Select Method!!");
-
+        
         // CARD SELECT
         if (cSelected.gameObject.layer == LayerMask.NameToLayer("Your Card"))
         {
             if (selectedCard[0] == null)
             {
                 selectedCard[0] = cSelected;
-                selectedCard[0].Select();
+                await selectedCard[0].Select();
             }else{
-                selectedCard[0].Deselect();
+                await selectedCard[0].Deselect();
                 selectedCard[0] = cSelected;    
-                selectedCard[0].Select();
+                await selectedCard[0].Select();
             }
         }
         else if (cSelected.gameObject.layer == LayerMask.NameToLayer("Enemy Card"))
         {
             if(selectedCard[0] != null && selectedCard[1] == null){
                 selectedCard[1] = cSelected;
-                selectedCard[1].Select();
+                await selectedCard[1].Select();
             }else{
                 Debug.Log("Select a card first");
             }
@@ -272,8 +271,8 @@ public class CardGameManager : MonoBehaviour
         if (selectedCard[0] != null && selectedCard[1] != null)
         {
             CardAttack(selectedCard[0], selectedCard[1]);
-            selectedCard[0].Deselect();
-            selectedCard[1].Deselect();
+            await selectedCard[0].Deselect();
+            await selectedCard[1].Deselect();
             selectedCard[0] = null;
             selectedCard[1] = null; 
 
@@ -361,36 +360,36 @@ public class CardGameManager : MonoBehaviour
         if (MultiplayerManager.Instance.isJoiner) {
             LobbyData lobby = MultiplayerManager.Instance.lobbyData;
             deckCountText.text = lobby.joinerCurrentDeck.Count.ToString();
-            if(lobby.joinerActiveCards.Count == 0){
-                // SEND DITO YUNG SURRENDER SA KABILA
+            if(lobby.joinerCurrentDeck.Count == 0 && AreAllCardsBelowHpThreshold(lobby.joinerActiveCards)){
+                MultiplayerManager.Instance.SendSurrender(true, false);
+                gameHudLose.SetActive(true);
             }
-            Debug.Log($"Updated joiner card HP: {lobby.joinerActiveCards[selectedCard[1].slotNo].cardHP}");
         } else {
             LobbyData lobby = MultiplayerManager.Instance.lobbyData;
             deckCountText.text = lobby.hostCurrentDeck.Count.ToString();
-            if(lobby.hostActiveCards.Count == 0){
-                // SEND DITO YUNG SURRENDER SA KABILA
+            if(lobby.hostCurrentDeck.Count == 0 && AreAllCardsBelowHpThreshold(lobby.hostActiveCards)){
+                MultiplayerManager.Instance.SendSurrender(true, false);
+                gameHudLose.SetActive(true);
             }
-            Debug.Log($"Updated joiner card HP: {lobby.joinerActiveCards[selectedCard[1].slotNo].cardHP}");
         }
         TimerToEndTurn();
-        
-        // DECK IS EMPTY AND CARDS SLOTS ARE EMPTY 
-        if (hostDeck.Count == 0 && AllSlotsAvailable())
-        {
-            Debug.Log("Game Over");
 
-            Time.timeScale = 0;
-
-            gameDoneHUD.SetActive(true);
-            topPanelText.text = "Nice Try";
-            
-        }
 
         // DRAW CARDS IF THERE IS AVAILABLE SLOTS IN THE FIELD
         // if (hostDeck.Count > 0 && AnySlotAvailable())
         // {
         //     DrawCard();
         // }
+    }
+    public bool AreAllCardsBelowHpThreshold(List<ActiveCards> activeCards)
+    {
+        foreach (ActiveCards card in activeCards)
+        {
+            if (card.cardHP >= 1)
+            {
+                return false;
+            }
+        }
+        return true;
     }
 }
