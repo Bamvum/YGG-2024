@@ -30,6 +30,7 @@ public class CardGameManager : MonoBehaviour
     [Header("HUD/UI")]
     [SerializeField] public GameObject gameHudLose;
     [SerializeField] public GameObject gameHudWin;
+    [SerializeField] public Text turn;
 
     [Header("Flag")]
     [SerializeField] TMP_Text deckCountText;
@@ -273,12 +274,15 @@ public class CardGameManager : MonoBehaviour
         // CARD COMBAT 
         if (selectedCard[0] != null && selectedCard[1] != null)
         {
-            CardAttack(selectedCard[0], selectedCard[1]);
-            await selectedCard[0].Deselect();
+            Vector3 pos = selectedCard[1].gameObject.transform.position;
+            Vector3 defaultPos = cardSlots[selectedCard[0].slotNo].position;
             await selectedCard[1].Deselect();
+            await selectedCard[0].gameObject.transform.DOMove(pos, 0.3f).SetUpdate(true).AsyncWaitForCompletion();
+            CardAttack(selectedCard[0], selectedCard[1]);
+            await selectedCard[0].gameObject.transform.DOMove(defaultPos, 0.3f).SetUpdate(true).AsyncWaitForCompletion();
+            await selectedCard[0].Deselect();
             selectedCard[0] = null;
             selectedCard[1] = null; 
-
             // ADD END TURN
         }
     }
@@ -286,8 +290,15 @@ public class CardGameManager : MonoBehaviour
         yourTurn = !yourTurn;
         await AnimateAttacker(actionMessage);
         if(yourTurn){
+
+            turn.text = "Your Turn";
+            await turn.transform.DOScale(new Vector3(1f, 1f, 1f) + new Vector3(0.2f, 0.2f, 0.2f), 0.3f).AsyncWaitForCompletion();
+            await turn.transform.DOScale(new Vector3(1.2f, 1.2f, 1.2f) - new Vector3(0.2f, 0.2f, 0.2f), 0.3f).AsyncWaitForCompletion();
             ticker = 1;
         }else{
+            turn.text = "Enemy Turn";
+            await turn.transform.DOScale(new Vector3(1f, 1f, 1f) + new Vector3(0.2f, 0.2f, 0.2f), 0.3f).AsyncWaitForCompletion();
+            await turn.transform.DOScale(new Vector3(1.2f, 1.2f, 1.2f) - new Vector3(0.2f, 0.2f, 0.2f), 0.3f).AsyncWaitForCompletion();
             ticker = 0;
         }
     }
@@ -324,7 +335,7 @@ public class CardGameManager : MonoBehaviour
                 attackedSlotNo = selectedCard[1].slotNo
             };
             Debug.Log($"Attacking card in slot {selectedCard[1].slotNo} with {totalDamage} damage");
-        
+
             if (!MultiplayerManager.Instance.isJoiner) {
                 lobby.joinerActiveCards[selectedCard[1].slotNo].cardHP = Mathf.Max(0, lobby.joinerActiveCards[selectedCard[1].slotNo].cardHP - totalDamage);
                 Debug.Log($"Updated joiner card HP: {lobby.joinerActiveCards[selectedCard[1].slotNo].cardHP}");
