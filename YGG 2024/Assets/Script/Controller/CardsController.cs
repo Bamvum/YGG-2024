@@ -176,6 +176,7 @@ public class CardsController : MonoBehaviour
         if (cards.isEquipped)
         {
             Debug.Log("The card is already equipped.");
+            GameManager.instance.ShowFloatingText("CARD ALREADY EQUIPPED", Color.yellow);
             return;
         }
 
@@ -202,7 +203,7 @@ public class CardsController : MonoBehaviour
                 item.OnItemClicked += HandleItemSelection;
                 usedItemsIndexMap[ListofUsedItems.Count - 1] = cardIndex;
 
-
+                GameManager.instance.ShowFloatingText("CARD EQUIPPED", Color.green);
                 // Set the item's position based on the available slot
                 item.transform.localPosition = availableSlot.localPosition;
                 item.transform.localScale = new Vector3(1.2f, 1.2f, 1.2f);
@@ -213,6 +214,7 @@ public class CardsController : MonoBehaviour
         }
 
         // If no available slots were found
+        GameManager.instance.ShowFloatingText("NO SLOT AVAILABLE", Color.yellow);
         Debug.Log("There's no slot available.");
     }
 
@@ -279,7 +281,7 @@ public class CardsController : MonoBehaviour
         // Update the card data to mark it as unequipped
         cards.isEquipped = false;
         inventoryData.UpdateCardAt(cardIndex, cards);
-
+        GameManager.instance.ShowFloatingText("CARD UNQUIPPED", Color.yellow);
         Debug.Log($"Card '{card.cName}' has been unequipped.");
     }
 
@@ -300,6 +302,7 @@ public class CardsController : MonoBehaviour
         if (cards.isEquipped)
         {
             Debug.Log("You cannot sell an equipped card. Please unequip it first.");
+            GameManager.instance.ShowFloatingText("Cannot Sell Card", Color.yellow);
             return;
         }
        
@@ -318,7 +321,7 @@ public class CardsController : MonoBehaviour
             NFTResponse nFTResponse = await SolanaUtility.MintNFT(card, AccountManager.Instance.priceData.price);
             if(nFTResponse.response){
                 cards.isMinted = true;
-                
+                GameManager.instance.ShowFloatingText("CARD MINTED", Color.green);
                 Debug.Log(nFTResponse.url);
             }
         }catch(Exception err){
