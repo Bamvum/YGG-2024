@@ -147,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Boar-Icon_0: -4963826387029331128
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

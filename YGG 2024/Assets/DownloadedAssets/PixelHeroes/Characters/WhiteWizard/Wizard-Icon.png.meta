@@ -147,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Wizard-Icon_0: 7243910638518971562
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

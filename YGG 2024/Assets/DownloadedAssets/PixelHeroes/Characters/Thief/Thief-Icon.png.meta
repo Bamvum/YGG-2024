@@ -147,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Thief-Icon_0: -8855863299125010522
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

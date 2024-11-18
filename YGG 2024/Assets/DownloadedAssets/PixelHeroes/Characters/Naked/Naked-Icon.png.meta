@@ -147,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Naked-Icon_0: 8770484167423317122
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
