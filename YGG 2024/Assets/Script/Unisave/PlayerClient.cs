@@ -122,7 +122,6 @@ public class PlayerClient : UnisaveBroadcastingClient
     void ReceiveStartGame(GameStart game){
         if(!game.playerData.publicKey.Equals(AccountManager.Instance.playerData.publicKey.ToString())){
             MultiplayerManager.Instance.lobbyUI.SetActive(false);
-            MultiplayerManager.Instance.lobbyUI.SetActive(false);
             PlayerUIManager.Instance.gameCamera.SetActive(false);
             PlayerUIManager.Instance.OpenLoader();
             MultiplayerManager.Instance.gameStarted = game.gameStarted;
@@ -184,7 +183,7 @@ public class PlayerClient : UnisaveBroadcastingClient
     public void ProceedGame(){
         SceneManager.LoadSceneAsync("Testing Gameplay", LoadSceneMode.Additive).completed += async (operation) => {
             MultiplayerManager.Instance.playerInGame = true;
-            PlayerUIManager.Instance.createLobby.interactable = false;
+            PlayerUIManager.Instance.createLobby.gameObject.SetActive(false);
             MultiplayerManager.Instance.SendInGame();
             if(MultiplayerManager.Instance.playerInGame && MultiplayerManager.Instance.enemyInGame){
                 PlayerUIManager.Instance.CloseLoader();
