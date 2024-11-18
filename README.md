@@ -49,12 +49,14 @@ The game also features a **Tavern**, a charming clicker-style minigame where pla
 - **Secure Transactions**: Solana's fast and low-cost transactions make card trading and purchases seamless and efficient.
 - **Interoperability**: Future plans could allow cards to be used across different blockchain-based games.
 
-By integrating **Sovryn** and **Solana**, **Card Rush** provides players with a secure, scalable, and rewarding gaming experience while showcasing the power of blockchain technology in enhancing traditional game mechanics.
+By integrating **Solana**, **Card Rush** provides players with a secure, scalable, and rewarding gaming experience while showcasing the power of blockchain technology in enhancing traditional game mechanics.
 
+
+Github: https://github.com/Bamvum/YGG-2024
 ---
 
-# YGG-2024
-YGG Play Summit 2024
+
+# YGG Play Summit 2024
 
 Members:
 
