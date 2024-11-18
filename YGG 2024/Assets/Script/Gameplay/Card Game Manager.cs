@@ -58,7 +58,10 @@ public class CardGameManager : MonoBehaviour
             yourTurn = MultiplayerManager.Instance.lobbyData.hostTurn;
         }
         if(yourTurn){
+            turn.text = "Your Turn";
             ticker = 1;
+        }else{
+            turn.text = "Enemy Turn";
         }
         InstantiateCardDeck();
         DrawThreeCards();
