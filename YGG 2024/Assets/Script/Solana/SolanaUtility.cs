@@ -45,9 +45,8 @@ public class SolanaUtility : MonoBehaviour
         decimal lamportsPerSol = 1_000_000_000m;
         return (ulong)(sol * lamportsPerSol);
     }
-    public static async Task<bool> TransferSols(){
-        decimal sol = 0.05m; 
-        ulong lamports = ConvertSolToLamports(sol);
+    public static async Task<bool> TransferSols(decimal amount){
+        ulong lamports = ConvertSolToLamports(amount);
         var transaction = new Transaction
         {
             RecentBlockHash = await Web3.Instance.WalletBase.GetBlockHash(),

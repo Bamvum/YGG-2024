@@ -1,16 +1,15 @@
+using Solana.Unity.SDK;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PremiumModal : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
+    [SerializeField] public Text balance;
+    private void OnEnable(){
+        Web3.OnBalanceChange += OnBalanceChange;
     }
-
-    // Update is called once per frame
-    void Update()
+    private void OnBalanceChange(double solBalance)
     {
-        
+        balance.text = Utilities.FormatSolana(solBalance);
     }
 }
