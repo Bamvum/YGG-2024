@@ -19,7 +19,6 @@ The game also features a **Tavern**, a charming clicker-style minigame where pla
   - **Unisave**: A serverless backend framework for database management and real-time multiplayer functionality.  
   - **ArangoDB**: A flexible, multi-model database for storing player data, card metadata, and game states.  
 - **Frontend**:  
-  - TextMeshPro for UI elements.  
   - Unity for 2D/3D rendering.  
 - **Networking**: Photon or Unity's Netcode for multiplayer battles.  
 - **Version Control**: Git and GitHub for collaborative development.  
