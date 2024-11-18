@@ -184,6 +184,7 @@ public class PlayerClient : UnisaveBroadcastingClient
     public void ProceedGame(){
         SceneManager.LoadSceneAsync("Testing Gameplay", LoadSceneMode.Additive).completed += async (operation) => {
             MultiplayerManager.Instance.playerInGame = true;
+            PlayerUIManager.Instance.createLobby.interactable = false;
             MultiplayerManager.Instance.SendInGame();
             if(MultiplayerManager.Instance.playerInGame && MultiplayerManager.Instance.enemyInGame){
                 PlayerUIManager.Instance.CloseLoader();
