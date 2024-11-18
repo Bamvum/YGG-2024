@@ -493,7 +493,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 24814883}
   m_Direction: 2
   m_Value: 1.0000006
-  m_Size: 0.8484217
+  m_Size: 0.84842163
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -21546,6 +21546,8 @@ MonoBehaviour:
   cardLists: {fileID: 11400000, guid: 9c3d2865f5795c141a9f2f9ea796e931, type: 2}
   PlayerMoney: 0
   PlayerMoneyText: {fileID: 273382428}
+  floatingTextPrefab: {fileID: 0}
+  cANVAS: {fileID: 0}
 --- !u!1 &1280324344
 GameObject:
   m_ObjectHideFlags: 0
@@ -34627,6 +34629,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d8dda7a4317da64785741d64941efb8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  itemPrefab: {fileID: 0}
+  cardContainer: {fileID: 0}
+  ReceiveCard: {fileID: 0}
 --- !u!114 &2117861401
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class NotifText : MonoBehaviour
 {
-    private float floatDuration = 1f;
-    private float floatDistance = 3f;
+    public float floatDuration = 1f;
+    public float floatDistance = 3f;
     public TMP_Text textComponent; // Use TextMeshProUGUI if using TextMeshPro
 
     private void Start()
