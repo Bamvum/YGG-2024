@@ -6,6 +6,7 @@ using DG.Tweening;
 using ESDatabase.Classes;
 using System.Linq;
 using System;
+using UnityEngine.SceneManagement;
 
 /*
     TODO    - WHO WILL GO FIRST? COIN FLIP? 
@@ -25,8 +26,8 @@ public class CardGameManager : MonoBehaviour
     [SerializeField] bool[] availableCardSlots;
 
     [Header("HUD/UI")]
-    [SerializeField] GameObject gameDoneHUD;
-    [SerializeField] Text topPanelText;
+    [SerializeField] public GameObject gameHudLose;
+    [SerializeField] public GameObject gameHudWin;
 
     [Header("Flag")]
     [SerializeField] TMP_Text deckCountText;
@@ -191,10 +192,9 @@ public class CardGameManager : MonoBehaviour
     {
         Debug.Log("You Surrendered!");
         
-        Time.timeScale = 0;
+        ticker = 0;
         MultiplayerManager.Instance.SendSurrender(false, true);
-        gameDoneHUD.SetActive(true);
-        topPanelText.text = "Nice Try";
+        gameHudLose.SetActive(true);
     }
 
     public void Return()
@@ -239,7 +239,7 @@ public class CardGameManager : MonoBehaviour
 
     #region  - COMBAT -
 
-    public void CardSelect(Card cSelected)
+    public async void CardSelect(Card cSelected)
     {
         
         Debug.Log("Card Select Method!!");
@@ -250,18 +250,18 @@ public class CardGameManager : MonoBehaviour
             if (selectedCard[0] == null)
             {
                 selectedCard[0] = cSelected;
-                selectedCard[0].Select();
+                await selectedCard[0].Select();
             }else{
-                selectedCard[0].Deselect();
+                await selectedCard[0].Deselect();
                 selectedCard[0] = cSelected;    
-                selectedCard[0].Select();
+                await selectedCard[0].Select();
             }
         }
         else if (cSelected.gameObject.layer == LayerMask.NameToLayer("Enemy Card"))
         {
             if(selectedCard[0] != null && selectedCard[1] == null){
                 selectedCard[1] = cSelected;
-                selectedCard[1].Select();
+                await selectedCard[1].Select();
             }else{
                 Debug.Log("Select a card first");
             }
@@ -272,8 +272,8 @@ public class CardGameManager : MonoBehaviour
         if (selectedCard[0] != null && selectedCard[1] != null)
         {
             CardAttack(selectedCard[0], selectedCard[1]);
-            selectedCard[0].Deselect();
-            selectedCard[1].Deselect();
+            await selectedCard[0].Deselect();
+            await selectedCard[1].Deselect();
             selectedCard[0] = null;
             selectedCard[1] = null; 
 
@@ -363,34 +363,27 @@ public class CardGameManager : MonoBehaviour
             deckCountText.text = lobby.joinerCurrentDeck.Count.ToString();
             if(lobby.joinerCurrentDeck.Count == 0 && AreAllCardsBelowHpThreshold(lobby.joinerActiveCards)){
                 MultiplayerManager.Instance.SendSurrender(true, false);
+                gameHudLose.SetActive(true);
             }
-            Debug.Log($"Updated joiner card HP: {lobby.joinerActiveCards[selectedCard[1].slotNo].cardHP}");
         } else {
             LobbyData lobby = MultiplayerManager.Instance.lobbyData;
             deckCountText.text = lobby.hostCurrentDeck.Count.ToString();
             if(lobby.hostCurrentDeck.Count == 0 && AreAllCardsBelowHpThreshold(lobby.hostActiveCards)){
                 MultiplayerManager.Instance.SendSurrender(true, false);
+                gameHudLose.SetActive(true);
             }
         }
         TimerToEndTurn();
-        
-        // DECK IS EMPTY AND CARDS SLOTS ARE EMPTY 
-        if (hostDeck.Count == 0 && AllSlotsAvailable())
-        {
-            Debug.Log("Game Over");
 
-            Time.timeScale = 0;
-
-            gameDoneHUD.SetActive(true);
-            topPanelText.text = "Nice Try";
-            
-        }
 
         // DRAW CARDS IF THERE IS AVAILABLE SLOTS IN THE FIELD
         // if (hostDeck.Count > 0 && AnySlotAvailable())
         // {
         //     DrawCard();
         // }
+    }
+    public void Win(){
+        Return();
     }
     public bool AreAllCardsBelowHpThreshold(List<ActiveCards> activeCards)
     {

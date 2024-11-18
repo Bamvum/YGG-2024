@@ -5,6 +5,7 @@ using Solana.Unity.SDK;
 using Solana.Unity.Wallet;
 using Unisave.Facets;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using static CardSOData;
 
@@ -132,6 +133,13 @@ public class MultiplayerManager : MonoBehaviour
         lobbyCodeText.text = "";
         lobbyCodeInput.text = "";
     }
+    public void Return(){
+        SceneManager.UnloadSceneAsync("Testing Gameplay").completed += async (operation) => {
+                PlayerUIManager.Instance.gameCamera.SetActive(true);
+                ClearMultiplayer();
+                PlayerUIManager.Instance.playerUI.SetActive(true);
+        };
+    }
     public void StartGame(){
         this.CallFacet((RoomManager rm) => rm.SendGameStart(lobbyCode, AccountManager.Instance.playerData, true));
     }
@@ -143,7 +151,6 @@ public class MultiplayerManager : MonoBehaviour
     }
     public void SendSurrender(bool throughWinComplete, bool throughSurrenderButton){
         this.CallFacet((RoomManager rm) => rm.SendSurrender(lobbyCode, AccountManager.Instance.playerData, throughSurrenderButton, throughSurrenderButton));
-        ClearMultiplayer();
     }
     public void SendInGame(){
         this.CallFacet((RoomManager rm) => rm.SendInGame(lobbyCode, AccountManager.Instance.playerData, true));

@@ -166,6 +166,7 @@ public class PlayerClient : UnisaveBroadcastingClient
     }
     async void ReceiveSurrender(SurrenderMessage surrenderMessage){
         if(!surrenderMessage.playerData.publicKey.Equals(AccountManager.Instance.playerData.publicKey.ToString())){
+            CardGameManager.instance.gameHudLose.SetActive(true);
             PlayerData playerData = AccountManager.Instance.playerData;
             if(surrenderMessage.throughWinComplete){
                 playerData.gameData.money += 2000;
@@ -174,10 +175,6 @@ public class PlayerClient : UnisaveBroadcastingClient
                 playerData.gameData.money += 500;
                 await AccountManager.SaveData(playerData);
             }
-            SceneManager.UnloadSceneAsync("Testing Gameplay").completed += async (operation) => {
-                MultiplayerManager.Instance.ClearMultiplayer();
-                PlayerUIManager.Instance.playerUI.SetActive(true);
-            };
         }
     }
     public void ProceedGame(){
