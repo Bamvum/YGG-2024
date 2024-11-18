@@ -173,7 +173,7 @@ public class PlayerClient : UnisaveBroadcastingClient
                 GameManager.instance.AddMoney(500);
             }
         }else{
-            if(GameManager.instance.PlayerMoney < 500){
+            if(AccountManager.Instance.playerData.gameData.money < 500){
                 GameManager.instance.DeductMoney(GameManager.instance.PlayerMoney);
             }else{
                 GameManager.instance.DeductMoney(500);
