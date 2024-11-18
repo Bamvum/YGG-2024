@@ -8,9 +8,13 @@ public class CardPrice : MonoBehaviour
     [SerializeField] public double solPrice;
     [SerializeField] public double goldAmount;
     [SerializeField] public Text buttonText;
+    private void OnEnable(){
+        solPrice = Convert.ToDouble(AccountManager.Instance.priceData.price) * ((double)pesoPrice / 50);
+        buttonText.text = solPrice.ToString("#.###") + "SOL\nPHP " + pesoPrice;
+    }
     private void Update(){
-        if(AccountManager.Instance.priceData != null){
-            solPrice = Convert.ToInt64(AccountManager.Instance.priceData.price) * (pesoPrice / 50);
+        if(AccountManager.Instance != null){
+            solPrice = Convert.ToDouble(AccountManager.Instance.priceData.price) * ((double)pesoPrice / 50);
             buttonText.text = solPrice.ToString("#.###") + "SOL\nPHP " + pesoPrice;
         }
     }

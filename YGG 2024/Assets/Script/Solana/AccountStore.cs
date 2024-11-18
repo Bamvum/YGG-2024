@@ -32,7 +32,6 @@ public class AccountStore : MonoBehaviour
                 AccountManager.Instance.uid = generatedUID;
                 AccountManager.Instance.priceData.price = response.priceData.price;
                 AccountManager.Instance.priceData.date = response.priceData.date;
-                
             }).Catch(error => 
             {
                 PlayerUIManager.Instance.CloseLoader();
@@ -48,7 +47,8 @@ public class AccountStore : MonoBehaviour
                 playerClient.enabled = true;
                 AccountManager.Instance.EntityId = response.playerData.EntityId;
                 AccountManager.Instance.uid = generatedUID;
-                
+                AccountManager.Instance.priceData.price = response.priceData.price;
+                AccountManager.Instance.priceData.date = response.priceData.date;
             }).Catch(error => 
             {
                 PlayerUIManager.Instance.CloseLoader();
@@ -66,7 +66,6 @@ public class AccountStore : MonoBehaviour
                 AccountManager.Instance.uid = generatedUID;
                 AccountManager.Instance.priceData.price = response.priceData.price;
                 AccountManager.Instance.priceData.date = response.priceData.date;
-                
             }).Catch(error => 
             {
                 PlayerUIManager.Instance.CloseLoader();
