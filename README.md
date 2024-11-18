@@ -13,14 +13,17 @@ The game also features a **Tavern**, a charming clicker-style minigame where pla
 
 ## **Tech Stack**
 - **Game Engine**: Unity (C#)
-- **Blockchain**: Solana
-  - Powered by Sovryn for secure blockchain-based transactions and integration.
-  - NFT-based card ownership and trading.
-- **Backend**: Unisave (for database management and real-time multiplayer functionality)
-- **Frontend**: TextMeshPro for UI elements and Unity for 2D/3D rendering.
-- **Networking**: Photon or Unity's Netcode for multiplayer battles.
-- **Version Control**: Git and GitHub for collaborative development.
-- **Tools**: Visual Studio, Rider, and GitHub Actions for CI/CD.
+- **Blockchain**: Solana  
+  - **Solana-Unity SDK**: Enables seamless integration of blockchain features into the game, such as NFT card ownership and cryptocurrency transactions.  
+- **Backend**:  
+  - **Unisave**: A serverless backend framework for database management and real-time multiplayer functionality.  
+  - **ArangoDB**: A flexible, multi-model database for storing player data, card metadata, and game states.  
+- **Frontend**:  
+  - TextMeshPro for UI elements.  
+  - Unity for 2D/3D rendering.  
+- **Networking**: Photon or Unity's Netcode for multiplayer battles.  
+- **Version Control**: Git and GitHub for collaborative development.  
+- **Tools**: Visual Studio, Rider, and GitHub Actions for CI/CD.  
 
 ---
 
