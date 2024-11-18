@@ -315,7 +315,7 @@ public class CardsController : MonoBehaviour
             Cards cards = inventoryData.GetItemAt(cardIndex);
             CardSO card = cards.item.CreateCopy();
 
-            NFTResponse nFTResponse = await SolanaUtility.MintNFT(card, AccountManager.Instance.price);
+            NFTResponse nFTResponse = await SolanaUtility.MintNFT(card, AccountManager.Instance.priceData.price);
             if(nFTResponse.response){
                 cards.isMinted = true;
                 
