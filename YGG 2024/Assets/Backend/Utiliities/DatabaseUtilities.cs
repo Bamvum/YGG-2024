@@ -24,4 +24,10 @@ namespace ESDatabase.Utilities
             }
         }
     }
+    [Serializable]
+    public class LoginResponse
+    {
+        public PlayerData playerData;
+        public PriceData priceData;
+    }
 }

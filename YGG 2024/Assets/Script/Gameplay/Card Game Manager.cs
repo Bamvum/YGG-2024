@@ -7,6 +7,8 @@ using ESDatabase.Classes;
 using System.Linq;
 using System;
 using UnityEngine.SceneManagement;
+using System.Threading.Tasks;
+using Solana.Unity.Soar.Accounts;
 
 /*
     TODO    - WHO WILL GO FIRST? COIN FLIP? 
@@ -28,9 +30,13 @@ public class CardGameManager : MonoBehaviour
     [Header("HUD/UI")]
     [SerializeField] public GameObject gameHudLose;
     [SerializeField] public GameObject gameHudWin;
+    [SerializeField] public GameObject playerDeck;
+    [SerializeField] public GameObject enemyDeck;
+    [SerializeField] public Text turn;
 
     [Header("Flag")]
     [SerializeField] TMP_Text deckCountText;
+    [SerializeField] TMP_Text enemyDeckCountText;
     [SerializeField] public bool yourTurn;
 
     [Space(10)]
@@ -52,7 +58,10 @@ public class CardGameManager : MonoBehaviour
             yourTurn = MultiplayerManager.Instance.lobbyData.hostTurn;
         }
         if(yourTurn){
+            turn.text = "Your Turn";
             ticker = 1;
+        }else{
+            turn.text = "Enemy Turn";
         }
         InstantiateCardDeck();
         DrawThreeCards();
@@ -227,6 +236,7 @@ public class CardGameManager : MonoBehaviour
             ActionData actionData = new ActionData(){
                 attackerCardID = "",
                 actionType = ActionType.None,
+                attackerSlotNo = 0,
                 attackedSlotNo = 0
             };
             MultiplayerManager.Instance.SendAction(MultiplayerManager.Instance.lobbyData, actionData);
@@ -270,24 +280,49 @@ public class CardGameManager : MonoBehaviour
         // CARD COMBAT 
         if (selectedCard[0] != null && selectedCard[1] != null)
         {
-            CardAttack(selectedCard[0], selectedCard[1]);
-            await selectedCard[0].Deselect();
+            Vector3 pos = selectedCard[1].gameObject.transform.position;
+            Vector3 defaultPos = cardSlots[selectedCard[0].slotNo].position;
             await selectedCard[1].Deselect();
+            await selectedCard[0].gameObject.transform.DOMove(pos, 0.3f).SetUpdate(true).AsyncWaitForCompletion();
+            CardAttack(selectedCard[0], selectedCard[1]);
+            await selectedCard[0].gameObject.transform.DOMove(defaultPos, 0.3f).SetUpdate(true).AsyncWaitForCompletion();
+            await selectedCard[0].Deselect();
             selectedCard[0] = null;
             selectedCard[1] = null; 
-
             // ADD END TURN
         }
     }
-    public void ToggleTurn(){
+    public async void ToggleTurn(ActionMessage actionMessage){
         yourTurn = !yourTurn;
+        await AnimateAttacker(actionMessage);
         if(yourTurn){
+
+            turn.text = "Your Turn";
+            await turn.transform.DOScale(new Vector3(1f, 1f, 1f) + new Vector3(0.2f, 0.2f, 0.2f), 0.3f).AsyncWaitForCompletion();
+            await turn.transform.DOScale(new Vector3(1.2f, 1.2f, 1.2f) - new Vector3(0.2f, 0.2f, 0.2f), 0.3f).AsyncWaitForCompletion();
             ticker = 1;
         }else{
+            turn.text = "Enemy Turn";
+            await turn.transform.DOScale(new Vector3(1f, 1f, 1f) + new Vector3(0.2f, 0.2f, 0.2f), 0.3f).AsyncWaitForCompletion();
+            await turn.transform.DOScale(new Vector3(1.2f, 1.2f, 1.2f) - new Vector3(0.2f, 0.2f, 0.2f), 0.3f).AsyncWaitForCompletion();
             ticker = 0;
         }
     }
-    void CardAttack(Card attacker, Card defender)
+
+    private async Task AnimateAttacker(ActionMessage actionMessage){
+        if(actionMessage.actionData.actionType == ActionType.Attack){
+            Card card = joinerDeck[actionMessage.actionData.attackerSlotNo];
+            await card.Select();
+            Transform cardTransfrom = card.gameObject.transform;
+            Vector3 defaultPos = cardTransfrom.gameObject.transform.position;
+  
+            Transform targetTransform = cardSlots[actionMessage.actionData.attackedSlotNo];
+            await cardTransfrom.DOMove(new Vector3(targetTransform.position.x, targetTransform.position.y, targetTransform.position.z), 0.3f).SetUpdate(true).AsyncWaitForCompletion();
+            await cardTransfrom.DOMove(new Vector3(defaultPos.x, defaultPos.y, defaultPos.z), 0.3f).SetUpdate(true).AsyncWaitForCompletion();
+            await card.Deselect();
+        }
+    }
+    async void CardAttack(Card attacker, Card defender)
     {
         if (attacker.cardSO != null && defender.cardSO != null)
         {
@@ -304,20 +339,19 @@ public class CardGameManager : MonoBehaviour
                 attackerCardID = selectedCard[0].cardSO.UniqueID,
                 actionType = ActionType.Attack,
                 damage = totalDamage,
+                attackerSlotNo = selectedCard[0].slotNo,
                 attackedSlotNo = selectedCard[1].slotNo
             };
-            Debug.Log($"Attacking card in slot {selectedCard[1].slotNo} with {totalDamage} damage");
-        
             if (!MultiplayerManager.Instance.isJoiner) {
                 lobby.joinerActiveCards[selectedCard[1].slotNo].cardHP = Mathf.Max(0, lobby.joinerActiveCards[selectedCard[1].slotNo].cardHP - totalDamage);
-                Debug.Log($"Updated joiner card HP: {lobby.joinerActiveCards[selectedCard[1].slotNo].cardHP}");
             } else {
                 lobby.hostActiveCards[selectedCard[1].slotNo].cardHP = Mathf.Max(0, lobby.hostActiveCards[selectedCard[1].slotNo].cardHP - totalDamage);
-                Debug.Log($"Updated host card HP: {lobby.hostActiveCards[selectedCard[1].slotNo].cardHP}");
             }
             MultiplayerManager.Instance.SendAction(MultiplayerManager.Instance.lobbyData, actionData);
+            turn.text = "Enemy Turn";
+            await turn.transform.DOScale(new Vector3(1f, 1f, 1f) + new Vector3(0.2f, 0.2f, 0.2f), 0.3f).AsyncWaitForCompletion();
+            await turn.transform.DOScale(new Vector3(1.2f, 1.2f, 1.2f) - new Vector3(0.2f, 0.2f, 0.2f), 0.3f).AsyncWaitForCompletion();
             yourTurn = !yourTurn;
-            Debug.Log("Player End Turn");
             // DEFENDER HEALTH CHECKER 
             // if (defender.cardSO.cHealth <= 0)
             // {
@@ -330,7 +364,14 @@ public class CardGameManager : MonoBehaviour
             Debug.LogWarning("One or both cards are missing CardSO data.");
         }  
     }
-
+    public async void AnimateEnemyDeck(){
+        await enemyDeck.transform.DOScale(new Vector3(1f, 1f, 1f) + new Vector3(0.2f, 0.2f, 0.2f), 0.3f).AsyncWaitForCompletion();
+        await enemyDeck.transform.DOScale(new Vector3(1.2f, 1.2f, 1.2f) - new Vector3(0.2f, 0.2f, 0.2f), 0.3f).AsyncWaitForCompletion();
+    }
+    public async void AnimatePlayerDeck(){
+        await playerDeck.transform.DOScale(new Vector3(1f, 1f, 1f) + new Vector3(0.2f, 0.2f, 0.2f), 0.3f).AsyncWaitForCompletion();
+        await playerDeck.transform.DOScale(new Vector3(1.2f, 1.2f, 1.2f) - new Vector3(0.2f, 0.2f, 0.2f), 0.3f).AsyncWaitForCompletion();
+    }
     int GetTypeDamageModifier(string attackerType, string defenderType)
     {
         if (attackerType == "Inferno")
@@ -360,6 +401,7 @@ public class CardGameManager : MonoBehaviour
         if (MultiplayerManager.Instance.isJoiner) {
             LobbyData lobby = MultiplayerManager.Instance.lobbyData;
             deckCountText.text = lobby.joinerCurrentDeck.Count.ToString();
+            enemyDeckCountText.text = lobby.hostCurrentDeck.Count.ToString();
             if(lobby.joinerCurrentDeck.Count == 0 && AreAllCardsBelowHpThreshold(lobby.joinerActiveCards)){
                 MultiplayerManager.Instance.SendSurrender(true, false);
                 gameHudLose.SetActive(true);
@@ -367,6 +409,7 @@ public class CardGameManager : MonoBehaviour
         } else {
             LobbyData lobby = MultiplayerManager.Instance.lobbyData;
             deckCountText.text = lobby.hostCurrentDeck.Count.ToString();
+            enemyDeckCountText.text = lobby.joinerCurrentDeck.Count.ToString();
             if(lobby.hostCurrentDeck.Count == 0 && AreAllCardsBelowHpThreshold(lobby.hostActiveCards)){
                 MultiplayerManager.Instance.SendSurrender(true, false);
                 gameHudLose.SetActive(true);

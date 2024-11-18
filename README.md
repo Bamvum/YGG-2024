@@ -34,15 +34,12 @@ The game also features a **Tavern**, a charming clicker-style minigame where pla
    - Players can own, trade, and sell cards securely within the game or on external marketplaces.
 
 2. **Decentralized Marketplace**
-   - The in-game Card Shop leverages Sovryn to facilitate secure transactions using cryptocurrencies (e.g., SOL).
+   - The in-game Card Shop Solana  to facilitate secure transactions using cryptocurrencies (e.g., SOL).
    - Players can purchase exclusive card packs, participate in auctions, and trade cards with other players.
 
 3. **Player Rewards**
    - Players earn blockchain-based rewards by winning battles or participating in special events, encouraging competitive gameplay.
    - Rewards can include rare NFT cards, SOL tokens, or exclusive items.
-
-4. **Immutable Leaderboards**
-   - Multiplayer battle rankings are stored on the blockchain, ensuring transparency and fairness.
 
 ### **Blockchain Use Cases in Card Rush**
 - **Enhanced Player Ownership**: Cards are tied to the blockchain, offering true ownership beyond the game itself.

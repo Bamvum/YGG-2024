@@ -34,7 +34,7 @@ public class SolanaUtility : MonoBehaviour
     }
     [ContextMenu("AJAccount")]
     public async void AJAccount(){
-        await Web3.Instance.CreateAccount("5nD46oP3g54DmxcU3SFtnprVYKzn2j6dhuL2FaRkymWbA6vvxY2tas173H6Z37qaezKazR523PMMGh6MwDybaZFn", "A704Gods");
+        await Web3.Instance.CreateAccount("NRfeXStpHdurR5bqRfb6VkA9iLiPdwGC9UvgoTGy9WwmDNq6wcmT87rVtur6AdUnamVM1XzzFAC89DeGWGaeegS", "A704Gods");
     }
 
     [ContextMenu("Logout")]

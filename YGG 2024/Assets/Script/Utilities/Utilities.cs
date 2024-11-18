@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 using static CardSOData;
@@ -14,6 +15,11 @@ public class Utilities : MonoBehaviour
         }
 
         return new string(code);
+    }
+    public static string GenerateUuid()
+    {
+        Guid uuid = Guid.NewGuid();
+        return uuid.ToString();
     }
     public static void EnableAllButtons(GameObject gameObject)
     {
@@ -33,6 +39,39 @@ public class Utilities : MonoBehaviour
             button.interactable = false;
         }
     }
+    public static bool CheckIfLateBy10Minutes(DateTime dateTime)
+    {
+                // Convert scheduled time to local time zone
+        DateTime localScheduledTime = dateTime.ToLocalTime();
+                
+                // Get current local time
+        DateTime currentLocalTime = DateTime.Now;
+                // Calculate the difference in minutes
+        double minutesLate = (currentLocalTime - localScheduledTime).TotalMinutes;
+        if (minutesLate > 10)
+        {
+            return true;
+        }
+        else
+        {
+                        return false;
+        }
+    }
+    public static string FormatTimeRemaining(TimeSpan timeRemaining)
+    {
+        if (timeRemaining.TotalMinutes >= 1 && timeRemaining.TotalMinutes <= 10)
+        {
+                int minutesRemaining = Mathf.FloorToInt((float)timeRemaining.TotalMinutes);
+                return $"{minutesRemaining} minute{(minutesRemaining > 1 ? "s" : "")}";
+        }
+                // If less than 1 minute remains, show it in seconds
+        else if (timeRemaining.TotalSeconds < 60)
+        {
+                int secondsRemaining = Mathf.FloorToInt((float)timeRemaining.TotalSeconds);
+                return $"{secondsRemaining} second{(secondsRemaining > 1 ? "s" : "")}";
+        }
+        return "Fetching...";
+    }
     public static Cards cardtoCards(CardSO selectedCard)
     {
         Cards newCard = new Cards();
@@ -41,5 +80,13 @@ public class Utilities : MonoBehaviour
         newCard.quantity = 1;
 
         return newCard;
+    }
+    public static string FormatNumber(int number)
+    {
+        return string.Format("{0:N0}", number);
+    }
+    public static string FormatSolana(double number)
+    {
+        return number.ToString("F9");
     }
 }

@@ -22,27 +22,66 @@ public class AccountStore : MonoBehaviour
     private async void OnLogin(Account account){
         PlayerUIManager.Instance.OpenLoader();
         publicKey.SetText("Public Key: " + account.PublicKey);
-        await this.CallFacet((DatabaseService ds) => ds.CreateAccount(account.PublicKey))
-        .Then(async response => {
-            AccountManager.Instance.playerData = response;
-            Debug.Log("Success");
-            PlayerUIManager.Instance.CloseLoader();
-            PlayerUIManager.Instance.CloseConnection();
-            PlayerUIManager.Instance.OpenMainmenu();
-            playerClient.enabled = true;
-            await this.CallFacet((DatabaseService ds) => ds.GetPrice()).Then(response =>{
-                AccountManager.Instance.price = response.price;
+        string generatedUID = Utilities.GenerateUuid();
+        if(AccountManager.Instance.priceData.date != null && Utilities.CheckIfLateBy10Minutes(AccountManager.Instance.priceData.date)){
+            await this.CallFacet((DatabaseService ds) => ds.InitializeLoginWithPrice(account.PublicKey, generatedUID))
+            .Then(async response => {
+                AccountManager.Instance.playerData = response.playerData;
+                Debug.Log("Success");
+                PlayerUIManager.Instance.CloseLoader();
+                PlayerUIManager.Instance.CloseConnection();
+                PlayerUIManager.Instance.OpenMainmenu();
+                playerClient.enabled = true;
+                AccountManager.Instance.EntityId = response.playerData.EntityId;
+                AccountManager.Instance.uid = generatedUID;
+                AccountManager.Instance.priceData.price = response.priceData.price;
+                AccountManager.Instance.priceData.date = response.priceData.date;
+                
+            }).Catch(error => 
+            {
+                PlayerUIManager.Instance.CloseLoader();
             });
-        }).Catch(error => 
-        {
-            PlayerUIManager.Instance.CloseLoader();
-        });
-        
+        }else if(AccountManager.Instance.priceData.date != null && !Utilities.CheckIfLateBy10Minutes(AccountManager.Instance.priceData.date)){
+            await this.CallFacet((DatabaseService ds) => ds.CreateAccountWithoutPrice(account.PublicKey, generatedUID))
+            .Then(async response => {
+                AccountManager.Instance.playerData = response.playerData;
+                Debug.Log("Success");
+                PlayerUIManager.Instance.CloseLoader();
+                PlayerUIManager.Instance.CloseConnection();
+                PlayerUIManager.Instance.OpenMainmenu();
+                playerClient.enabled = true;
+                AccountManager.Instance.EntityId = response.playerData.EntityId;
+                AccountManager.Instance.uid = generatedUID;
+                
+            }).Catch(error => 
+            {
+                PlayerUIManager.Instance.CloseLoader();
+            });
+        }else{
+            await this.CallFacet((DatabaseService ds) => ds.InitializeLoginWithPrice(account.PublicKey, generatedUID))
+            .Then(async response => {
+                AccountManager.Instance.playerData = response.playerData;
+                Debug.Log("Success");
+                PlayerUIManager.Instance.CloseLoader();
+                PlayerUIManager.Instance.CloseConnection();
+                PlayerUIManager.Instance.OpenMainmenu();
+                playerClient.enabled = true;
+                AccountManager.Instance.EntityId = response.playerData.EntityId;
+                AccountManager.Instance.uid = generatedUID;
+                AccountManager.Instance.priceData.price = response.priceData.price;
+                AccountManager.Instance.priceData.date = response.priceData.date;
+                
+            }).Catch(error => 
+            {
+                PlayerUIManager.Instance.CloseLoader();
+            });
+        }
     }
     private void OnLogout(){
         publicKey.SetText("");
         balance.SetText("");
         playerClient.enabled = false;
+        
         PlayerUIManager.Instance.CloseMainmenu();
         PlayerUIManager.Instance.OpenConnection();
     }
