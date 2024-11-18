@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using ESDatabase.Classes;
 using Solana.Unity.SDK;
 using Solana.Unity.Wallet;
@@ -127,10 +128,13 @@ public class MultiplayerManager : MonoBehaviour
         gameStarted = false;
         isJoiner = false;
         playerPubKey.text = "";
-        enemyPubKey.text = "Opponent: ";
-        int i = 0;
-        foreach(CardData cardData in playerData.gameData.cardDeck){
+        enemyPubKey.text = "Waiting...";
+        for(int i = 0; i < 6; i++){
             playerCards[i].gameObject.SetActive(false);
+            i++;
+        }
+        for(int i = 0; i < 6; i++){
+            enemyCards[i].gameObject.SetActive(false);
             i++;
         }
         playerDeck = new List<ActiveCards>{null, null, null, null, null, null};
