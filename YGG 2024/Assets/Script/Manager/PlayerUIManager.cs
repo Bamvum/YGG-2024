@@ -107,6 +107,11 @@ public class PlayerUIManager : MonoBehaviour
             //GameManager.instance.characterBuilder.Rebuild(layer?.Name);
         };
     }
+    public void CloseLobby(){
+        MultiplayerManager.Instance.lobbyUI.SetActive(false);
+        MultiplayerManager.Instance.ClearMultiplayer();
+        playerUI.SetActive(true);
+    }
     public void CloseMultiplayer(){
         MultiplayerManager.Instance.multiplayerUI.SetActive(false);
         MultiplayerManager.Instance.ClearMultiplayer();
