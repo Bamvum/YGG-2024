@@ -50,7 +50,7 @@ public class Card : MonoBehaviour
             CardGameManager.instance.CardSelect(this);
         }
     }
-    public void Update(){
+    public async void Update(){
         if(CardGameManager.instance != null){
             LobbyData lobby = MultiplayerManager.Instance.lobbyData;
             if (MultiplayerManager.Instance.isJoiner) {
@@ -62,7 +62,10 @@ public class Card : MonoBehaviour
                     isPlayercard = true;
                     lobby.joinerActiveCards[slotNo].uniqueID = selectedCard.UniqueID;
                     lobby.joinerActiveCards[slotNo].cardHP = 20;
+                    await gameObject.transform.DOScale(new Vector3(1f, 1f, 1f) - new Vector3(1f, 1f, 1f), 0.3f).SetDelay(0.7f).AsyncWaitForCompletion();
                     DisplayCard();
+                    await gameObject.transform.DOScale(new Vector3(0f, 0f, 0f) + new Vector3(1f, 1f, 1f), 0.3f).AsyncWaitForCompletion();
+                    CardGameManager.instance.AnimatePlayerDeck();
                     lobby.joinerCurrentDeck.RemoveAt(0);
                 } else if (lobby.joinerActiveCards[slotNo].cardHP < 1 && lobby.joinerCurrentDeck.Count == 0 && isPlayercard) {
                     
@@ -77,7 +80,10 @@ public class Card : MonoBehaviour
                     isPlayercard = false;
                     lobby.hostActiveCards[slotNo].uniqueID = selectedCard.UniqueID;
                     lobby.hostActiveCards[slotNo].cardHP = 20;
+                    await gameObject.transform.DOScale(new Vector3(1f, 1f, 1f) - new Vector3(1f, 1f, 1f), 0.3f).SetDelay(0.7f).AsyncWaitForCompletion();
                     DisplayCard();
+                    await gameObject.transform.DOScale(new Vector3(0f, 0f, 0f) + new Vector3(1f, 1f, 1f), 0.3f).AsyncWaitForCompletion();
+                    CardGameManager.instance.AnimateEnemyDeck();
                     lobby.hostCurrentDeck.RemoveAt(0);
                 } else if (lobby.hostActiveCards[slotNo].cardHP < 1 && lobby.hostCurrentDeck.Count == 0 && !isPlayercard) {
                     
@@ -92,7 +98,10 @@ public class Card : MonoBehaviour
                     isPlayercard = true;
                     lobby.hostActiveCards[slotNo].uniqueID = selectedCard.UniqueID;
                     lobby.hostActiveCards[slotNo].cardHP = 20;
+                    await gameObject.transform.DOScale(new Vector3(1f, 1f, 1f) - new Vector3(1f, 1f, 1f), 0.3f).SetDelay(0.7f).AsyncWaitForCompletion();
                     DisplayCard();
+                    await gameObject.transform.DOScale(new Vector3(0f, 0f, 0f) + new Vector3(1f, 1f, 1f), 0.3f).AsyncWaitForCompletion();
+                    CardGameManager.instance.AnimatePlayerDeck();
                     lobby.hostCurrentDeck.RemoveAt(0);
                 } else if (lobby.hostActiveCards[slotNo].cardHP < 1 && lobby.hostCurrentDeck.Count == 0 && isPlayercard) {
                     Destroy(gameObject);
@@ -106,7 +115,10 @@ public class Card : MonoBehaviour
                     isPlayercard = false;
                     lobby.joinerActiveCards[slotNo].uniqueID = selectedCard.UniqueID;
                     lobby.joinerActiveCards[slotNo].cardHP = 20;
+                    await gameObject.transform.DOScale(new Vector3(1f, 1f, 1f) - new Vector3(1f, 1f, 1f), 0.3f).SetDelay(0.7f).AsyncWaitForCompletion();
                     DisplayCard();
+                    await gameObject.transform.DOScale(new Vector3(0f, 0f, 0f) + new Vector3(1f, 1f, 1f), 0.3f).AsyncWaitForCompletion();
+                    CardGameManager.instance.AnimateEnemyDeck();
                     lobby.joinerCurrentDeck.RemoveAt(0);
                 } else if (lobby.joinerActiveCards[slotNo].cardHP < 1 && lobby.joinerCurrentDeck.Count == 0 && !isPlayercard) {
                     Destroy(gameObject);
