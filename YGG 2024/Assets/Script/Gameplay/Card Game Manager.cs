@@ -34,6 +34,7 @@ public class CardGameManager : MonoBehaviour
 
     [Header("Flag")]
     [SerializeField] TMP_Text deckCountText;
+    [SerializeField] TMP_Text enemyDeckCountText;
     [SerializeField] public bool yourTurn;
 
     [Space(10)]
@@ -388,6 +389,7 @@ public class CardGameManager : MonoBehaviour
         if (MultiplayerManager.Instance.isJoiner) {
             LobbyData lobby = MultiplayerManager.Instance.lobbyData;
             deckCountText.text = lobby.joinerCurrentDeck.Count.ToString();
+            enemyDeckCountText.text = lobby.hostCurrentDeck.Count.ToString();
             if(lobby.joinerCurrentDeck.Count == 0 && AreAllCardsBelowHpThreshold(lobby.joinerActiveCards)){
                 MultiplayerManager.Instance.SendSurrender(true, false);
                 gameHudLose.SetActive(true);
@@ -395,6 +397,7 @@ public class CardGameManager : MonoBehaviour
         } else {
             LobbyData lobby = MultiplayerManager.Instance.lobbyData;
             deckCountText.text = lobby.hostCurrentDeck.Count.ToString();
+            enemyDeckCountText.text = lobby.joinerCurrentDeck.Count.ToString();
             if(lobby.hostCurrentDeck.Count == 0 && AreAllCardsBelowHpThreshold(lobby.hostActiveCards)){
                 MultiplayerManager.Instance.SendSurrender(true, false);
                 gameHudLose.SetActive(true);
