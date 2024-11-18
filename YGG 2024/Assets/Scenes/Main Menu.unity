@@ -987,7 +987,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -4.9279175, y: 7.6104126}
+  m_AnchoredPosition: {x: -4.9279785, y: 7.6103516}
   m_SizeDelta: {x: -358.6329, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &91372145
@@ -33373,7 +33373,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 10.667, y: 44.956}
+  m_AnchoredPosition: {x: 10.666992, y: 44.956055}
   m_SizeDelta: {x: 93.9196, y: 44.282}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1835938609
@@ -36294,7 +36294,7 @@ MonoBehaviour:
   webSocketsRpc: 
   autoConnectOnStartup: 0
   web3AuthWalletOptions:
-    appName: Web3Auth Sample App
+    appName: Card Rush
     logoLight: 
     logoDark: 
     defaultLanguage: 0

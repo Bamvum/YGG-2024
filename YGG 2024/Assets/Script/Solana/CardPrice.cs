@@ -10,7 +10,7 @@ public class CardPrice : MonoBehaviour
     [SerializeField] public Text buttonText;
     private void OnEnable(){
         solPrice = Convert.ToDouble(AccountManager.Instance.priceData.price) * ((double)pesoPrice / 50);
-        buttonText.text = solPrice.ToString("#.###") + "SOL\nPHP " + pesoPrice;
+        buttonText.text = solPrice.ToString("#.###") + " SOL\nPHP " + pesoPrice;
     }
     private void Update(){
         if(AccountManager.Instance != null){
