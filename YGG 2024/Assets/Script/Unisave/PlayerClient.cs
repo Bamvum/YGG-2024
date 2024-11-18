@@ -144,30 +144,24 @@ public class PlayerClient : UnisaveBroadcastingClient
             //     CardSO selectedCard = GameManager.instance.cardLists.CardItems.FirstOrDefault(card => card.UniqueID.Equals(activeCards.uniqueID));
             //     Debug.Log(selectedCard.cName);
             // }
-            Debug.Log("Joiner Current Active Cards:");
-            foreach(ActiveCards activeCards in MultiplayerManager.Instance.lobbyData.joinerActiveCards){
-                CardSO selectedCard = GameManager.instance.cardLists.CardItems.FirstOrDefault(card => card.UniqueID.Equals(activeCards.uniqueID)).CreateCopy();
-                Debug.Log(activeCards.cardHP);
-            }
-            Debug.Log("Joiner Current Deck:");
-            foreach(ActiveCards activeCards in MultiplayerManager.Instance.lobbyData.joinerCurrentDeck){
-                CardSO selectedCard = GameManager.instance.cardLists.CardItems.FirstOrDefault(card => card.UniqueID.Equals(activeCards.uniqueID)).CreateCopy();
-                Debug.Log(activeCards.cardHP);
-            }
+            // Debug.Log("Joiner Current Active Cards:");
+            // foreach(ActiveCards activeCards in MultiplayerManager.Instance.lobbyData.joinerActiveCards){
+            //     CardSO selectedCard = GameManager.instance.cardLists.CardItems.FirstOrDefault(card => card.UniqueID.Equals(activeCards.uniqueID)).CreateCopy();
+            //     Debug.Log(activeCards.cardHP);
+            // }
+            // Debug.Log("Joiner Current Deck:");
+            // foreach(ActiveCards activeCards in MultiplayerManager.Instance.lobbyData.joinerCurrentDeck){
+            //     CardSO selectedCard = GameManager.instance.cardLists.CardItems.FirstOrDefault(card => card.UniqueID.Equals(activeCards.uniqueID)).CreateCopy();
+            //     Debug.Log(activeCards.cardHP);
+            // }
         }   
     }
     void ReceiveAction(ActionMessage actionMessage){
+        MultiplayerManager.Instance.lobbyData = actionMessage.lobbyData;
+
         if(!actionMessage.playerData.publicKey.Equals(AccountManager.Instance.playerData.publicKey.ToString())){
             CardGameManager.instance.ToggleTurn();
             Debug.Log("Damage Received");
-            MultiplayerManager.Instance.lobbyData = actionMessage.lobbyData;
-            LobbyData lobby = MultiplayerManager.Instance.lobbyData;
-            if(actionMessage.actionData.actionType == ActionType.None) return;
-            if(MultiplayerManager.Instance.isJoiner){
-                lobby.joinerActiveCards[actionMessage.actionData.attackedSlotNo].cardHP = Math.Max(0, lobby.joinerActiveCards[actionMessage.actionData.attackedSlotNo].cardHP - actionMessage.actionData.damage);
-            }else{
-                lobby.hostActiveCards[actionMessage.actionData.attackedSlotNo].cardHP = Math.Max(0, lobby.hostActiveCards[actionMessage.actionData.attackedSlotNo].cardHP - actionMessage.actionData.damage);
-            }
         }
     }
     public void ProceedGame(){
