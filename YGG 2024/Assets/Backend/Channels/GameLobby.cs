@@ -11,3 +11,14 @@ public class GameLobby : BroadcastingChannel
         return SpecificChannel.From<GameLobby>(roomID);
     }
 }
+public class OnlineChannel : BroadcastingChannel
+{
+    public SpecificChannel JoinRoom(string entityID)
+    {
+        return SpecificChannel.From<OnlineChannel>(entityID);
+    }
+    public SpecificChannel ForPlayer(string entityID)
+    {
+        return SpecificChannel.From<OnlineChannel>(entityID);
+    }
+}

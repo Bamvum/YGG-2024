@@ -8,11 +8,21 @@ using Solana.Unity.SDK;
 using System.Linq;
 using UnityEngine.SceneManagement;
 using System;
+using System.Collections.Generic;
 
 public class PlayerClient : UnisaveBroadcastingClient
 {
-    private void OnEnable()
+    private async void OnEnable()
     {
+        var subscription = await OnFacet<DatabaseService>
+            .CallAsync<ChannelSubscription>(
+                nameof(DatabaseService.JoinOnlineChannel)
+            );
+        
+        // customize the message routing    
+        FromSubscription(subscription)
+            .Forward<NewExistingSession>(NewExistingSession)
+            .ElseLogWarning();
         Debug.Log("Connected to Game Server");
     }
     private void OnDisable(){
@@ -63,8 +73,18 @@ public class PlayerClient : UnisaveBroadcastingClient
         MultiplayerManager.Instance.lobbyUI.SetActive(true);
         MultiplayerManager.Instance.StartLobby();
     }
-
+    void NewExistingSession(NewExistingSession msg)
+    {
+        AccountManager.Instance.CheckSession(msg.message);
+    }
     // Receiver
+    public PlayerData GetPlayerByPublicKey(string pubkey)
+    {
+        List<PlayerData> playerList = DB.TakeAll<PlayerData>().Get();
+        PlayerData player = playerList.FirstOrDefault(data => data.publicKey == pubkey);
+        
+        return player;
+    }
     void PlayerJoin(PlayerJoinedMessage msg)
     {
         Debug.Log("Player Joined: " + msg.playerData.publicKey);

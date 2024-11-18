@@ -45,6 +45,7 @@ namespace ESDatabase.Classes
         public bool throughWinComplete = false;
         public bool throughSurrenderButton = false;
     }
+    
     public class WinMessage : BroadcastingMessage
     {
         public string playerName;
@@ -57,5 +58,9 @@ namespace ESDatabase.Classes
         public ActionData actionData;
         
         public int target = 0;
+    }
+    public class NewExistingSession : BroadcastingMessage
+    {
+        public string message;
     }
 }
