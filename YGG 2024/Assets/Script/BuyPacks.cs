@@ -36,7 +36,7 @@ public class BuyPacks : MonoBehaviour
             playerData.gameData.cardList.AddRange(listCards);
             await AccountManager.SaveData(playerData);
 
-            GameManager.instance.PlayerMoney -= 1000;
+            GameManager.instance.DeductMoney(1000);
 
         }
         else
