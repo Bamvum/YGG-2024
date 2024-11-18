@@ -1,8 +1,3 @@
-# YGG-2024
-YGG Play Summit 2024
-
----
-
 # **Card Rush**
 
 ## **Description**
@@ -56,6 +51,8 @@ By integrating **Sovryn** and **Solana**, **Card Rush** provides players with a 
 
 ---
 
+# YGG-2024
+YGG Play Summit 2024
 
 Members:
 
