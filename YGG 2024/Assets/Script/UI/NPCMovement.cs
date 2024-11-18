@@ -83,7 +83,7 @@ public class NPCMovement : MonoBehaviour
         if (other.CompareTag("Shop"))
         {
             ShowFloatingText(MoneySpawn);
-            GameManager.instance.PlayerMoney += MoneySpawn;
+            GameManager.instance.AddMoney(MoneySpawn);
 
 
             StartCoroutine(DestroyAfterDelay(1f));

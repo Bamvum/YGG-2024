@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using static CardSOData;
+using Solana.Unity.Wallet;
 
 public class GameManager : MonoBehaviour
 {
@@ -36,19 +37,20 @@ public class GameManager : MonoBehaviour
         itemsToTransfer.Add(item);
         OnItemsToTransferUpdated?.Invoke(item);
     }
-
+    public async void AddMoney(double amount){
+        AccountManager.Instance.playerData.gameData.money += amount;
+        await AccountManager.SaveData(AccountManager.Instance.playerData);
+    }
+    public async void DeductMoney(double amount){
+        AccountManager.Instance.playerData.gameData.money -= amount;
+        await AccountManager.SaveData(AccountManager.Instance.playerData);
+    }
     // Update is called once per frame
     void Update()
     {
-        PlayerMoneyText.text = PlayerMoney.ToString();
-        
-    }
-
-    public async void OnApplicationQuit()
-    {
-        PlayerData playerData = AccountManager.Instance.playerData;
-        playerData.gameData.money = PlayerMoney;
-        await AccountManager.SaveData(playerData);
+        if(AccountManager.Instance.playerData != null){
+            PlayerMoneyText.text = AccountManager.Instance.playerData.gameData.money.ToString("#.##");
+        }
     }
 
     public void OpenEditor()

@@ -126,6 +126,13 @@ public class MultiplayerManager : MonoBehaviour
         enemyInGame = false;
         gameStarted = false;
         isJoiner = false;
+        playerPubKey.text = "";
+        enemyPubKey.text = "Opponent: ";
+        int i = 0;
+        foreach(CardData cardData in playerData.gameData.cardDeck){
+            playerCards[i].gameObject.SetActive(false);
+            i++;
+        }
         playerDeck = new List<ActiveCards>{null, null, null, null, null, null};
         enemyDeck = new List<ActiveCards>{null, null, null, null, null, null};
         readyImagePlayer.sprite = notReady;
