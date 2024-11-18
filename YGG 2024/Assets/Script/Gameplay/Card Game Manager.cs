@@ -30,6 +30,8 @@ public class CardGameManager : MonoBehaviour
     [Header("HUD/UI")]
     [SerializeField] public GameObject gameHudLose;
     [SerializeField] public GameObject gameHudWin;
+    [SerializeField] public GameObject playerDeck;
+    [SerializeField] public GameObject enemyDeck;
     [SerializeField] public Text turn;
 
     [Header("Flag")]
@@ -305,6 +307,7 @@ public class CardGameManager : MonoBehaviour
     }
 
     private async Task AnimateAttacker(ActionMessage actionMessage){
+        if(actionMessage.actionData.actionType == ActionType.Attack){
             Card card = joinerDeck[actionMessage.actionData.attackerSlotNo];
             await card.Select();
             Transform cardTransfrom = card.gameObject.transform;
@@ -314,8 +317,9 @@ public class CardGameManager : MonoBehaviour
             await cardTransfrom.DOMove(new Vector3(targetTransform.position.x, targetTransform.position.y, targetTransform.position.z), 0.3f).SetUpdate(true).AsyncWaitForCompletion();
             await cardTransfrom.DOMove(new Vector3(defaultPos.x, defaultPos.y, defaultPos.z), 0.3f).SetUpdate(true).AsyncWaitForCompletion();
             await card.Deselect();
+        }
     }
-    void CardAttack(Card attacker, Card defender)
+    async void CardAttack(Card attacker, Card defender)
     {
         if (attacker.cardSO != null && defender.cardSO != null)
         {
@@ -335,18 +339,16 @@ public class CardGameManager : MonoBehaviour
                 attackerSlotNo = selectedCard[0].slotNo,
                 attackedSlotNo = selectedCard[1].slotNo
             };
-            Debug.Log($"Attacking card in slot {selectedCard[1].slotNo} with {totalDamage} damage");
-
             if (!MultiplayerManager.Instance.isJoiner) {
                 lobby.joinerActiveCards[selectedCard[1].slotNo].cardHP = Mathf.Max(0, lobby.joinerActiveCards[selectedCard[1].slotNo].cardHP - totalDamage);
-                Debug.Log($"Updated joiner card HP: {lobby.joinerActiveCards[selectedCard[1].slotNo].cardHP}");
             } else {
                 lobby.hostActiveCards[selectedCard[1].slotNo].cardHP = Mathf.Max(0, lobby.hostActiveCards[selectedCard[1].slotNo].cardHP - totalDamage);
-                Debug.Log($"Updated host card HP: {lobby.hostActiveCards[selectedCard[1].slotNo].cardHP}");
             }
             MultiplayerManager.Instance.SendAction(MultiplayerManager.Instance.lobbyData, actionData);
+            turn.text = "Enemy Turn";
+            await turn.transform.DOScale(new Vector3(1f, 1f, 1f) + new Vector3(0.2f, 0.2f, 0.2f), 0.3f).AsyncWaitForCompletion();
+            await turn.transform.DOScale(new Vector3(1.2f, 1.2f, 1.2f) - new Vector3(0.2f, 0.2f, 0.2f), 0.3f).AsyncWaitForCompletion();
             yourTurn = !yourTurn;
-            Debug.Log("Player End Turn");
             // DEFENDER HEALTH CHECKER 
             // if (defender.cardSO.cHealth <= 0)
             // {
@@ -359,7 +361,14 @@ public class CardGameManager : MonoBehaviour
             Debug.LogWarning("One or both cards are missing CardSO data.");
         }  
     }
-
+    public async void AnimateEnemyDeck(){
+        await enemyDeck.transform.DOScale(new Vector3(1f, 1f, 1f) + new Vector3(0.2f, 0.2f, 0.2f), 0.3f).AsyncWaitForCompletion();
+        await enemyDeck.transform.DOScale(new Vector3(1.2f, 1.2f, 1.2f) - new Vector3(0.2f, 0.2f, 0.2f), 0.3f).AsyncWaitForCompletion();
+    }
+    public async void AnimatePlayerDeck(){
+        await playerDeck.transform.DOScale(new Vector3(1f, 1f, 1f) + new Vector3(0.2f, 0.2f, 0.2f), 0.3f).AsyncWaitForCompletion();
+        await playerDeck.transform.DOScale(new Vector3(1.2f, 1.2f, 1.2f) - new Vector3(0.2f, 0.2f, 0.2f), 0.3f).AsyncWaitForCompletion();
+    }
     int GetTypeDamageModifier(string attackerType, string defenderType)
     {
         if (attackerType == "Inferno")
