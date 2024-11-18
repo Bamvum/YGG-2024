@@ -13,10 +13,10 @@ public class PlayerClient : UnisaveBroadcastingClient
 {
     private void OnEnable()
     {
-        Debug.Log("Player Logged in");
+        Debug.Log("Connected to Game Server");
     }
     private void OnDisable(){
-        Debug.Log("Player Logged out");
+        Debug.Log("Disconnected to Game Server");
     }
     public async void CreateLobby(){
         MultiplayerManager.Instance.lobbyCode = Utilities.GenerateCode(5);
@@ -34,6 +34,7 @@ public class PlayerClient : UnisaveBroadcastingClient
             .Forward<GameStart>(ReceiveStartGame)
             .Forward<InGameMessage>(ReceiveInGame)
             .Forward<ActionMessage>(ReceiveAction)
+            .Forward<SurrenderMessage>(ReceiveSurrender)
             .ElseLogWarning();
             MultiplayerManager.Instance.multiplayerUI.SetActive(false);
             MultiplayerManager.Instance.lobbyUI.SetActive(true);
@@ -56,6 +57,7 @@ public class PlayerClient : UnisaveBroadcastingClient
             .Forward<GameStart>(ReceiveStartGame)
             .Forward<InGameMessage>(ReceiveInGame)
             .Forward<ActionMessage>(ReceiveAction)
+            .Forward<SurrenderMessage>(ReceiveSurrender)
             .ElseLogWarning();
         MultiplayerManager.Instance.multiplayerUI.SetActive(false);
         MultiplayerManager.Instance.lobbyUI.SetActive(true);
@@ -161,7 +163,19 @@ public class PlayerClient : UnisaveBroadcastingClient
 
         if(!actionMessage.playerData.publicKey.Equals(AccountManager.Instance.playerData.publicKey.ToString())){
             CardGameManager.instance.ToggleTurn();
-            Debug.Log("Damage Received");
+        }
+    }
+    void ReceiveSurrender(SurrenderMessage surrenderMessage){
+        if(!surrenderMessage.playerData.publicKey.Equals(AccountManager.Instance.playerData.publicKey.ToString())){
+            PlayerData playerData = AccountManager.Instance.playerData;
+            if(surrenderMessage.throughWinComplete){
+                playerData.gameData.money += 2000;
+            }else if(surrenderMessage.throughSurrenderButton){
+                playerData.gameData.money += 500;
+            }
+            SceneManager.UnloadSceneAsync("Testing Gameplay").completed += async (operation) => {
+                MultiplayerManager.Instance.ClearMultiplayer();
+            };
         }
     }
     public void ProceedGame(){

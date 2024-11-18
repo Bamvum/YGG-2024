@@ -114,6 +114,24 @@ public class MultiplayerManager : MonoBehaviour
     public void SetEnemyInGame(bool inGame){
         enemyInGame = inGame;
     }
+    public void ClearMultiplayer(){
+        playerData = null;
+        enemyPlayerData = null;
+        lobbyCode = "";
+        lobbyData = null;
+        playerReady = false;
+        enemyReady = false;
+        playerInGame = false;
+        enemyInGame = false;
+        gameStarted = false;
+        isJoiner = false;
+        playerDeck = new List<ActiveCards>{null, null, null, null, null, null};
+        enemyDeck = new List<ActiveCards>{null, null, null, null, null, null};
+        readyImagePlayer.sprite = notReady;
+        readyImageEnemy.sprite = notReady;
+        lobbyCodeText.text = "";
+        lobbyCodeInput.text = "";
+    }
     public void StartGame(){
         this.CallFacet((RoomManager rm) => rm.SendGameStart(lobbyCode, AccountManager.Instance.playerData, true));
     }
@@ -122,6 +140,10 @@ public class MultiplayerManager : MonoBehaviour
     }
     public void SendAction(LobbyData lobbyData, ActionData actionData){
         this.CallFacet((RoomManager rm) => rm.SendAction(lobbyCode, AccountManager.Instance.playerData, lobbyData, actionData));
+    }
+    public void SendSurrender(bool throughWinComplete, bool throughSurrenderButton){
+        this.CallFacet((RoomManager rm) => rm.SendSurrender(lobbyCode, AccountManager.Instance.playerData, throughSurrenderButton, throughSurrenderButton));
+        ClearMultiplayer();
     }
     public void SendInGame(){
         this.CallFacet((RoomManager rm) => rm.SendInGame(lobbyCode, AccountManager.Instance.playerData, true));

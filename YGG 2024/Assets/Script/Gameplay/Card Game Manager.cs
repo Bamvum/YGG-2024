@@ -192,7 +192,7 @@ public class CardGameManager : MonoBehaviour
         Debug.Log("You Surrendered!");
         
         Time.timeScale = 0;
-        
+        MultiplayerManager.Instance.SendSurrender(false, true);
         gameDoneHUD.SetActive(true);
         topPanelText.text = "Nice Try";
     }
@@ -243,7 +243,7 @@ public class CardGameManager : MonoBehaviour
     {
         
         Debug.Log("Card Select Method!!");
-
+        
         // CARD SELECT
         if (cSelected.gameObject.layer == LayerMask.NameToLayer("Your Card"))
         {
@@ -361,17 +361,16 @@ public class CardGameManager : MonoBehaviour
         if (MultiplayerManager.Instance.isJoiner) {
             LobbyData lobby = MultiplayerManager.Instance.lobbyData;
             deckCountText.text = lobby.joinerCurrentDeck.Count.ToString();
-            if(lobby.joinerActiveCards.Count == 0){
-                // SEND DITO YUNG SURRENDER SA KABILA
+            if(lobby.joinerCurrentDeck.Count == 0 && AreAllCardsBelowHpThreshold(lobby.joinerActiveCards)){
+                MultiplayerManager.Instance.SendSurrender(true, false);
             }
             Debug.Log($"Updated joiner card HP: {lobby.joinerActiveCards[selectedCard[1].slotNo].cardHP}");
         } else {
             LobbyData lobby = MultiplayerManager.Instance.lobbyData;
             deckCountText.text = lobby.hostCurrentDeck.Count.ToString();
-            if(lobby.hostActiveCards.Count == 0){
-                // SEND DITO YUNG SURRENDER SA KABILA
+            if(lobby.hostCurrentDeck.Count == 0 && AreAllCardsBelowHpThreshold(lobby.hostActiveCards)){
+                MultiplayerManager.Instance.SendSurrender(true, false);
             }
-            Debug.Log($"Updated joiner card HP: {lobby.joinerActiveCards[selectedCard[1].slotNo].cardHP}");
         }
         TimerToEndTurn();
         
@@ -392,5 +391,16 @@ public class CardGameManager : MonoBehaviour
         // {
         //     DrawCard();
         // }
+    }
+    public bool AreAllCardsBelowHpThreshold(List<ActiveCards> activeCards)
+    {
+        foreach (ActiveCards card in activeCards)
+        {
+            if (card.cardHP >= 1)
+            {
+                return false;
+            }
+        }
+        return true;
     }
 }
