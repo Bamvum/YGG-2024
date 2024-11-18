@@ -117,7 +117,6 @@ public class MultiplayerManager : MonoBehaviour
         enemyInGame = inGame;
     }
     public void ClearMultiplayer(){
-        playerData = null;
         enemyPlayerData = null;
         lobbyCode = "";
         lobbyData = null;
