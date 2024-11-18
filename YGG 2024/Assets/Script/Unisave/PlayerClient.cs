@@ -101,16 +101,16 @@ public class PlayerClient : UnisaveBroadcastingClient
             //     CardSO selectedCard = GameManager.instance.cardLists.CardItems.FirstOrDefault(card => card.UniqueID.Equals(activeCards.uniqueID));
             //     Debug.Log(selectedCard.cName);
             // }
-            Debug.Log("Joiner Current Active Cards:");
-            foreach(ActiveCards activeCards in MultiplayerManager.Instance.lobbyData.joinerActiveCards){
-                CardSO selectedCard = GameManager.instance.cardLists.CardItems.FirstOrDefault(card => card.UniqueID.Equals(activeCards.uniqueID)).CreateCopy();
-                Debug.Log(activeCards.cardHP);
-            }
-            Debug.Log("Joiner Current Deck:");
-            foreach(ActiveCards activeCards in MultiplayerManager.Instance.lobbyData.joinerCurrentDeck){
-                CardSO selectedCard = GameManager.instance.cardLists.CardItems.FirstOrDefault(card => card.UniqueID.Equals(activeCards.uniqueID)).CreateCopy();
-                Debug.Log(activeCards.cardHP);
-            }
+            // Debug.Log("Joiner Current Active Cards:");
+            // foreach(ActiveCards activeCards in MultiplayerManager.Instance.lobbyData.joinerActiveCards){
+            //     CardSO selectedCard = GameManager.instance.cardLists.CardItems.FirstOrDefault(card => card.UniqueID.Equals(activeCards.uniqueID)).CreateCopy();
+            //     Debug.Log(activeCards.cardHP);
+            // }
+            // Debug.Log("Joiner Current Deck:");
+            // foreach(ActiveCards activeCards in MultiplayerManager.Instance.lobbyData.joinerCurrentDeck){
+            //     CardSO selectedCard = GameManager.instance.cardLists.CardItems.FirstOrDefault(card => card.UniqueID.Equals(activeCards.uniqueID)).CreateCopy();
+            //     Debug.Log(activeCards.cardHP);
+            // }
             
             MultiplayerManager.Instance.enemyPlayerData = msg.playerData;
             MultiplayerManager.Instance.SendPlayerData();
@@ -180,13 +180,12 @@ public class PlayerClient : UnisaveBroadcastingClient
         MultiplayerManager.Instance.lobbyData = actionMessage.lobbyData;
 
         if(!actionMessage.playerData.publicKey.Equals(AccountManager.Instance.playerData.publicKey.ToString())){
-            CardGameManager.instance.ToggleTurn();
+            CardGameManager.instance.ToggleTurn(actionMessage);
         }
     }
     void ReceiveSurrender(SurrenderMessage surrenderMessage){
         if(!surrenderMessage.playerData.publicKey.Equals(AccountManager.Instance.playerData.publicKey.ToString())){
             CardGameManager.instance.gameHudWin.SetActive(true);
-            PlayerData playerData = AccountManager.Instance.playerData;
             if(surrenderMessage.throughWinComplete){
                 GameManager.instance.AddMoney(2000);
             }else if(surrenderMessage.throughSurrenderButton){

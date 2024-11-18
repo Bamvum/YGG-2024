@@ -10,6 +10,7 @@ namespace ESDatabase.Classes
         public string attackerCardID;
         public ActionType actionType;
         public int damage = 0;
+        public int attackerSlotNo;
         public int attackedSlotNo;
     }
 
