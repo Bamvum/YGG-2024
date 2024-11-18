@@ -293,7 +293,6 @@ public class CardGameManager : MonoBehaviour
     }
 
     private async Task AnimateAttacker(ActionMessage actionMessage){
-        if(MultiplayerManager.Instance.isJoiner){
             Card card = joinerDeck[actionMessage.actionData.attackerSlotNo];
             await card.Select();
             Transform cardTransfrom = card.gameObject.transform;
@@ -303,7 +302,6 @@ public class CardGameManager : MonoBehaviour
             await cardTransfrom.DOMove(new Vector3(targetTransform.position.x, targetTransform.position.y, targetTransform.position.z), 0.3f).SetUpdate(true).AsyncWaitForCompletion();
             await cardTransfrom.DOMove(new Vector3(defaultPos.x, defaultPos.y, defaultPos.z), 0.3f).SetUpdate(true).AsyncWaitForCompletion();
             await card.Deselect();
-        }
     }
     void CardAttack(Card attacker, Card defender)
     {
