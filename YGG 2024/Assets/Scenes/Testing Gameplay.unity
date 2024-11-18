@@ -1614,6 +1614,8 @@ MonoBehaviour:
   availableCardSlots: 000000
   gameHudLose: {fileID: 1314256344}
   gameHudWin: {fileID: 1961632181}
+  playerDeck: {fileID: 585180561}
+  enemyDeck: {fileID: 1632447366}
   turn: {fileID: 519724643}
   deckCountText: {fileID: 693942572}
   enemyDeckCountText: {fileID: 1859204915}
