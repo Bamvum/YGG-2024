@@ -199,7 +199,7 @@ public class CardGameManager : MonoBehaviour
 
     public void Return()
     {
-        Debug.Log("Return!");
+        Return();
 
     }
 
@@ -381,9 +381,6 @@ public class CardGameManager : MonoBehaviour
         // {
         //     DrawCard();
         // }
-    }
-    public void Win(){
-        Return();
     }
     public bool AreAllCardsBelowHpThreshold(List<ActiveCards> activeCards)
     {
