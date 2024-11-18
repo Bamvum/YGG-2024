@@ -6,6 +6,7 @@ using ESDatabase.Classes;
 using Solana.Unity.Soar.Accounts;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class PlayerUIManager : MonoBehaviour
 {
@@ -21,6 +22,7 @@ public class PlayerUIManager : MonoBehaviour
     [Header("Cameras")]
     [SerializeField] public GameObject mainMenuCamera;
     [SerializeField] public GameObject gameCamera;
+    [SerializeField] public Button createLobby;
     [Header("Loader")]
     [SerializeField] public GameObject loader;
     [SerializeField] public CanvasGroup loaderCG;
@@ -73,6 +75,7 @@ public class PlayerUIManager : MonoBehaviour
         SceneManager.LoadSceneAsync("TheGame", LoadSceneMode.Additive).completed += async (operation) => {
             GameManager.instance.characterBuilder = GameReference.Instance.characterBuilder;
             gameCamera = GameReference.Instance.gameCamera;
+            createLobby = GameReference.Instance.createGame;
             // characterEditor.Rebuild();
             characterBuilder.SetActive(false);
             PlayerData playerData = AccountManager.Instance.playerData;
