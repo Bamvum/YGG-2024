@@ -1,4 +1,6 @@
 using System.Linq;
+using System.Threading.Tasks;
+using DG.Tweening;
 using ESDatabase.Classes;
 using Solana.Unity.Soar.Accounts;
 using TMPro;
@@ -25,6 +27,7 @@ public class Card : MonoBehaviour
     [SerializeField] public int slotNo = 0;
     [SerializeField] public int hp = 0;
     [SerializeField] public bool isPlayercard = false;
+    [SerializeField] public bool isAnimating = false;
 
     [Space(10)]
     [SerializeField] Button cardButton;
@@ -40,7 +43,10 @@ public class Card : MonoBehaviour
             if(!CardGameManager.instance.yourTurn){
                 Debug.Log("Not Your Turn!");
                 return;
-            }            
+            }
+            if(isAnimating){
+                return;
+            }
             CardGameManager.instance.CardSelect(this);
         }
     }
@@ -50,7 +56,6 @@ public class Card : MonoBehaviour
             if (MultiplayerManager.Instance.isJoiner) {
                 // Check joiner's active cards
                 if (lobby.joinerActiveCards[slotNo].cardHP < 1 && lobby.joinerCurrentDeck.Count > 0 && isPlayercard) {
-                    Debug.Log($"Replacing joiner card in slot {slotNo}");
                     CardSO selectedCard = GameManager.instance.cardLists.CardItems.FirstOrDefault(card => card.UniqueID == lobby.joinerCurrentDeck[0].uniqueID);
                     cardSO = selectedCard;
                     hp = 20;
@@ -60,13 +65,12 @@ public class Card : MonoBehaviour
                     DisplayCard();
                     lobby.joinerCurrentDeck.RemoveAt(0);
                 } else if (lobby.joinerActiveCards[slotNo].cardHP < 1 && lobby.joinerCurrentDeck.Count == 0 && isPlayercard) {
-                    Debug.Log($"Destroying joiner card in slot {slotNo}");
+                    
                     Destroy(gameObject);
                 }
 
                 // Check host's active cards
                 if (lobby.hostActiveCards[slotNo].cardHP < 1 && lobby.hostCurrentDeck.Count > 0 && !isPlayercard) {
-                    Debug.Log($"Replacing host card in slot {slotNo} by joiner");
                     CardSO selectedCard = GameManager.instance.cardLists.CardItems.FirstOrDefault(card => card.UniqueID == lobby.hostCurrentDeck[0].uniqueID);
                     cardSO = selectedCard;
                     hp = 20;
@@ -76,13 +80,12 @@ public class Card : MonoBehaviour
                     DisplayCard();
                     lobby.hostCurrentDeck.RemoveAt(0);
                 } else if (lobby.hostActiveCards[slotNo].cardHP < 1 && lobby.hostCurrentDeck.Count == 0 && !isPlayercard) {
-                    Debug.Log($"Destroying host card in slot {slotNo}");
+                    
                     Destroy(gameObject);
                 }
             } else {
                 // Host's logic
                 if (lobby.hostActiveCards[slotNo].cardHP < 1 && lobby.hostCurrentDeck.Count > 0 && isPlayercard) {
-                    Debug.Log($"Replacing host card in slot {slotNo}");
                     CardSO selectedCard = GameManager.instance.cardLists.CardItems.FirstOrDefault(card => card.UniqueID == lobby.hostCurrentDeck[0].uniqueID);
                     cardSO = selectedCard;
                     hp = 20;
@@ -92,13 +95,11 @@ public class Card : MonoBehaviour
                     DisplayCard();
                     lobby.hostCurrentDeck.RemoveAt(0);
                 } else if (lobby.hostActiveCards[slotNo].cardHP < 1 && lobby.hostCurrentDeck.Count == 0 && isPlayercard) {
-                    Debug.Log($"Destroying host card in slot {slotNo}");
                     Destroy(gameObject);
                 }
 
                 // Check joiner's active cards
                 if (lobby.joinerActiveCards[slotNo].cardHP < 1 && lobby.joinerCurrentDeck.Count > 0 && !isPlayercard) {
-                    Debug.Log($"Replacing joiner card in slot {slotNo} by host");
                     CardSO selectedCard = GameManager.instance.cardLists.CardItems.FirstOrDefault(card => card.UniqueID == lobby.joinerCurrentDeck[0].uniqueID);
                     cardSO = selectedCard;
                     hp = 20;
@@ -108,18 +109,23 @@ public class Card : MonoBehaviour
                     DisplayCard();
                     lobby.joinerCurrentDeck.RemoveAt(0);
                 } else if (lobby.joinerActiveCards[slotNo].cardHP < 1 && lobby.joinerCurrentDeck.Count == 0 && !isPlayercard) {
-                    Debug.Log($"Destroying joiner card in slot {slotNo}");
                     Destroy(gameObject);
                 }
             }
         }
     }
-    public void Deselect(){
+    public async Task Deselect(){
         selected.SetActive(false);
+        isAnimating = true;
+        await transform.DOScale(new Vector3(1.2f, 1.2f, 1.2f) - new Vector3(0.2f, 0.2f, 0.2f), 0.3f).AsyncWaitForCompletion();
+        isAnimating = false;
         isSelected = false;
     }
-    public void Select(){
+    public async Task Select(){
         selected.SetActive(true);
+        isAnimating = true;
+        await transform.DOScale(new Vector3(1, 1, 1) + new Vector3(0.2f, 0.2f, 0.2f), 0.3f).AsyncWaitForCompletion();
+        isAnimating = false;
         isSelected = true;
     }
     public void DisplayCard()

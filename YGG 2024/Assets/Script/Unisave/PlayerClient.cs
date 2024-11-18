@@ -13,10 +13,10 @@ public class PlayerClient : UnisaveBroadcastingClient
 {
     private void OnEnable()
     {
-        Debug.Log("Player Logged in");
+        Debug.Log("Connected to Game Server");
     }
     private void OnDisable(){
-        Debug.Log("Player Logged out");
+        Debug.Log("Disconnected to Game Server");
     }
     public async void CreateLobby(){
         MultiplayerManager.Instance.lobbyCode = Utilities.GenerateCode(5);
@@ -34,6 +34,7 @@ public class PlayerClient : UnisaveBroadcastingClient
             .Forward<GameStart>(ReceiveStartGame)
             .Forward<InGameMessage>(ReceiveInGame)
             .Forward<ActionMessage>(ReceiveAction)
+            .Forward<SurrenderMessage>(ReceiveSurrender)
             .ElseLogWarning();
             MultiplayerManager.Instance.multiplayerUI.SetActive(false);
             MultiplayerManager.Instance.lobbyUI.SetActive(true);
@@ -56,6 +57,7 @@ public class PlayerClient : UnisaveBroadcastingClient
             .Forward<GameStart>(ReceiveStartGame)
             .Forward<InGameMessage>(ReceiveInGame)
             .Forward<ActionMessage>(ReceiveAction)
+            .Forward<SurrenderMessage>(ReceiveSurrender)
             .ElseLogWarning();
         MultiplayerManager.Instance.multiplayerUI.SetActive(false);
         MultiplayerManager.Instance.lobbyUI.SetActive(true);
@@ -100,8 +102,7 @@ public class PlayerClient : UnisaveBroadcastingClient
             MultiplayerManager.Instance.SetEnemyReady(readyMessage.isReady);
             if(MultiplayerManager.Instance.playerReady && MultiplayerManager.Instance.enemyReady){
                 MultiplayerManager.Instance.lobbyUI.SetActive(false);
-                PlayerUIManager.Instance.mainMenuCamera.SetActive(false);
-                PlayerUIManager.Instance.parentMainMenu.SetActive(false);
+                PlayerUIManager.Instance.gameCamera.SetActive(false);
                 PlayerUIManager.Instance.OpenLoader();
                 MultiplayerManager.Instance.StartGame();
                 MultiplayerManager.Instance.gameStarted = true;
@@ -121,8 +122,7 @@ public class PlayerClient : UnisaveBroadcastingClient
     void ReceiveStartGame(GameStart game){
         if(!game.playerData.publicKey.Equals(AccountManager.Instance.playerData.publicKey.ToString())){
             MultiplayerManager.Instance.lobbyUI.SetActive(false);
-            PlayerUIManager.Instance.mainMenuCamera.SetActive(false);
-            PlayerUIManager.Instance.parentMainMenu.SetActive(false);
+            PlayerUIManager.Instance.gameCamera.SetActive(false);
             PlayerUIManager.Instance.OpenLoader();
             MultiplayerManager.Instance.gameStarted = game.gameStarted;
             if(game.gameStarted){
@@ -161,12 +161,29 @@ public class PlayerClient : UnisaveBroadcastingClient
 
         if(!actionMessage.playerData.publicKey.Equals(AccountManager.Instance.playerData.publicKey.ToString())){
             CardGameManager.instance.ToggleTurn();
-            Debug.Log("Damage Received");
+        }
+    }
+    void ReceiveSurrender(SurrenderMessage surrenderMessage){
+        if(!surrenderMessage.playerData.publicKey.Equals(AccountManager.Instance.playerData.publicKey.ToString())){
+            CardGameManager.instance.gameHudWin.SetActive(true);
+            PlayerData playerData = AccountManager.Instance.playerData;
+            if(surrenderMessage.throughWinComplete){
+                GameManager.instance.AddMoney(2000);
+            }else if(surrenderMessage.throughSurrenderButton){
+                GameManager.instance.AddMoney(500);
+            }
+        }else{
+            if(GameManager.instance.PlayerMoney < 500){
+                GameManager.instance.DeductMoney(GameManager.instance.PlayerMoney);
+            }else{
+                GameManager.instance.DeductMoney(500);
+            }
         }
     }
     public void ProceedGame(){
         SceneManager.LoadSceneAsync("Testing Gameplay", LoadSceneMode.Additive).completed += async (operation) => {
             MultiplayerManager.Instance.playerInGame = true;
+            PlayerUIManager.Instance.createLobby.gameObject.SetActive(false);
             MultiplayerManager.Instance.SendInGame();
             if(MultiplayerManager.Instance.playerInGame && MultiplayerManager.Instance.enemyInGame){
                 PlayerUIManager.Instance.CloseLoader();
