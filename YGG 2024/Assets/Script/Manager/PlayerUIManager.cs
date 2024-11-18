@@ -15,6 +15,7 @@ public class PlayerUIManager : MonoBehaviour
     [SerializeField] public GameObject parentMainMenu;
     [SerializeField] public GameObject connectionMenu;
     [SerializeField] public GameObject mainMenu;
+    [SerializeField] public GameObject accountMenu;
     [Header("Game UI")]
     [SerializeField] public GameObject playerUI;
     [SerializeField] public GameObject multiplayerUI;

@@ -9,19 +9,15 @@ using UnityEngine;
 
 public class AccountStore : MonoBehaviour
 {
-    [SerializeField] TextMeshProUGUI publicKey;
-    [SerializeField] TextMeshProUGUI balance;
     [SerializeField] public PlayerClient playerClient;
     private void OnEnable(){
         Web3.OnLogin += OnLogin;
         Web3.OnLogout += OnLogout;
-        Web3.OnBalanceChange += OnBalanceChange;
         //Web3.OnNFTsUpdate += OnNFTsUpdate;
     }
 
     private async void OnLogin(Account account){
         PlayerUIManager.Instance.OpenLoader();
-        publicKey.SetText("Public Key: " + account.PublicKey);
         string generatedUID = Utilities.GenerateUuid();
         if(AccountManager.Instance.priceData.date != null && Utilities.CheckIfLateBy10Minutes(AccountManager.Instance.priceData.date)){
             await this.CallFacet((DatabaseService ds) => ds.InitializeLoginWithPrice(account.PublicKey, generatedUID))
@@ -78,15 +74,10 @@ public class AccountStore : MonoBehaviour
         }
     }
     private void OnLogout(){
-        publicKey.SetText("");
-        balance.SetText("");
         playerClient.enabled = false;
         
         PlayerUIManager.Instance.CloseMainmenu();
         PlayerUIManager.Instance.OpenConnection();
-    }
-    private void OnBalanceChange(double sol){
-        balance.SetText("Balance: " + sol.ToString("#.#########"));
     }
     // private void OnNFTsUpdate(List<Nft> nft, int total){
     //     foreach(Nft nftData in nft){
