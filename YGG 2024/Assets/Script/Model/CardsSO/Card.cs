@@ -117,14 +117,14 @@ public class Card : MonoBehaviour
     public async Task Deselect(){
         selected.SetActive(false);
         isAnimating = true;
-        await transform.DOScale(new Vector3(1.2f, 1.2f, 1.2f) + new Vector3(1f, 1f, 1f), 0.5f).AsyncWaitForCompletion();
+        await transform.DOScale(new Vector3(1.2f, 1.2f, 1.2f) - new Vector3(0.2f, 0.2f, 0.2f), 0.3f).AsyncWaitForCompletion();
         isAnimating = false;
         isSelected = false;
     }
     public async Task Select(){
         selected.SetActive(true);
         isAnimating = true;
-        await transform.DOScale(new Vector3(1, 1, 1) + new Vector3(0.2f, 0.2f, 0.2f), 0.5f).AsyncWaitForCompletion();
+        await transform.DOScale(new Vector3(1, 1, 1) + new Vector3(0.2f, 0.2f, 0.2f), 0.3f).AsyncWaitForCompletion();
         isAnimating = false;
         isSelected = true;
     }
