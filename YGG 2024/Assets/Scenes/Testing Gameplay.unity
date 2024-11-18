@@ -1347,9 +1347,8 @@ MonoBehaviour:
   - {fileID: 1964787102}
   - {fileID: 1275877355}
   availableCardSlots: 000000
-  gameHudLose: {fileID: 0}
-  gameHudWin: {fileID: 0}
-  topPanelText: {fileID: 968030683}
+  gameHudLose: {fileID: 1314256344}
+  gameHudWin: {fileID: 1961632181}
   deckCountText: {fileID: 693942572}
   yourTurn: 0
   selectedCard:
@@ -1673,17 +1672,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &968030683 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1803349068894566677, guid: b69e206908d5a3d4e9a305eddd837360, type: 3}
-  m_PrefabInstance: {fileID: 96295935}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1016333680
