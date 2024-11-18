@@ -8449,8 +8449,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 846e4f1fa602b884faa1399ca8a54ea2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  publicKey: {fileID: 966516390}
-  balance: {fileID: 1737682205}
   playerClient: {fileID: 1912035472}
 --- !u!1 &566351490
 GameObject:
@@ -24459,7 +24457,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1350549059}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 303556503}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!114 &1350549059
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25832,13 +25842,13 @@ MonoBehaviour:
   m_Padding:
     m_Left: 30
     m_Right: 30
-    m_Top: 70
+    m_Top: 235
     m_Bottom: 40
-  m_ChildAlignment: 0
+  m_ChildAlignment: 1
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 452.53, y: 600}
-  m_Spacing: {x: 30, y: 30}
+  m_CellSize: {x: 205, y: 295}
+  m_Spacing: {x: 258, y: 351}
   m_Constraint: 0
   m_ConstraintCount: 2
 --- !u!1 &1446068862

@@ -32,6 +32,7 @@ public class AccountModal : MonoBehaviour
                     CardSO selectedCard = GameManager.instance.cardLists.CardItems.FirstOrDefault(card => card.cName == n.metaplexData.data.offchainData.attributes[0].value).CreateCopy(); 
                     CardsInvItem uiItem = Instantiate(prefab, Vector3.zero, Quaternion.identity);
                     uiItem.transform.SetParent(population);
+                    uiItem.transform.localScale = new Vector3(2f, 2f, 2f); // Use Pos X and Pos Y from the image
                     uiItem.SetData(selectedCard.cImage, 1, selectedCard.cName, selectedCard.cDescription, selectedCard.cType, false);
                 }
             }
