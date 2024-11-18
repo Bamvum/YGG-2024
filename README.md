@@ -16,11 +16,12 @@ The game also features a **Tavern**, a charming clicker-style minigame where pla
 - **Blockchain**: Solana  
   - **Solana-Unity SDK**: Enables seamless integration of blockchain features into the game, such as NFT card ownership and cryptocurrency transactions.  
 - **Backend**:  
-  - **Unisave**: A serverless backend framework for database management and real-time multiplayer functionality.  
+  - **Unisave**: A serverless backend framework for database management and real-time multiplayer functionality.
+  - **Node.js**: For CoinGecko API price fetcher of Solana
   - **ArangoDB**: A flexible, multi-model database for storing player data, card metadata, and game states.  
 - **Frontend**:  
   - Unity for 2D/3D rendering.  
-- **Networking**: Photon or Unity's Netcode for multiplayer battles.  
+- **Networking**: Unity Broadcasting for Player vs Player Multiplayer Battle. 
 - **Version Control**: Git and GitHub for collaborative development.  
 - **Tools**: Visual Studio, Rider, and GitHub Actions for CI/CD.  
 
@@ -60,5 +61,5 @@ Members:
 - Medina, Jherico - Graphics Designer
 - Morales, Alfonso Jr. - Backend Developer
 - Pintor, Kyle - Full-Stack Developer
-- Rozul, Joseph Victor - Backend Developer
-- Tulipas, Rogelio Jr. - Backend Developer
+- Rozul, Joseph Victor - Backend Developer/Blockchain Developer
+- Tulipas, Rogelio Jr. - Game Developer
