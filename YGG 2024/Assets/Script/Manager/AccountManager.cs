@@ -25,8 +25,10 @@ public class AccountManager : MonoBehaviour
 
     public void Logout(){
         uid = "";
-        Web3.Instance.Logout();
+        EntityId = "";
         playerData = null;
+        Web3.Instance.Logout();
+
     }
     public async static Task SaveData(PlayerData player)
     {
@@ -46,6 +48,7 @@ public class AccountManager : MonoBehaviour
         if(GameReference.Instance != null && !MultiplayerManager.Instance.playerInGame){
             SceneManager.UnloadSceneAsync("TheGame").completed += async (operation) => {
                 PlayerUIManager.Instance.playerUI.SetActive(false);
+                PlayerUIManager.Instance.mainMenuCamera.SetActive(true);
                 PlayerUIManager.Instance.parentMainMenu.SetActive(true);
                 Logout();
             };
@@ -55,12 +58,14 @@ public class AccountManager : MonoBehaviour
                     MultiplayerManager.Instance.ClearMultiplayer();
                     SceneManager.UnloadSceneAsync("TheGame").completed += async (operation) => {
                     PlayerUIManager.Instance.playerUI.SetActive(false);
+                    PlayerUIManager.Instance.mainMenuCamera.SetActive(true);
                     PlayerUIManager.Instance.parentMainMenu.SetActive(true);
                     Logout();
                 };
             };
         }else{
             PlayerUIManager.Instance.playerUI.SetActive(false);
+            PlayerUIManager.Instance.mainMenuCamera.SetActive(true);
             PlayerUIManager.Instance.parentMainMenu.SetActive(true);
             Logout();
         }
