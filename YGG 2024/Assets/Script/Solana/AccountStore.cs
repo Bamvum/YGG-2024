@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using ESDatabase.Classes;
 using Solana.Unity.SDK;
 using Solana.Unity.SDK.Nft;
 using Solana.Unity.Wallet;
@@ -22,13 +23,16 @@ public class AccountStore : MonoBehaviour
         PlayerUIManager.Instance.OpenLoader();
         publicKey.SetText("Public Key: " + account.PublicKey);
         await this.CallFacet((DatabaseService ds) => ds.CreateAccount(account.PublicKey))
-        .Then(response => {
+        .Then(async response => {
             AccountManager.Instance.playerData = response;
             Debug.Log("Success");
             PlayerUIManager.Instance.CloseLoader();
             PlayerUIManager.Instance.CloseConnection();
             PlayerUIManager.Instance.OpenMainmenu();
             playerClient.enabled = true;
+            await this.CallFacet((DatabaseService ds) => ds.GetPrice()).Then(response =>{
+                AccountManager.Instance.price = response.price;
+            });
         }).Catch(error => 
         {
             PlayerUIManager.Instance.CloseLoader();

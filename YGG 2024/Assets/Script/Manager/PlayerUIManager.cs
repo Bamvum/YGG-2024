@@ -20,6 +20,7 @@ public class PlayerUIManager : MonoBehaviour
     [SerializeField] public GameObject characterBuilder;
     [Header("Cameras")]
     [SerializeField] public GameObject mainMenuCamera;
+    [SerializeField] public GameObject gameCamera;
     [Header("Loader")]
     [SerializeField] public GameObject loader;
     [SerializeField] public CanvasGroup loaderCG;
@@ -71,6 +72,7 @@ public class PlayerUIManager : MonoBehaviour
         mainMenuCamera.SetActive(false);
         SceneManager.LoadSceneAsync("TheGame", LoadSceneMode.Additive).completed += async (operation) => {
             GameManager.instance.characterBuilder = GameReference.Instance.characterBuilder;
+            gameCamera = GameReference.Instance.gameCamera;
             // characterEditor.Rebuild();
             characterBuilder.SetActive(false);
             PlayerData playerData = AccountManager.Instance.playerData;
@@ -104,6 +106,11 @@ public class PlayerUIManager : MonoBehaviour
             playerUI.SetActive(true);
             //GameManager.instance.characterBuilder.Rebuild(layer?.Name);
         };
+    }
+    public void CloseMultiplayer(){
+        MultiplayerManager.Instance.multiplayerUI.SetActive(false);
+        MultiplayerManager.Instance.ClearMultiplayer();
+        playerUI.SetActive(true);
     }
     public void OpenLink(string link){
         Application.OpenURL(link);

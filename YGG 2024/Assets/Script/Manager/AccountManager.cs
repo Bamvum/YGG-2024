@@ -7,6 +7,7 @@ public class AccountManager : MonoBehaviour
 {
     [SerializeField] public static AccountManager Instance;
     [SerializeField] public PlayerData playerData;
+    [SerializeField] public decimal price;
     private void Awake(){
         if(Instance == null){
             Instance = this;

@@ -102,8 +102,7 @@ public class PlayerClient : UnisaveBroadcastingClient
             MultiplayerManager.Instance.SetEnemyReady(readyMessage.isReady);
             if(MultiplayerManager.Instance.playerReady && MultiplayerManager.Instance.enemyReady){
                 MultiplayerManager.Instance.lobbyUI.SetActive(false);
-                PlayerUIManager.Instance.mainMenuCamera.SetActive(false);
-                PlayerUIManager.Instance.parentMainMenu.SetActive(false);
+                PlayerUIManager.Instance.gameCamera.SetActive(false);
                 PlayerUIManager.Instance.OpenLoader();
                 MultiplayerManager.Instance.StartGame();
                 MultiplayerManager.Instance.gameStarted = true;
@@ -123,8 +122,8 @@ public class PlayerClient : UnisaveBroadcastingClient
     void ReceiveStartGame(GameStart game){
         if(!game.playerData.publicKey.Equals(AccountManager.Instance.playerData.publicKey.ToString())){
             MultiplayerManager.Instance.lobbyUI.SetActive(false);
-            PlayerUIManager.Instance.mainMenuCamera.SetActive(false);
-            PlayerUIManager.Instance.parentMainMenu.SetActive(false);
+            MultiplayerManager.Instance.lobbyUI.SetActive(false);
+            PlayerUIManager.Instance.gameCamera.SetActive(false);
             PlayerUIManager.Instance.OpenLoader();
             MultiplayerManager.Instance.gameStarted = game.gameStarted;
             if(game.gameStarted){
@@ -165,16 +164,19 @@ public class PlayerClient : UnisaveBroadcastingClient
             CardGameManager.instance.ToggleTurn();
         }
     }
-    void ReceiveSurrender(SurrenderMessage surrenderMessage){
+    async void ReceiveSurrender(SurrenderMessage surrenderMessage){
         if(!surrenderMessage.playerData.publicKey.Equals(AccountManager.Instance.playerData.publicKey.ToString())){
             PlayerData playerData = AccountManager.Instance.playerData;
             if(surrenderMessage.throughWinComplete){
                 playerData.gameData.money += 2000;
+                await AccountManager.SaveData(playerData);
             }else if(surrenderMessage.throughSurrenderButton){
                 playerData.gameData.money += 500;
+                await AccountManager.SaveData(playerData);
             }
             SceneManager.UnloadSceneAsync("Testing Gameplay").completed += async (operation) => {
                 MultiplayerManager.Instance.ClearMultiplayer();
+                PlayerUIManager.Instance.playerUI.SetActive(true);
             };
         }
     }

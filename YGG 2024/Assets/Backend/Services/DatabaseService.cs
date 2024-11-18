@@ -42,4 +42,15 @@ public class DatabaseService : Facet
             return "Failed to save";
         }
     }
+
+    public PriceData GetPrice(){
+        string usdToSolUrl = "http://23.88.54.33:3444/nft-price-card"; // Use a crypto price API
+        decimal solPriceInUSD = decimal.Parse(Http.Get(usdToSolUrl)["data"].AsString);
+        DateTime fetchedDate = DateTime.Parse(Http.Get(usdToSolUrl)["lastUpdate"].AsString);
+        PriceData priceData = new PriceData(){
+            price = solPriceInUSD,
+            date = fetchedDate
+        };
+        return priceData;
+    }
 }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using ESDatabase.Classes;
 using UnityEngine;
 
 
@@ -31,10 +32,10 @@ public class CardSOData : ScriptableObject
 
     public void AddItem(Cards item)
     {
-        AddItem(item.item, item.quantity, item.isEquipped);
+        AddItem(item.item, item.quantity, item.isEquipped, item.isMinted);
     }
 
-    public int AddItem(CardSO item, int quantity, bool equip)
+    public int AddItem(CardSO item, int quantity, bool equip, bool isMinted)
     {
         if (item.IsStackable == false)
         {
@@ -49,7 +50,7 @@ public class CardSOData : ScriptableObject
             }
         }
         InformAboutChange();
-        return quantity = AddStackebleItem(item, quantity, equip);
+        return quantity = AddStackebleItem(item, quantity, equip, isMinted);
     }
 
 
@@ -75,7 +76,7 @@ public class CardSOData : ScriptableObject
 
     private bool IsInventoryFull() => CardItems.Where(item => item.isEmpty).Any() == false;
 
-    public int AddStackebleItem(CardSO item, int quantity, bool equip)
+    public int AddStackebleItem(CardSO item, int quantity, bool equip, bool isMinted)
     {
 
         for (int i = 0; i < CardItems.Count; i++)
@@ -88,12 +89,12 @@ public class CardSOData : ScriptableObject
 
                 if (quantity > amountPossibleToTake)
                 {
-                    CardItems[i] = CardItems[i].ChangeQuantity(CardItems[i].item.MaxStackableSize, equip);
+                    CardItems[i] = CardItems[i].ChangeQuantity(CardItems[i].item.MaxStackableSize, equip, isMinted, CardItems[i].cardData);
                     quantity -= amountPossibleToTake;
                 }
                 else
                 {
-                    CardItems[i] = CardItems[i].ChangeQuantity(CardItems[i].quantity + quantity, equip);
+                    CardItems[i] = CardItems[i].ChangeQuantity(CardItems[i].quantity + quantity, equip, isMinted, CardItems[i].cardData);
                     InformAboutChange();
                     return 0;
                 }
@@ -112,7 +113,7 @@ public class CardSOData : ScriptableObject
     }
 
 
-    internal void RemoveItem(int itemIndex, int amount, bool equip)
+    internal void RemoveItem(int itemIndex, int amount, bool equip, bool isMinted)
     {
         try
         {
@@ -136,7 +137,7 @@ public class CardSOData : ScriptableObject
                 else
                 {
                     // Decrease the item quantity.
-                    CardItems[itemIndex] = CardItems[itemIndex].ChangeQuantity(currentQuantity - amount, equip);
+                    CardItems[itemIndex] = CardItems[itemIndex].ChangeQuantity(currentQuantity - amount, equip, isMinted, CardItems[itemIndex].cardData);
                     //GameManager.instance.itemsToTransfer[itemIndex] = GameManager.instance.itemsToTransfer[itemIndex].ChangeQuantity(currentQuantity - amount);
                     InformAboutChange();
 
@@ -148,7 +149,7 @@ public class CardSOData : ScriptableObject
         catch (Exception) { }
 
     }
-    internal void RemoveItem(string name, int amount, bool equip)
+    internal void RemoveItem(string name, int amount, bool equip, bool isMinted)
     {
         try
         {
@@ -176,7 +177,7 @@ public class CardSOData : ScriptableObject
                 else
                 {
                     // Decrease the item quantity.
-                    CardItems[indexToRemove] = CardItems[indexToRemove].ChangeQuantity(currentQuantity - amount, equip);
+                    CardItems[indexToRemove] = CardItems[indexToRemove].ChangeQuantity(currentQuantity - amount, equip, isMinted, CardItems[indexToRemove].cardData);
                    // GameManager.instance.itemsToTransfer[indexToRemove] = GameManager.instance.itemsToTransfer[indexToRemove].ChangeQuantity(currentQuantity - amount);
                     InformAboutChange();
                     // Debug.LogError("Item has been removed");
@@ -247,15 +248,19 @@ public class CardSOData : ScriptableObject
     {
         public int quantity;
         public bool isEquipped;
+        public bool isMinted;
         public CardSO item;
+        public CardData cardData;
         public bool isEmpty => item == null;
 
-        public Cards ChangeQuantity(int newQuantity, bool equip)
+        public Cards ChangeQuantity(int newQuantity, bool equip, bool isMinted, CardData cardData)
         {
             return new Cards
             {
                 item = this.item,
                 quantity = newQuantity,
+                isMinted = isMinted, 
+                cardData = cardData,
                 isEquipped = equip
             };
         }
@@ -264,6 +269,8 @@ public class CardSOData : ScriptableObject
         {
             item = null,
             quantity = 0,
+            isMinted = false,
+            cardData = null,
             isEquipped = false
         };
     }
