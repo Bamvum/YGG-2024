@@ -146,7 +146,7 @@ public class MultiplayerManager : MonoBehaviour
     }
     public void Return(){
         SceneManager.UnloadSceneAsync("Testing Gameplay").completed += async (operation) => {
-                PlayerUIManager.Instance.createLobby.interactable = true;
+                PlayerUIManager.Instance.createLobby.gameObject.SetActive(true);
                 PlayerUIManager.Instance.gameCamera.SetActive(true);
                 ClearMultiplayer();
                 PlayerUIManager.Instance.playerUI.SetActive(true);
